@@ -22,9 +22,11 @@ db.once('open', (callback) => {
   console.log('mongoose connected');
 })
 
-
 let user = require('./controllers/users_controller');
 let player = require('./controllers/players_controller');
+
+app.use('/user', user);
+app.use('/player', player);
 
 let server = app.listen(3000, () => {
   let host = server.address().address;
