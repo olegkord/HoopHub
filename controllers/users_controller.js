@@ -4,6 +4,7 @@ let express = require('express');
 let router = express.Router();
 let bodyParser = require('body-parser');
 let Player = require('../models/player');
+let User = require('../models/user')
 
 //ROUTES HERE
 
