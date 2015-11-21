@@ -8,7 +8,7 @@
     <script script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
 
 
-    <title>Hoophub</title>
+    <title>HoopHub</title>
   </head>
   <body>
 
@@ -17,19 +17,30 @@
         <ul class= "nav navbar-nav">
           <li role="presentation" class="active" id="home"><a href="#"> Home </a></li>
           <li  id="myPage"><a href="#">  My HH </a></li>
+    <!-- use conditional to show either login or logout here need a function for this first-->
           <li  id="login"><a href="#">  Login </a></li>
           <li  id="logout"><a href="#">  Logout </a></li>
        </ul>
      </div>
 
-     <!-- RENDER DIVS -->
+     <!-- // =================================================================
+     // DIVS  ===========================================================
+     // ================================================================= -->
+
+     <!-- RENDER DIVS FOR USERS-->
      <div class="user-profile-div"></div>
      <div class="user-player-list-div"></div>
+
+    <!-- RENDER DIVS FOR PLAYERS-->
      <div class="player-profile-div"></div>
      <div class="player-update-div"></div>
      <div class="player-twtr-div"></div>
      <div class="player-stats-div"></div>
 
+
+     <!-- // =================================================================
+     // RENDER  =========================================================
+     // ================================================================= -->
 
       <!-- RENDER HOMEPAGE -->
      <form class="form-inline text-center">
@@ -44,6 +55,7 @@
       <a class="btn btn-default" id="new_user_button" href="#" role="button">Create New User </a>
     </div>
 
+
       <!-- TEMPLATE WILL RENDER USER PROFILE-->
       <template id="user-template" type="text/x-handlebars-template">
         <div class="user">
@@ -55,9 +67,77 @@
        </div>
      </template>
 
+      <!-- TEMPLATE WILL RENDER PLAYER PROFILE-->
+<!-- DON'T FORGET TO LOOK @ THE FIELD NAMES IN SCHEMA ONCE COMPLETED -->
+     <template id="player-profile-template" type="text/x-handlebars-template">
+       <div class="player_profile">
+         <div id="player_image">
+           <img src={{this.img_url}}></img>
+         </div>
+        <h3> {{this.player_name}} </h3> <br>
+        <h3> {{this.team_name}} </h3>
+        <h3> {{this.salary}} </h3>
+      </div>
+    </template>
+
+    <template id="player-stats-template" type="text/x-handlebars-template">
+      <div class="player_stats">
+        <h3> Last Game Stats </h3>
+          <ul>
+           <li> {{this.points}} </li>
+           <li> {{this.rebounds}} </li>
+           <li> {{this.assists}} </li>
+           <li> {{this.fouls}} </li>
+         </ul>
+       </div>
+   </template>
+
+     <template id="player-update-template" type="text/x-handlebars-template">
+       <div class="player_update">
+         <h3> Fantasy Update </h3>
+          <li> {{this.content}} </li>
+      </div>
+    </template>
+
+
       <!-- TEMPLATE WILL RENDER CREATE NEW USER PROFILE-->
       <template id="user-template" type="text/x-handlebars-template">
-        <form class="form-horizontal text center" id="new-user-form" method="post" action="/users"> <br>
+        <form class="form-horizontal text center" id="new-user-form" method="PUT" action="/users"> <br>
+          <div class="form-group text-center">
+            <label> User Name </label>
+            <input type="text" class="form-control" id="user-name-input" value={{this.user_name}}>
+          </div>
+
+          <div class="form-group text-center">
+            <label> Email </label>
+            <input type="text" class="form-control" id="email-input" value={{this.email}}>
+          </div>
+
+          <div class="form-group text-center">
+            <label> Profile Photo </label>
+            <input type="text" class="form-control" id="image-input" value={{this.user_img}}>
+          </div>
+
+          <div class="form-group text-center">
+            <label> Favorite Team </label>
+            <input type="text" class="form-control" id="favorite-team-input" value={{this.favorite_team}}>
+          </div>
+
+          <!-- going to need to figure this out with using multiple models with handlebar  -->
+          <!-- <div class="form-group text-center">
+            <label> Favorite Player </label>
+            <input type="text" class="form-control" id="favorite-player-input" value={{this.xyz}}>
+          </div> -->
+        </form>
+
+          <div class="text-center">
+            <a class="btn btn-default" id="create_user_button" href="#" role="button">Create User </a>
+         </div>
+      </template>
+
+      <!-- TEMPLATE WILL RENDER NEW USER FORM-->
+      <template id="user-template" type="text/x-handlebars-template">
+        <form class="form-horizontal text center" id="edit-user-form" method="POST" action="/users"> <br>
           <div class="form-group text-center">
             <label> User Name </label>
             <input type="text" class="form-control" id="user-name-input" placeholder="King James">
@@ -85,11 +165,9 @@
         </form>
 
           <div class="text-center">
-            <a class="btn btn-default" id="create_user_button" href="#" role="button">Create User </a>
+            <a class="btn btn-default" id="create_user_button" href="#" role="button">Create New User </a>
          </div>
       </template>
-
-
 
     <script src="script.js"></script>
   </body>
