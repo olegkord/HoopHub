@@ -8,10 +8,19 @@ let User = require('../models/user')
 
 //ROUTES HERE
 
+router.route('/new')
+//route to create a new user
+  .post( (req,res) => {
+    console.log('Creating a new user');
+
+    let newUserParams = req.body.params;
+  })
+
+
 router.route('/:id')
   //route to view user by ID
   .get( (req,res) => {
-    console.log('Viewing user profile')
+    console.log('Viewing user profile');
 
     //Body parser?
     // let userID = params.body.id;
