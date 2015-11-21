@@ -1,0 +1,20 @@
+body {
+  background-image: url("./images/WFTmul0.jpg");
+  background-size: cover;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+
+
+#new_user_button {
+  margin-top: 20px;
+}
+
+.form-inline {
+  margin-top: 200px;
+}
+
+#new-user-form {
+  width: 30%;
+  margin: 0 auto;
+}
