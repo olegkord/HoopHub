@@ -14,24 +14,29 @@ $(function(){
   // Link Click Events ===============================================
   // =================================================================
 
-    $('#create_user_button')((e) => {
-      
-
-
-    })
-
-
+    $('#create_user_button').click((e) => {
+          e.preventDefault();
+        .ajax({
+          type: "GET"
+          url: "/user/new"
+        }).done((data)  => {
+          console.log('data');
+          showUserForm(data);
+        });
+      });
 
 
   // =================================================================
   // Render templates ================================================
   // =================================================================
 
+  let showUserForm = (data) => {
+    resetUserView();
 
-
-
-
-
+    let form = $('.forms-div');
+    let compiledTemplate = renderTemplate_create_user(data);
+    $form.html('').append(compiledTemplate);
+  }
 
   let resetUserView = () => {
     $('.user-profile-div').empty();

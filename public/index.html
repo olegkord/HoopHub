@@ -27,6 +27,10 @@
      // DIVS  ===========================================================
      // ================================================================= -->
 
+
+     <!-- RENDER DIVS FOR FORMS-->
+     <div class="forms-div"> </div>
+
      <!-- RENDER DIVS FOR USERS-->
      <div class="user-profile-div"></div>
      <div class="user-player-list-div"></div>
@@ -100,7 +104,7 @@
     </template>
 
 
-      <!-- TEMPLATE WILL RENDER CREATE NEW USER PROFILE-->
+      <!-- TEMPLATE WILL EDIT USER PROFILE-->
       <template id="new-user-template" type="text/x-handlebars-template">
         <form class="form-horizontal text center" id="new-user-form" method="PUT" action="/users"> <br>
           <div class="form-group text-center">
@@ -122,6 +126,7 @@
             <label> Favorite Team </label>
             <input type="text" class="form-control" id="favorite-team-input" value={{this.favorite_team}}>
           </div>
+
 
           <!-- going to need to figure this out with using multiple models with handlebar  -->
           <!-- <div class="form-group text-center">
@@ -146,6 +151,11 @@
           <div class="form-group text-center">
             <label> Email </label>
             <input type="text" class="form-control" id="email-input" placeholder="KingJames@example.com">
+          </div>
+
+          <div class="form-group text-center">
+            <label> Password </label>
+            <input type="text" class="form-control" id="password-input" placeholder="password atleast five characters">
           </div>
 
           <div class="form-group text-center">
