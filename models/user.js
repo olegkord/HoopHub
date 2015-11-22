@@ -12,6 +12,7 @@ let userSchema = new mongoose.Schema({
 
   created_at: Date,
   updated_at: Date
+
 })
 
 var User = mongoose.model('User', userSchema )

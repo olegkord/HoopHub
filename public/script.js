@@ -15,29 +15,15 @@ $(function(){
   // =================================================================
 
     $('#new_user_button').click((e) => {
+      console.log('CLICKED BUTTON TO GENERATE FORM');
           e.preventDefault();
         $.ajax({
         }).done((data)  => {
           console.log('show user form');
           showUserForm(data);
+          registerSubmitClick();
         });
       });
-
-    $('#create_user_button').on('submit', (e) => {
-      e.preventDefault();
-
-      var new_user_data = $('#new-user-form').serialize();
-      console.log(new_user_data);
-
-      $.ajax({
-        type: "POST",
-        url: "/users/new",
-        data: new_user_data
-      }).done((data) => {
-         console.log(data);
-         showUser(data);
-      });
-    });
 
     $('#edit_user_button').click((e) => {
       e.preventDefault();
@@ -124,3 +110,23 @@ $(function(){
   }
 
 });
+
+// =================================================================
+// REGISTER CLICKS =================================================
+// =================================================================
+
+let registerSubmitClick = function(){
+    $('#new-user-form').on('submit', (e) => {
+      console.log('CLICKED BUTTON TO SUBMIT USER');
+      e.preventDefault();
+
+      var new_user_data = JSON.stringify($('#new-user-form').serializeArray());
+      console.log(new_user_data);
+
+      $.ajax({
+        type: "POST",
+        url: "/users/new",
+        data: new_user_data
+      });
+    });
+  }

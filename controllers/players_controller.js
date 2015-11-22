@@ -19,10 +19,11 @@ router.route('/:name')
 
       else {
         let options = {
-          // url: 'https://api.fantasydata.net/nba/v2/JSON/Player/' +player.id;
-          Host: 'api.fantasydata.net'
+          url: 'https://api.fantasydata.net/nba/v2/JSON/Player/'+player.id,
+          Host: 'api.fantasydat.net',
 //-------->OLEG'S Key:
-          // Ocp-Apim-Subscription-Key: 'd29863acdf714a50a97247181f9563e9'
+          "Ocp-Apim-Subscription-Key": 'd29863acdf714a50a97247181f9563e9'
+// 09e1b3b45952ae9f291e6250bd25752343b3a0c0
 //-------->STEVE'S Key:
 //          Ocp-Apim-Subscription-Key: '350faf5499d24addaa79a4ab6b949145';
         }
