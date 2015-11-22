@@ -15,27 +15,16 @@ $(function(){
   // =================================================================
 
     $('#new_user_button').click((e) => {
+      console.log('CLICKED BUTTON TO GENERATE FORM');
           e.preventDefault();
 
         $.ajax({
         }).done((data)  => {
-          console.log('data');
+
           showUserForm(data);
+          registerSubmitClick();
         });
       });
-
-    $('#create_user_button').on('submit', (e) => {
-      e.preventDefault();
-
-      var new_user_data = $('#new-user-form').serialize();
-      console.log(new_user_data);
-
-      $.post({
-        type: "POST",
-        url: "/users/new",
-        data: new_user_data
-      });
-    });
 
     $('#edit_user_button').click((e) => {
       e.preventDefault();
@@ -116,3 +105,23 @@ $(function(){
   }
 
 });
+
+// =================================================================
+// REGISTER CLICKS =================================================
+// =================================================================
+
+let registerSubmitClick = function(){
+    $('#create_user_button').click ((e) => {
+      console.log('CLICKED BUTTON TO SUBMIT USER');
+      e.preventDefault();
+
+      var new_user_data = $('#new-user-form').serialize();
+      console.log(new_user_data);
+
+      $.ajax({
+        type: "POST",
+        url: "/users/new",
+        data: new_user_data
+      });
+    });
+  }
