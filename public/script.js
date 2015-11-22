@@ -111,11 +111,11 @@ $(function(){
 // =================================================================
 
 let registerSubmitClick = function(){
-    $('#create_user_button').click ((e) => {
+    $('#new-user-form').on('submit', (e) => {
       console.log('CLICKED BUTTON TO SUBMIT USER');
       e.preventDefault();
 
-      var new_user_data = $('#new-user-form').serialize();
+      var new_user_data = JSON.stringify($('#new-user-form').serializeArray());
       console.log(new_user_data);
 
       $.ajax({
