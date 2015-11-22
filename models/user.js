@@ -2,12 +2,18 @@
 
 let mongoose = require('mongoose');
 
-let User = new mongoose.Schema({
+let userSchema = new mongoose.Schema({
   userName: String,
   email: String,
   password: String,
-  //image: <<object>>
-  favoriteTeam: String
+  image: String,
+  favoriteTeam: String,
+  favoritePlayers: [],
+
+  created_at: Date,
+  updated_at: Date
 })
 
-module.exports = mongoose.model('User',User);
+var User = mongoose.model('User', userSchema )
+
+module.exports = User;

@@ -16,10 +16,9 @@ $(function(){
 
     $('#new_user_button').click((e) => {
           e.preventDefault();
-
         $.ajax({
         }).done((data)  => {
-          console.log('data');
+          console.log('show user form');
           showUserForm(data);
         });
       });
@@ -30,10 +29,13 @@ $(function(){
       var new_user_data = $('#new-user-form').serialize();
       console.log(new_user_data);
 
-      $.post({
+      $.ajax({
         type: "POST",
         url: "/users/new",
         data: new_user_data
+      }).done((data) => {
+         console.log(data);
+         showUser(data);
       });
     });
 
@@ -47,6 +49,9 @@ $(function(){
         type: "PUT",
         url: "/users/" + $('.edit-user-form').data('id'),
         data: edit_user_data
+      }).done((data) => {
+         console.log(data);
+         showUser(data);
       });
     });
 
@@ -57,6 +62,9 @@ $(function(){
         type: "DELETE",
         url: "/users/" + $('.edit-user-form').data('id'),
         data: edit_user_data
+      }).done((data) => {
+         console.log(data);
+        // redirect home? ;
       });
     });
 
@@ -68,9 +76,9 @@ $(function(){
   let showUser = (data) => {
     resetUserView();
 
-    let $form = $('.forms-div');
+    let $profile = $('.user-profile-div');
     let compiledTemplate = renderTemplate_show_user(data);
-    $form.html('').append(compiledTemplate);
+    $profile.html('').append(compiledTemplate);
   }
 
   let showUserForm = (data) => {
