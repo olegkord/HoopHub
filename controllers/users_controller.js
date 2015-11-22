@@ -19,7 +19,7 @@ router.route('/new')
     newUser.save( (error) => {
       if (error) res.status(400).send({message: error.errmsg});
 
-      else res.status(201).send({message: "successfully created user"});
+      else res.status(200).send({message: "successfully created user"});
     })
   })
 
