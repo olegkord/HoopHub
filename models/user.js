@@ -8,7 +8,10 @@ let userSchema = new mongoose.Schema({
   password: String,
   image: String,
   favoriteTeam: String,
-  favoritePlayers: [],
+  favoritePlayers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Player'
+  }]
 
   created_at: Date,
   updated_at: Date
