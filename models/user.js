@@ -11,7 +11,7 @@ let userSchema = new mongoose.Schema({
   favoritePlayers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Player'
-  }]
+  }],
 
   created_at: Date,
   updated_at: Date
