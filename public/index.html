@@ -15,7 +15,7 @@
       <!-- NAVIGATION -->
       <div class="navbar">
         <ul class= "nav navbar-nav">
-          <li role="presentation" class="active" id="home"><a href="#"> Home </a></li>
+          <li role="presentation" class="active" id="home"><a href="/"> Home </a></li>
           <li  id="myPage"><a href="#">  My HH </a></li>
     <!-- use conditional to show either login or logout here need a function for this first-->
           <li  id="login"><a href="#">  Login </a></li>
@@ -23,10 +23,10 @@
        </ul>
      </div>
 
+
      <!-- // =================================================================
      // DIVS  ===========================================================
      // ================================================================= -->
-
 
      <!-- RENDER DIVS FOR FORMS-->
      <div class="forms-div"> </div>
@@ -47,7 +47,8 @@
      // ================================================================= -->
 
       <!-- RENDER HOMEPAGE -->
-     <form class="form-inline text-center">
+    <!-- <template id="index" type="text/x-handlebars-template"> -->
+     <form class="form-inline text-center" id="index_form">
        <div class="form-group">
          <input type="text" class="form-control" id="player_search" placeholder="e.g. Lebron James">
        </div>
@@ -55,10 +56,10 @@
         <button type="submit" class="btn btn-default"> Search Player</button>
     </form>
 
-     <div class="text-center">
-      <a class="btn btn-default" id="new_user_button" href="#" role="button">Create New User </a>
+     <div class="text-center" id="index_button">
+      <a class="btn btn-default" id="new_user_button" role="button">Create New User </a>
     </div>
-
+   <!-- </template>  -->
 
       <!-- TEMPLATE WILL RENDER USER PROFILE-->
       <template id="user-template" type="text/x-handlebars-template">
@@ -69,6 +70,12 @@
          <h3> {{this.user_name}} </h3> <br>
          <h3> {{this.favorite_team}} </h3>
        </div>
+       <div class="text-center">
+         <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
+      </div>
+      <div class="text-center">
+        <a class="btn btn-default" id="delete_user_button" role="button">Delete User </a>
+     </div>
      </template>
 
       <!-- TEMPLATE WILL RENDER PLAYER PROFILE-->
@@ -105,10 +112,10 @@
 
 
       <!-- TEMPLATE WILL EDIT USER PROFILE-->
-      <template id="new-user-template" type="text/x-handlebars-template">
-        <form class="form-horizontal text center" id="new-user-form" method="PUT" action="/users"> <br>
+      <template id="edit-user-template" type="text/x-handlebars-template">
+        <form class="form-horizontal text center" id="edit-user-form" method="PUT" action="/users"> <br>
           <div class="form-group text-center">
-            <label> User Name </label>
+            <label> <font color="white">  User Name </label>
             <input type="text" class="form-control" id="user-name-input" value={{this.user_name}}>
           </div>
 
@@ -136,15 +143,16 @@
         </form>
 
           <div class="text-center">
-            <a class="btn btn-default" id="create_user_button" href="#" role="button">Create User </a>
+            <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
          </div>
       </template>
 
       <!-- TEMPLATE WILL RENDER NEW USER FORM-->
-      <template id="edit-user-template" type="text/x-handlebars-template">
-        <form class="form-horizontal text center" id="edit-user-form" method="POST" action="/users"> <br>
+      <template id="new-user-template" type="text/x-handlebars-template">
+        <h2 id="new-user-headline">Create A New User </h2>
+        <form class="form-horizontal text center" id="new-user-form" method="POST" action="/users"> <br>
           <div class="form-group text-center">
-            <label> User Name </label>
+            <label> <font color="white"> User Name </label>
             <input type="text" class="form-control" id="user-name-input" placeholder="King James">
           </div>
 
@@ -175,7 +183,7 @@
         </form>
 
           <div class="text-center">
-            <a class="btn btn-default" id="create_user_button" href="#" role="button">Create New User </a>
+            <a class="btn btn-default" id="create_user_button" role="button">Create New User </a>
          </div>
       </template>
 

@@ -11,36 +11,101 @@ $(function(){
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
 
   // =================================================================
-  // Link Click Events ===============================================
+  // USER Click Events ===============================================
   // =================================================================
 
-    $('#create_user_button').click((e) => {
+    $('#new_user_button').click((e) => {
           e.preventDefault();
-        .ajax({
-          type: "GET"
-          url: "/user/new"
+
+        $.ajax({
         }).done((data)  => {
           console.log('data');
           showUserForm(data);
         });
       });
 
+    $('#create_user_button').on('submit', (e) => {
+      e.preventDefault();
+
+      var new_user_data = $('#new-user-form').serialize();
+      console.log(new_user_data);
+
+      $.post({
+        type: "POST",
+        url: "/users/new",
+        data: new_user_data
+      });
+    });
+
+    $('#edit_user_button').click((e) => {
+      e.preventDefault();
+
+      var edit_user_data = $('#edit-user-form').serialize();
+      console.log(edit_user_data);
+
+      $.ajax({
+        type: "PUT",
+        url: "/users/" + $('.edit-user-form').data('id'),
+        data: edit_user_data
+      });
+    });
+
+    $('#delete_user_button').click((e) => {
+      e.preventDefault();
+
+      $.ajax({
+        type: "DELETE",
+        url: "/users/" + $('.edit-user-form').data('id'),
+        data: edit_user_data
+      });
+    });
+
 
   // =================================================================
   // Render templates ================================================
   // =================================================================
 
-  let showUserForm = (data) => {
+  let showUser = (data) => {
     resetUserView();
 
-    let form = $('.forms-div');
+    let $form = $('.forms-div');
+    let compiledTemplate = renderTemplate_show_user(data);
+    $form.html('').append(compiledTemplate);
+  }
+
+  let showUserForm = (data) => {
+    resetForm();
+
+    let $form = $('.forms-div');
     let compiledTemplate = renderTemplate_create_user(data);
     $form.html('').append(compiledTemplate);
+  }
+
+  let editUserForm = (data) => {
+    resetForm();
+
+    let $form = $('.forms-div');
+    let compiledTemplate = renderTemplate_edit_user(data);
+    $form.html('').append(compiledTemplate);
+  }
+
+
+  // =================================================================
+  // RESETS ==========================================================
+  // =================================================================
+
+
+  let resetForm = () => {
+    $('.forms-div').empty();
+    $('#index_form').hide();
+    $('#index_button').hide();
   }
 
   let resetUserView = () => {
     $('.user-profile-div').empty();
     $('.user-player-list-div').empty();
+    $('#index_form').hide();
+    $('#index_button').hide();
   }
 
   let resetPlayerView = () => {
