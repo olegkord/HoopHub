@@ -25,7 +25,7 @@ db.once('open', (callback) => {
 let user = require('./controllers/users_controller');
 let player = require('./controllers/players_controller');
 
-app.use('/user', user);
+app.use('/users', user);
 app.use('/player', player);
 
 let server = app.listen(3000, () => {
