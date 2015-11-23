@@ -71,7 +71,7 @@ $(function(){
           url: "/users/new",
           data: new_user_data
         }).done( (new_user_data) => {
-          $.get('/users/' + new_user_data._id, showUser, 'json');
+          $.get('/users/' + new_user_data.userID, showUser, 'json');
         });
       });
     }

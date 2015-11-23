@@ -20,7 +20,7 @@ router.route('/new')
       if (error) res.status(400).send({message: error.errmsg});
 
       else res.status(200).send({
-        user: newUser._id
+        userID: newUser._id
       });
     })
   })
@@ -33,8 +33,9 @@ router.route('/:id')
 
     //Body parser?
     // let userID = params.body.id;
+    debugger;
 
-    let userID = req.body.id;
+    let userID = req.params.id;
     console.log('ID viewing: ' + userID);
 
     User.find( {id: userID}, (error, user) => {
