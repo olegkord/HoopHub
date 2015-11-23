@@ -29,7 +29,7 @@ $(function(){
         });
       });
 
-    $('#edit_user_button').click((e) => {
+    $('body').on('click', '#edit_user_button', (e) => {
       console.log('CLICKED BUTTON TO GENERATE EDIT FORM')
       e.preventDefault();
 
