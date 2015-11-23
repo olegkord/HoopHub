@@ -17,6 +17,7 @@ let userSchema = new mongoose.Schema({
   updated_at: Date
 });
 
+// User.pre('save', function(next){
 
 // userSchema.pre('save', function(next){
 
