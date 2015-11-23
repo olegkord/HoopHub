@@ -29,18 +29,14 @@ $(function(){
       });
 
     $('#edit_user_button').click((e) => {
+      console.log('CLICKED BUTTON TO GENERATE EDIT FORM')
       e.preventDefault();
 
-      var edit_user_data = $('#edit-user-form').serialize();
-      console.log(edit_user_data);
-
       $.ajax({
-        type: "PUT",
-        url: "/users/" + $('.edit-user-form').data('id'),
-        data: edit_user_data
       }).done((data) => {
-         console.log(data);
-         showUser(data);
+         console.log('show edit form');
+         editUserForm(data);
+         registerEditClick();
       });
     });
 
@@ -84,6 +80,31 @@ $(function(){
     });
   }
 
+
+  function registerEditClick() {
+    $('#edit-user-form').on('submit', (e) => {
+      console.log('CLICKED BUTTON TO SUBMIT USER');
+      e.preventDefault();
+
+      let edit_user_data = $('#edit-user-form').serializeArray();
+      let edit_user_json = {};
+
+      $.map(edit_user_data, (n,i) => {
+        edit_user_json[n['name']] = n['value'];
+      })
+
+      console.log(edit_user_json);
+
+      $.ajax({
+        type: "PUT",
+        url: '/users/' + edit_user_json._id,
+        data: edit_user_json
+      }).done((edit_user_json) => {
+        $.get('/users/' + edit_user_json._id, editUserForm(edit_user_json), 'json');
+      });
+    });
+  }
+
   // =================================================================
   // Render templates ================================================
   // =================================================================
@@ -110,7 +131,7 @@ $(function(){
     $form.html('').append(compiledTemplate);
   }
 
-  let editUserForm = (data) => {
+  function editUserForm(data) {
     console.log('Displaying edit user form');
     resetForm();
 
@@ -135,6 +156,7 @@ $(function(){
   function resetForm() {
     console.log('Resetting forms in view');
     $('.forms-div').empty();
+    $('.user-profile-div').hide();
     $('#index_form').hide();
     $('#index_button').hide();
   }
