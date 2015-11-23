@@ -18,6 +18,11 @@ body {
   margin: 0 auto;
 }
 
+#edit-user-form {
+  width: 20%;
+  margin: 0 auto;
+}
+
 #new-user-headline {
   text-align: center;
   color: white;

@@ -142,6 +142,7 @@ $(function(){
     let $form = $('.forms-div');
     let compiledTemplate = renderTemplate_edit_user(data);
     $form.html('').append(compiledTemplate);
+
   }
 
   function showUserPlayerList(data) {
@@ -161,6 +162,7 @@ $(function(){
     console.log('Resetting forms in view');
     $('.forms-div').empty();
     $('.user-profile-div').hide();
+    $('.user-player-list-div').hide(); 
     $('#index_form').hide();
     $('#index_button').hide();
   }

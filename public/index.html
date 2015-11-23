@@ -130,7 +130,7 @@
 
       <!-- TEMPLATE WILL EDIT USER PROFILE-->
       <template id="edit-user-template" type="text/x-handlebars-template">
-        <form class="form-horizontal text center" id="edit-user-form" method="PUT" action="/users/"> <br>
+        <form class="form-horizontal text center" id="edit-user-form" method="put"> <br>
           <div class="form-group text-center">
             <label> <font color="white">  User Name </label>
             <input type="text" class="form-control" id="user-name-input" name="userName" value={{this.user_name}}>
@@ -160,7 +160,7 @@
         </form>
 
           <div class="text-center">
-            <a class="btn btn-default" id="submit_edit_button" role="button">Edit User </a>
+            <input class="btn btn-default" id="submit_edit_button" type="submit" value="edit user" role="button"></input>
          </div>
       </template>
 
