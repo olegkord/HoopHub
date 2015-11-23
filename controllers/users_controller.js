@@ -111,14 +111,18 @@ function findUserFirstPlayer(playerName) {
   debugger;
   Player.find({$and: [
     {FirstName: playerName.FirstName},
-    {LastName: playerName.LastName}]}, (error, player) => {
-    //locate the player in the API
-    debugger;
-    request(options(player.PlayerID), (data) => {
-//----> here we would have to compare the JSON's of our local DB and what the API gives
+    {LastName: playerName.LastName}]}, (error, playerData) => {
+      if (error) throw error;
+
+      else {
+        debugger;
+        console.log(playerData);
+      }
     })
-  })
-}
+  }
+
+
+
 
 function options(playerID) {
   console.log('defining API query options');
