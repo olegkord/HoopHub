@@ -117,7 +117,7 @@ $(function(){
     $form.html('').append(compiledTemplate);
   }
 
-  let showUserPlayerList(data) {
+  let showUserPlayerList = (data) => {
     console.log('Displaying player list');
     resetPlayerList();
 
