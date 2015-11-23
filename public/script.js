@@ -76,8 +76,9 @@ $(function(){
         type: "POST",
         url: "/users/new",
         data: new_user_json
-      }).done( (new_user_json) => {
+      }).done((new_user_json) => {
         $.get('/users/' + new_user_json.userID, showUser, 'json');
+        showUser(new_user_json);
       });
     });
   }
@@ -126,6 +127,7 @@ $(function(){
   let resetUserView = () => {
     $('.user-profile-div').empty();
     $('.user-player-list-div').empty();
+    $('.form-div').empty();
     $('#index_form').hide();
     $('#index_button').hide();
   }

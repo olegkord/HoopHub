@@ -65,10 +65,10 @@
       <template id="user-template" type="text/x-handlebars-template">
         <div class="user">
           <div id="user_image">
-            <img src={{this.img_url}}></img>
+            <img src={{this.image}}></img>
           </div>
-         <h3> {{this.user_name}} </h3> <br>
-         <h3> {{this.favorite_team}} </h3>
+         <h3> {{this.userName}} </h3> <br>
+         <h3> {{this.favoriteTeam}} </h3>
        </div>
        <div class="text-center">
          <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
@@ -159,7 +159,7 @@
       <!-- TEMPLATE WILL RENDER NEW USER FORM-->
       <template id="new-user-template" type="text/x-handlebars-template">
         <h2 id="new-user-headline">Create A New User </h2>
-        <form class="form-horizontal text center" id="new-user-form" method="POST"> <br>
+        <form class="form-horizontal text center" id="new-user-form" method="POST" action="/users/new"> <br>
           <div class="form-group text-center">
             <label> <font color="white"> User Name </label>
             <input type="text" class="form-control" id="user-name-input" name="userName" placeholder="King James">
