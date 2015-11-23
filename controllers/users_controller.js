@@ -5,6 +5,7 @@ let router = express.Router();
 let bodyParser = require('body-parser');
 let Player = require('../models/player');
 let User = require('../models/user')
+let request = require('request');
 
 //ROUTES HERE
 
@@ -14,6 +15,8 @@ router.route('/new')
     console.log('Creating a new user');
 
     let rawParams = req.body;
+
+    
 
     let newUserParams = {
       name: rawParams.name,
