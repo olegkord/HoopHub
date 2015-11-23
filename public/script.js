@@ -142,6 +142,31 @@ $(function(){
     $form.html('').append(compiledTemplate);
   }
 
+  // =================================================================
+  // RENDER PLAYER ===================================================
+  // =================================================================
+
+  let showPlayerStats(data) {
+    console.log('Displaying player stats');
+    resetPlayerStats();
+
+    let $stats = ('.player_stats');
+    let compiledTemplate = renderTemplate_show_player_stats(data);
+    $stats.html('').append(compiledTemplate);
+  }
+
+  let showPlayerUpdates(data) {
+    console.log('Displaying player updates');
+    resetPlayerUpdates();
+
+    let $updates = ('.player_update');
+    let compiledTemplate = renderTemplate_show_player_updates(data);
+    $stats.html('').append(compiledTemplate);
+  }
+
+  // =================================================================
+  // RENDER USER PLAYER LIST =========================================
+  // =================================================================
   let showUserPlayerList = (data) => {
     console.log('Displaying player list');
     resetPlayerList();
@@ -177,6 +202,14 @@ $(function(){
     $('.player-update-div').empty();
     $('.player-twtr-div').empty();
     $('.player-stats-div').empty();
+  }
+
+  let resetPlayerStats = () => {
+    $('.player-stats-template').empty();
+  }
+
+  let resetPlayerUpdates = () => {
+    $('.player-update-template').empty();
   }
 
   let resetUserPlayerList = () => {
