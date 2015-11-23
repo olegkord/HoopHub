@@ -17,9 +17,19 @@ router.route('/new')
     let rawParams = req.body;
 
 
+    let playerNameObject = processPlayerName(rawParams.favoritePlayer);
+
+
+
+    debugger;
+    // $.get('/player/'+rawParams.favoritePlayer, 'json').done( (player) => {
+    //   console.log(player);
+    // })
+
+    findUserFirstPlayer(playerNameObject);
 
     let newUserParams = {
-      name: rawParams.name,
+      userName: rawParams.name,
       email: rawParams.email,
       password: rawParams.password,
       favoriteTeam: rawParams.favoriteTeam,
@@ -33,9 +43,7 @@ router.route('/new')
       debugger;
       if (error) res.status(400).send({message: error.errmsg});
 
-      else res.status(200).send({
-        userID: newUser._id
-      });
+      else res.status(200).json(newUser);
     })
   })
 
@@ -83,10 +91,54 @@ router.route('/:id')
       else return res.status(200).send({message: "User delete successful"})
     });
   })
+////////////////////////
+/////HELPER FUNCTIONS///
+////////////////////////
+function processPlayerName(name) {
+  if (name.split(' ').length === 2) {
+    return {FirstName: name.split(' ')[0], LastName: name.split(' ')[1]}
+  }
+  else {
+    return 'INCORRECT NAME'
+  }
+}
+
+
+function findUserFirstPlayer(playerName) {
+  console.log('Locating ' + playerName)
+  //find the player from our current DB
+  debugger;
+  Player.find({$and: [
+    {FirstName: playerName.FirstName},
+    {LastName: playerName.LastName}]}, (error, playerData) => {
+      if (error) throw error;
+
+      else {
+        debugger;
+        console.log(playerData);
+      }
+    })
+  }
+
+
+
 
 router.route('/login')
   // route for users to login
   
+function options(playerID) {
+  console.log('defining API query options');
+  return {
+    url: 'https://api.fantasydata.net/nba/v2/JSON/Player/'+PlayerID,
+    Host: 'api.fantasydat.net',
+//-------->OLEG'S Key:
+    "Ocp-Apim-Subscription-Key": 'd29863acdf714a50a97247181f9563e9'
+//-------->STEVE'S Key:
+//          Ocp-Apim-Subscription-Key: '350faf5499d24addaa79a4ab6b949145';
+  }
+}
+
+
 
 //END ROUTES
 

@@ -79,8 +79,7 @@ $(function(){
         url: "/users/new",
         data: new_user_json
       }).done((new_user_json) => {
-        $.get('/users/' + new_user_json.userID, showUser, 'json');
-        showUser(new_user_json);
+        $.get('/users/' + new_user_json._id, showUser(new_user_json), 'json');
       });
     });
   }
@@ -95,7 +94,8 @@ $(function(){
     resetUserView();
 
     let $profile = $('.user-profile-div');
-    let compiledTemplate = renderTemplate_show_user({user: data[0]});
+
+    let compiledTemplate = renderTemplate_show_user({user: data});
     $profile.html('').append(compiledTemplate);
   }
 
@@ -130,16 +130,18 @@ $(function(){
   // RESETS ==========================================================
   // =================================================================
 
-  let resetForm = () => {
+  function resetForm() {
+    console.log('Resetting forms in view');
     $('.forms-div').empty();
     $('#index_form').hide();
     $('#index_button').hide();
   }
 
-  let resetUserView = () => {
+  function resetUserView() {
+    console.log('In ResetUserView!!');
     $('.user-profile-div').empty();
     $('.user-player-list-div').empty();
-    $('.form-div').empty();
+    $('.forms-div').empty();
     $('#index_form').hide();
     $('#index_button').hide();
   }

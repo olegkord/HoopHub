@@ -10325,6 +10325,11 @@ let players = [
 players.forEach( (player) => {
   let newPlayer = new Player(player);
   newPlayer.save( (error) => {
-    if (error) { console.log(error) }
+    if (error) {
+      console.log(error)
+    }
+    else {
+      console.log('player added!')
+    }
   })
 })

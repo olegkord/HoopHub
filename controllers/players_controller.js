@@ -5,29 +5,59 @@ let router = express.Router();
 let bodyParser = require('body-parser');
 let User = require('../models/user');
 let request = require('request');
-
+let Player = require('../models/player');
 
 
 //ROUTES HERE
 router.route('/:name')
 //route to locate a player by name
   .get( (req,res) => {
-    console.log('Searching for a player');
 
+    debugger;
     let playerName = req.params.name;
 
-    Player.find({name: playerName}, (error, player) => {
-      if (error) throw error;
+    let playerNameObject = processPlayerName(playerName);
 
-      else { request(options(player.PlayerID), (data) =>{
-          //COMPARE TWO JSON OBJECTS IF THERE IS A DIFFERENCE, REPLACE.
-        })
-      }
-    });
+    Player.find({$and: [
+      {FirstName: playerNameObject.FirstName},
+      {LastName: playerNameObject.LastName}]}, (error, playerData) => {
+        if (error) throw error;
+
+        else {
+          res.json(playerData);
+        }
+    })
   })
+
 //END ROUTES
 
+function processPlayerName(name) {
+  if (name.split(' ').length === 2) {
+    return {FirstName: name.split(' ')[0], LastName: name.split(' ')[1]}
+  }
+  else {
+    return 'INCORRECT NAME'
+  }
+}
+
+function findPlayerByName(playerName) {
+  console.log('Locating ' + playerName)
+  //find the player from our current DB
+  debugger;
+  Player.find({$and: [
+    {FirstName: playerName.FirstName},
+    {LastName: playerName.LastName}]}, (error, playerData) => {
+      if (error) throw error;
+
+      else {
+        debugger;
+        console.log(playerData);
+      }
+    })
+  }
+
 function options(playerID) {
+  console.log('defining API query options');
   return {
     url: 'https://api.fantasydata.net/nba/v2/JSON/Player/'+PlayerID,
     Host: 'api.fantasydat.net',
