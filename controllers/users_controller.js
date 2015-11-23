@@ -69,7 +69,7 @@ router.route('/:id')
     });
   })
 
-  .put( (req, res) => {
+  .put((req, res) => {
     //route to edit user information
     console.log('Editing User information');
     let userParams = req.body;
