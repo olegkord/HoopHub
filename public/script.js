@@ -146,12 +146,34 @@ $(function(){
   }
 
   function showUserPlayerList(data) {
+  // =================================================================
+  // RENDER PLAYER ===================================================
+  // =================================================================
+  let showUserPlayerList = (data) => {
     console.log('Displaying player list');
     resetPlayerList();
 
     let $list = ('.user_player_list');
     let compiledTemplate = renderTemplate_show_user_player_list({user: data});
     $list.html('').append(compiledTemplate);
+  }
+
+  let showPlayerStats(data) {
+    console.log('Displaying player stats');
+    resetPlayerStats();
+
+    let $stats = ('.player_stats');
+    let compiledTemplate = renderTemplate_show_player_stats(data);
+    $stats.html('').append(compiledTemplate);
+  }
+
+  let showPlayerUpdates(data) {
+    console.log('Displaying player updates');
+    resetPlayerUpdates();
+
+    let $updates = ('.player_update');
+    let compiledTemplate = renderTemplate_show_player_updates(data);
+    $stats.html('').append(compiledTemplate);
   }
 
   // =================================================================
@@ -162,7 +184,7 @@ $(function(){
     console.log('Resetting forms in view');
     $('.forms-div').empty();
     $('.user-profile-div').hide();
-    $('.user-player-list-div').hide(); 
+    $('.user-player-list-div').hide();
     $('#index_form').hide();
     $('#index_button').hide();
   }
@@ -181,6 +203,14 @@ $(function(){
     $('.player-update-div').empty();
     $('.player-twtr-div').empty();
     $('.player-stats-div').empty();
+  }
+
+  let resetPlayerStats = () => {
+    $('.player-stats-template').empty();
+  }
+
+  let resetPlayerUpdates = () => {
+    $('.player-update-template').empty();
   }
 
   let resetUserPlayerList = () => {
