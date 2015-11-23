@@ -129,7 +129,7 @@
 
       <!-- TEMPLATE WILL EDIT USER PROFILE-->
       <template id="edit-user-template" type="text/x-handlebars-template">
-        <form class="form-horizontal text center" id="edit-user-form" method="put"> <br>
+        <form class="form-horizontal text center" id="edit-user-form" data-id={{this._id}} method="PUT" action="/users/"+{{this._id}}> <br>
           <div class="form-group text-center">
             <label> <font color="white">  User Name </label>
             <input type="text" class="form-control" id="user-name-input" name="userName" value={{this.user_name}}>

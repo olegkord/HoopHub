@@ -40,7 +40,6 @@ router.route('/new')
          let newUser = new User(newUserParams)
 
          newUser.save( (error) => {
-           debugger;
            if (error) res.status(400).send({message: error.errmsg});
 
            else res.status(200).json(newUser);
@@ -73,10 +72,11 @@ router.route('/:id')
     //route to edit user information
     console.log('Editing User information');
     let userParams = req.body;
-
+    debugger;
     User.findByIdAndUpdate(userParams.id,
       {$set: userParams},
       (error, user) => {
+        debugger;
         if(error) res.status(400).send({message: error.errmsg});
 
         else return res.status(202).send({message: "User update succesful"});
