@@ -33,7 +33,7 @@ router.route('/new')
            email: rawParams.email,
            password: rawParams.password,
            favoriteTeam: rawParams.favoriteTeam,
-           favoritePlayers: [player], //player has been located by name and added to params
+           favoritePlayers: player, //player has been located by name and added to params
            image: rawParams.image
          };
 
@@ -50,10 +50,6 @@ router.route('/new')
 //END ABSTRACT ME
 
 })
-
-
-
-
 
 router.route('/:id')
   //route to view user by ID

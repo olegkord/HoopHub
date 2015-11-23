@@ -83,6 +83,7 @@ $(function(){
 
 
   function registerEditClick(user_data) {
+    console.log('registering edit button');
     $('#edit-user-form').on('submit', (e) => {
       console.log('CLICKED BUTTON TO SUBMIT USER');
       e.preventDefault();
@@ -120,6 +121,7 @@ $(function(){
     let compiledTemplate = renderTemplate_show_user({user: data});
     $profile.html('').append(compiledTemplate);
 
+
      $('.user-profile-div').show();
      $('.user-player-list-div').show();
   }
@@ -142,7 +144,7 @@ $(function(){
     $form.html('').append(compiledTemplate);
   }
 
-  let showUserPlayerList = (data) => {
+  function showUserPlayerList(data) {
     console.log('Displaying player list');
     resetPlayerList();
 
