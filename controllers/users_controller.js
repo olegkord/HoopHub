@@ -15,10 +15,8 @@ router.route('/new')
     console.log('Creating a new user');
 
     let rawParams = req.body;
-
-
     let playerNameObject = processPlayerName(rawParams.favoritePlayer);
-
+////CONSTRUCTION ZONE
 
 
     debugger;
@@ -26,6 +24,8 @@ router.route('/new')
     //   console.log(player);
     // })
 
+    
+/////END CONSTRUCTION ZONE
     findUserFirstPlayer(playerNameObject);
 
     let newUserParams = {
@@ -125,7 +125,7 @@ function findUserFirstPlayer(playerName) {
 
 router.route('/login')
   // route for users to login
-  
+
 function options(playerID) {
   console.log('defining API query options');
   return {
