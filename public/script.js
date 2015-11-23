@@ -17,15 +17,20 @@ $(function(){
   // PLAYER Click Events =============================================
   // =================================================================
 
-    $('body').on('click', '#player_search_submit', (e) => {
+    $('#player_search_submit').click((e) => {
       console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
         e.preventDefault();
 
+        let player_search = $('#player_search').val();
+          console.log(player_search);
+        player_search.replace(/ /g,'%20')
+          console.log(player_search);
       $.ajax({
+        type: "GET",
+        url: "/player/" + player_search
       }).done((data) => {
         console.log('show player profile');
         showPlayerProfile(data);
-        playerSubmitClick()    
       });
     });
 
@@ -45,8 +50,6 @@ $(function(){
         });
       });
 
-
-
     $('#delete_user_button').click((e) => {
       e.preventDefault();
 
@@ -63,29 +66,29 @@ $(function(){
   // REGISTER CLICKS =================================================
   // =================================================================
 
-  function playerSubmitClick() {
-    $('#index-form').on('submit', (e) => {
-      console.log('CLICKED BUTTON TO SHOW PLAYERS');
-      e.preventDefault();
-
-      let new_player_data = $('#new-player-form').serializeArray();
-      let new_player_json = {};
-
-      $.map(new_player_data, (n,i) => {
-        new_player_json[n['name']] = n['value'];
-      })
-
-      console.log(new_player_json);
-
-      $.ajax({
-        type: "GET",
-        url: "/player/",
-        data: new_player_json
-      }).done((new_player_json) => {
-        $.get('/player/' + new_player_json._id, showPlayerProfile(new_player_json), 'json');
-      });
-    });
-  }
+  // function playerSubmitClick(data) {
+  //   $('#player_search_submit').on('click', (e) => {
+  //     console.log('CLICKED BUTTON TO SHOW PLAYERS');
+  //     e.preventDefault();
+  //
+  //     let new_player_data = $('index_form').serializeArray();
+  //     let new_player_json = {};
+  //
+  //     $.map(new_player_data, (n,i) => {
+  //       new_player_json[n['name']] = n['value'];
+  //     })
+  //
+  //     console.log(new_player_json);
+  //
+  //     $.ajax({
+  //       type: "GET",
+  //       url: "/player",
+  //       data: new_player_json
+  //     }).done((new_player_json) => {
+  //       $.get('/player/' + new_player_json._id, showPlayerProfile(new_player_json), 'json');
+  //     });
+  //   });
+  // }
 
 
   function registerSubmitClick() {
@@ -206,36 +209,36 @@ $(function(){
 
   }
 
-  function showUserPlayerList(data) {
+  // function showUserPlayerList(data)
   // =================================================================
   // RENDER PLAYER ===================================================
   // =================================================================
-  let showUserPlayerList = (data) => {
-    console.log('Displaying player list');
-    resetPlayerList();
-
-    let $list = ('.user_player_list');
-    let compiledTemplate = renderTemplate_show_user_player_list({user: data});
-    $list.html('').append(compiledTemplate);
-  }
-
-  let showPlayerStats(data) {
-    console.log('Displaying player stats');
-    resetPlayerStats();
-
-    let $stats = ('.player_stats');
-    let compiledTemplate = renderTemplate_show_player_stats(data);
-    $stats.html('').append(compiledTemplate);
-  }
-
-  let showPlayerUpdates(data) {
-    console.log('Displaying player updates');
-    resetPlayerUpdates();
-
-    let $updates = ('.player_update');
-    let compiledTemplate = renderTemplate_show_player_updates(data);
-    $stats.html('').append(compiledTemplate);
-  }
+  // let showUserPlayerList = (data) => {
+  //   console.log('Displaying player list');
+  //   resetPlayerList();
+  //
+  //   let $list = ('.user_player_list');
+  //   let compiledTemplate = renderTemplate_show_user_player_list({user: data});
+  //   $list.html('').append(compiledTemplate);
+  // }
+  //
+  // let showPlayerStats(data) {
+  //   console.log('Displaying player stats');
+  //   resetPlayerStats();
+  //
+  //   let $stats = ('.player_stats');
+  //   let compiledTemplate = renderTemplate_show_player_stats(data);
+  //   $stats.html('').append(compiledTemplate);
+  // }
+  //
+  // let showPlayerUpdates(data) {
+  //   console.log('Displaying player updates');
+  //   resetPlayerUpdates();
+  //
+  //   let $updates = ('.player_update');
+  //   let compiledTemplate = renderTemplate_show_player_updates(data);
+  //   $stats.html('').append(compiledTemplate);
+  // }
 
   // =================================================================
   // RESETS ==========================================================
