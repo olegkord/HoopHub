@@ -29,17 +29,7 @@ $(function(){
         });
       });
 
-    $('body').on('click', '#edit_user_button', (e) => {
-      console.log('CLICKED BUTTON TO GENERATE EDIT FORM')
-      e.preventDefault();
 
-      $.ajax({
-      }).done((data) => {
-         console.log('show edit form');
-         editUserForm(data);
-         registerEditClick(data);
-      });
-    });
 
     $('#delete_user_button').click((e) => {
       e.preventDefault();
@@ -69,7 +59,6 @@ $(function(){
         new_user_json[n['name']] = n['value'];
       })
 
-      console.log(new_user_json);
 
       $.ajax({
         type: "POST",
@@ -81,11 +70,25 @@ $(function(){
     });
   }
 
+  function registerShowEditFormClick() {
+    console.log('registering listener to display edit form');
+    $('#edit_user_button').on('click', (e) => {
+      console.log('CLICKED BUTTON TO GENERATE EDIT FORM')
+      e.preventDefault();
+
+      $.ajax({
+      }).done((data) => {
+         console.log('show edit form');
+         editUserForm(data);
+         registerEditClick(data);
+      });
+    });
+  }
 
   function registerEditClick(user_data) {
     console.log('registering edit button');
     $('#edit-user-form').on('submit', (e) => {
-      console.log('CLICKED BUTTON TO SUBMIT USER');
+      console.log('CLICKED BUTTON TO EDIT USER');
       e.preventDefault();
 
       let edit_user_data = $('#edit-user-form').serializeArray();
@@ -102,7 +105,7 @@ $(function(){
         url: '/users/' + user_data._id,
         data: edit_user_json
       }).done((new_user_json) => {
-        $.get('/users/' + new_user_json._id, editUserForm(edit_user_json), 'json');
+        $.get('/users/' + new_user_json._id, showUser(new_user_json), 'json');
       });
     });
   }
@@ -113,7 +116,6 @@ $(function(){
 
   function showUser(data) {
     console.log('Showing User profile page');
-    console.log(data);
     resetUserView();
 
     let $profile = $('.user-profile-div');
@@ -121,6 +123,7 @@ $(function(){
     let compiledTemplate = renderTemplate_show_user({user: data});
     $profile.html('').append(compiledTemplate);
 
+    registerShowEditFormClick();
 
      $('.user-profile-div').show();
      $('.user-player-list-div').show();
@@ -140,7 +143,7 @@ $(function(){
     resetForm();
 
     let $form = $('.forms-div');
-    let compiledTemplate = renderTemplate_edit_user(data);
+    let compiledTemplate = renderTemplate_edit_user({user: data});
     $form.html('').append(compiledTemplate);
 
   }
@@ -162,7 +165,7 @@ $(function(){
     console.log('Resetting forms in view');
     $('.forms-div').empty();
     $('.user-profile-div').hide();
-    $('.user-player-list-div').hide(); 
+    $('.user-player-list-div').hide();
     $('#index_form').hide();
     $('#index_button').hide();
   }
