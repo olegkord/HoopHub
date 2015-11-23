@@ -5,16 +5,25 @@ body {
   background-repeat: no-repeat;
 }
 
-
 #new_user_button {
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 .form-inline {
-  margin-top: 200px;
+  margin-top: 250px;
 }
 
 #new-user-form {
-  width: 30%;
+  width: 20%;
   margin: 0 auto;
+}
+
+#new-user-headline {
+  text-align: center;
+  color: white;
+}
+
+.form-control {
+  color: white;
+
 }

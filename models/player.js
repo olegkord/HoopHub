@@ -3,7 +3,7 @@
 let mongoose = require('mongoose');
 
 
-let Player = new mongoose.Schema({
+let playerSchema = new mongoose.Schema({
     PlayerID: Number,
     SportsDataID: Number,
     Status: String,
@@ -27,4 +27,6 @@ let Player = new mongoose.Schema({
     Experience: Number
 })
 
-module.exports = mongoose.model('Player',Player);
+let Player = mongoose.model('Player', playerSchema )
+
+module.exports = Player;

@@ -15,7 +15,7 @@
       <!-- NAVIGATION -->
       <div class="navbar">
         <ul class= "nav navbar-nav">
-          <li role="presentation" class="active" id="home"><a href="#"> Home </a></li>
+          <li role="presentation" class="active" id="home"><a href="/"> Home </a></li>
           <li  id="myPage"><a href="#">  My HH </a></li>
     <!-- use conditional to show either login or logout here need a function for this first-->
           <li  id="login"><a href="#">  Login </a></li>
@@ -23,9 +23,13 @@
        </ul>
      </div>
 
+
      <!-- // =================================================================
      // DIVS  ===========================================================
      // ================================================================= -->
+
+     <!-- RENDER DIVS FOR FORMS-->
+     <div class="forms-div"> </div>
 
      <!-- RENDER DIVS FOR USERS-->
      <div class="user-profile-div"></div>
@@ -43,7 +47,8 @@
      // ================================================================= -->
 
       <!-- RENDER HOMEPAGE -->
-     <form class="form-inline text-center">
+    <!-- <template id="index" type="text/x-handlebars-template"> -->
+     <form class="form-inline text-center" id="index_form">
        <div class="form-group">
          <input type="text" class="form-control" id="player_search" placeholder="e.g. Lebron James">
        </div>
@@ -51,23 +56,49 @@
         <button type="submit" class="btn btn-default"> Search Player</button>
     </form>
 
+<<<<<<< HEAD
      <div class="text-center">
+=======
+     <div class="text-center" id="index_button">
+>>>>>>> develop
       <a class="btn btn-default" id="new_user_button" role="button">Create New User </a>
     </div>
-
+   <!-- </template>  -->
 
       <!-- TEMPLATE WILL RENDER USER PROFILE-->
       <template id="user-template" type="text/x-handlebars-template">
         <div class="user">
           <div id="user_image">
-            <img src={{this.img_url}}></img>
+            <img src={{user.image}}></img>
           </div>
-         <h3> {{this.user_name}} </h3> <br>
-         <h3> {{this.favorite_team}} </h3>
+         <h3> {{user.userName}} </h3> <br>
+         <h3> {{user.favoriteTeam}} </h3>
        </div>
+       <div class="text-center">
+         <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
+      </div>
+      <div class="text-center">
+        <a class="btn btn-default" id="delete_user_button" role="button">Delete User </a>
+     </div>
      </template>
 
       <!-- TEMPLATE WILL RENDER PLAYER PROFILE-->
+
+      <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
+      <template id="user-player-list-template" type="text/x-handlebars-template">
+        <div class="user_player_list">
+          <div id="player_list">
+            <ul>
+              {{each}}
+              <li> {{this.favoritePlayers}} </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+        <div class="text-center">
+          <a class="btn btn-default" id="add_player_button" role="button">Add Player </a>
+        </div>
+      </template>
 <!-- DON'T FORGET TO LOOK @ THE FIELD NAMES IN SCHEMA ONCE COMPLETED -->
      <template id="player-profile-template" type="text/x-handlebars-template">
        <div class="player_profile">
@@ -100,11 +131,11 @@
     </template>
 
 
-      <!-- TEMPLATE WILL RENDER CREATE NEW USER PROFILE-->
-      <template id="new-user-template" type="text/x-handlebars-template">
-        <form class="form-horizontal text center" id="new-user-form" method="PUT" action="/users"> <br>
+      <!-- TEMPLATE WILL EDIT USER PROFILE-->
+      <template id="edit-user-template" type="text/x-handlebars-template">
+        <form class="form-horizontal text center" id="edit-user-form" method="PUT" action="/users"> <br>
           <div class="form-group text-center">
-            <label> User Name </label>
+            <label> <font color="white">  User Name </label>
             <input type="text" class="form-control" id="user-name-input" value={{this.user_name}}>
           </div>
 
@@ -123,6 +154,7 @@
             <input type="text" class="form-control" id="favorite-team-input" value={{this.favorite_team}}>
           </div>
 
+
           <!-- going to need to figure this out with using multiple models with handlebar  -->
           <!-- <div class="form-group text-center">
             <label> Favorite Player </label>
@@ -131,41 +163,47 @@
         </form>
 
           <div class="text-center">
-            <a class="btn btn-default" id="create_user_button" href="#" role="button">Create User </a>
+            <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
          </div>
       </template>
 
       <!-- TEMPLATE WILL RENDER NEW USER FORM-->
-      <template id="edit-user-template" type="text/x-handlebars-template">
-        <form class="form-horizontal text center" id="edit-user-form" method="POST" action="/users"> <br>
+      <template id="new-user-template" type="text/x-handlebars-template">
+        <h2 id="new-user-headline">Create A New User </h2>
+        <form class="form-horizontal text center" id="new-user-form" method="POST" action="/users/new"> <br>
           <div class="form-group text-center">
-            <label> User Name </label>
-            <input type="text" class="form-control" id="user-name-input" placeholder="King James">
+            <label> <font color="white"> User Name </label>
+            <input type="text" class="form-control" id="user-name-input" name="userName" placeholder="King James">
           </div>
 
           <div class="form-group text-center">
             <label> Email </label>
-            <input type="text" class="form-control" id="email-input" placeholder="KingJames@example.com">
+            <input type="text" class="form-control" id="email-input" name="email" placeholder="KingJames@example.com">
+          </div>
+
+          <div class="form-group text-center">
+            <label> Password </label>
+            <input type="password" class="form-control" id="password-input" name="password" placeholder="password atleast five characters">
           </div>
 
           <div class="form-group text-center">
             <label> Profile Photo </label>
-            <input type="text" class="form-control" id="image-input">
+            <input type="text" class="form-control" id="image-input" name="image">
           </div>
 
           <div class="form-group text-center">
             <label> Favorite Team </label>
-            <input type="text" class="form-control" id="favorite-team-input" placeholder="e.g. Cleveland Cavaliers ">
+            <input type="text" class="form-control" id="favorite-team-input" name="favoriteTeam" placeholder="e.g. Cleveland Cavaliers ">
           </div>
 
           <div class="form-group text-center">
             <label> Favorite Player </label>
-            <input type="text" class="form-control" id="favorite-player-input" placeholder="e.g. Lebron James">
+            <input type="text" class="form-control" id="favorite-player-input" name="favoritePlayer" placeholder="e.g. Lebron James">
           </div>
         </form>
 
           <div class="text-center">
-            <a class="btn btn-default" id="create_user_button" href="#" role="button">Create New User </a>
+            <input class="btn btn-default" id="create_user_button" type="submit" value="Create New User"  role="button"></input>
          </div>
       </template>
 
