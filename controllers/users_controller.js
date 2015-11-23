@@ -19,17 +19,13 @@ router.route('/new')
 ////CONSTRUCTION ZONE
 
 
-    debugger;
-    // $.get('/player/'+rawParams.favoritePlayer, 'json').done( (player) => {
-    //   console.log(player);
-    // })
 
-    
+
 /////END CONSTRUCTION ZONE
     findUserFirstPlayer(playerNameObject);
 
     let newUserParams = {
-      userName: rawParams.name,
+      userName: rawParams.userName,
       email: rawParams.email,
       password: rawParams.password,
       favoriteTeam: rawParams.favoriteTeam,
@@ -38,7 +34,7 @@ router.route('/new')
     };
 
     let newUser = new User(newUserParams)
-
+    debugger;
     newUser.save( (error) => {
       debugger;
       if (error) res.status(400).send({message: error.errmsg});
