@@ -10,6 +10,8 @@ $(function(){
   let renderTemplate_show_player_stats = Handlebars.compile($('template#player-stats-template').html());
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
 
+  let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
+
   // =================================================================
   // USER Click Events ===============================================
   // =================================================================
@@ -115,6 +117,15 @@ $(function(){
     $form.html('').append(compiledTemplate);
   }
 
+  let showUserPlayerList(data) {
+    console.log('Displaying player list');
+    resetPlayerList();
+
+    let $list = ('.user_player_list');
+    let compiledTemplate = renderTemplate_show_user_player_list(data);
+    $list.html('').append(compiledTemplate);
+  }
+
   // =================================================================
   // RESETS ==========================================================
   // =================================================================
@@ -138,6 +149,10 @@ $(function(){
     $('.player-update-div').empty();
     $('.player-twtr-div').empty();
     $('.player-stats-div').empty();
+  }
+
+  let resetUserPlayerList = () => {
+    $('.user_player_list').empty();
   }
 
 });
