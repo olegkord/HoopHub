@@ -58,8 +58,6 @@ $(function(){
       $.map(new_user_data, (n,i) => {
         new_user_json[n['name']] = n['value'];
       })
-
-
       $.ajax({
         type: "POST",
         url: "/users/new",
@@ -70,18 +68,18 @@ $(function(){
     });
   }
 
-  function registerShowEditFormClick() {
+  function registerShowEditFormClick(data) {
     console.log('registering listener to display edit form');
     $('#edit_user_button').on('click', (e) => {
       console.log('CLICKED BUTTON TO GENERATE EDIT FORM')
       e.preventDefault();
 
-      $.ajax({
-      }).done((data) => {
-         console.log('show edit form');
-         editUserForm(data);
-         registerEditClick(data);
-      });
+     console.log(data);
+
+     console.log('show edit form');
+     editUserForm(data);
+     registerEditClick(data);
+
     });
   }
 
@@ -123,7 +121,7 @@ $(function(){
     let compiledTemplate = renderTemplate_show_user({user: data});
     $profile.html('').append(compiledTemplate);
 
-    registerShowEditFormClick();
+    registerShowEditFormClick(data);
 
      $('.user-profile-div').show();
      $('.user-player-list-div').show();
@@ -143,12 +141,12 @@ $(function(){
     resetForm();
 
     let $form = $('.forms-div');
-    let compiledTemplate = renderTemplate_edit_user({user: data});
+    let compiledTemplate = renderTemplate_edit_user(data);
     $form.html('').append(compiledTemplate);
 
   }
 
-  function showUserPlayerList(data) {
+  //function showUserPlayerList(data) {
   // =================================================================
   // RENDER PLAYER ===================================================
   // =================================================================
@@ -161,7 +159,7 @@ $(function(){
     $list.html('').append(compiledTemplate);
   }
 
-  let showPlayerStats(data) {
+  function showPlayerStats(data) {
     console.log('Displaying player stats');
     resetPlayerStats();
 
@@ -170,7 +168,7 @@ $(function(){
     $stats.html('').append(compiledTemplate);
   }
 
-  let showPlayerUpdates(data) {
+  function showPlayerUpdates(data) {
     console.log('Displaying player updates');
     resetPlayerUpdates();
 
