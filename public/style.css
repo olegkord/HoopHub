@@ -36,6 +36,7 @@ body {
  margin-left: 50px;
  background-color: rgba(1,128,128,0.7);
  border-radius: 15px;
+ float: left;
 }
 
 #user_image {
@@ -53,4 +54,20 @@ body {
 
 #edit_user_button {
   margin: 20px;
+}
+
+/*USER PLAYER LIST*/
+
+.user-player-list-div {
+  width: 450px;
+  height: 500px;
+  margin-left: 500px;
+  background-color: rgba(255, 0, 0, 0.7);
+  border-radius: 15px
+}
+
+#player_list li {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 24px;
 }
