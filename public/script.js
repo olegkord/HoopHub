@@ -18,6 +18,7 @@ $(function(){
       console.log('CLICKED BUTTON TO GENERATE FORM');
           e.preventDefault();
         $.ajax({
+
         }).done((data)  => {
           console.log('show user form');
           showUserForm(data);
@@ -53,13 +54,34 @@ $(function(){
         // redirect home? ;
       });
     });
+  // =================================================================
+  // REGISTER CLICKS =================================================
+  // =================================================================
 
+  function registerSubmitClick() {
+      $('#new-user-form').on('submit', (e) => {
+        console.log('CLICKED BUTTON TO SUBMIT USER');
+        e.preventDefault();
+
+        var new_user_data = JSON.stringify($('#new-user-form').serializeArray());
+        console.log(new_user_data);
+
+        $.ajax({
+          type: "POST",
+          url: "/users/new",
+          data: new_user_data
+        }).done( (new_user_data) => {
+          $.get('/users/' + new_user_data._id, showUser, 'json');
+        });
+      });
+    }
 
   // =================================================================
   // Render templates ================================================
   // =================================================================
 
-  let showUser = (data) => {
+  function showUser(data) {
+    console.log('Showing User profile page');
     resetUserView();
 
     let $profile = $('.user-profile-div');
@@ -67,7 +89,8 @@ $(function(){
     $profile.html('').append(compiledTemplate);
   }
 
-  let showUserForm = (data) => {
+  function showUserForm(data) {
+    console.log('Displaying user signup form');
     resetForm();
 
     let $form = $('.forms-div');
@@ -76,6 +99,7 @@ $(function(){
   }
 
   let editUserForm = (data) => {
+    console.log('Displaying edit user form');
     resetForm();
 
     let $form = $('.forms-div');
@@ -83,11 +107,9 @@ $(function(){
     $form.html('').append(compiledTemplate);
   }
 
-
   // =================================================================
   // RESETS ==========================================================
   // =================================================================
-
 
   let resetForm = () => {
     $('.forms-div').empty();
@@ -110,23 +132,3 @@ $(function(){
   }
 
 });
-
-// =================================================================
-// REGISTER CLICKS =================================================
-// =================================================================
-
-let registerSubmitClick = function(){
-    $('#new-user-form').on('submit', (e) => {
-      console.log('CLICKED BUTTON TO SUBMIT USER');
-      e.preventDefault();
-
-      var new_user_data = JSON.stringify($('#new-user-form').serializeArray());
-      console.log(new_user_data);
-
-      $.ajax({
-        type: "POST",
-        url: "/users/new",
-        data: new_user_data
-      });
-    });
-  }
