@@ -13,10 +13,21 @@ router.route('/new')
   .post( (req,res) => {
     console.log('Creating a new user');
 
-    let newUserParams = req.body;
+    let rawParams = req.body;
+
+    let newUserParams = {
+      name: rawParams.name,
+      email: rawParams.email,
+      password: rawParams.password,
+      favoriteTeam: rawParams.favoriteTeam,
+  //    favoritePlayers: [rawParams.favoritePlayer],
+      image: rawParams.image
+    };
 
     let newUser = new User(newUserParams)
+
     newUser.save( (error) => {
+      debugger;
       if (error) res.status(400).send({message: error.errmsg});
 
       else res.status(200).send({
@@ -33,12 +44,11 @@ router.route('/:id')
 
     //Body parser?
     // let userID = params.body.id;
-    debugger;
 
     let userID = req.params.id;
     console.log('ID viewing: ' + userID);
 
-    User.find( {id: userID}, (error, user) => {
+    User.find( {_id: userID}, (error, user) => {
       if (error) throw error;
 
       res.json(user);

@@ -59,22 +59,28 @@ $(function(){
   // =================================================================
 
   function registerSubmitClick() {
-      $('#new-user-form').on('submit', (e) => {
-        console.log('CLICKED BUTTON TO SUBMIT USER');
-        e.preventDefault();
+    $('#new-user-form').on('submit', (e) => {
+      console.log('CLICKED BUTTON TO SUBMIT USER');
+      e.preventDefault();
 
-        var new_user_data = JSON.stringify($('#new-user-form').serializeArray());
-        console.log(new_user_data);
+      let new_user_data = $('#new-user-form').serializeArray();
+      let new_user_json = {};
 
-        $.ajax({
-          type: "POST",
-          url: "/users/new",
-          data: new_user_data
-        }).done( (new_user_data) => {
-          $.get('/users/' + new_user_data.userID, showUser, 'json');
-        });
+      $.map(new_user_data, (n,i) => {
+        new_user_json[n['name']] = n['value'];
+      })
+
+      console.log(new_user_json);
+
+      $.ajax({
+        type: "POST",
+        url: "/users/new",
+        data: new_user_json
+      }).done( (new_user_json) => {
+        $.get('/users/' + new_user_json.userID, showUser, 'json');
       });
-    }
+    });
+  }
 
   // =================================================================
   // Render templates ================================================
