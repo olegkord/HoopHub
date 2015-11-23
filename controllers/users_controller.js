@@ -16,7 +16,16 @@ router.route('/new')
 
     let rawParams = req.body;
 
-    
+    let playerNameObject = processPlayerName(rawParams.favoritePlayer);
+
+
+
+    debugger;
+    // $.get('/player/'+rawParams.favoritePlayer, 'json').done( (player) => {
+    //   console.log(player);
+    // })
+
+    findUserFirstPlayer(playerNameObject);
 
     let newUserParams = {
       name: rawParams.name,
@@ -83,7 +92,45 @@ router.route('/:id')
       else return res.status(200).send({message: "User delete successful"})
     });
   })
+////////////////////////
+/////HELPER FUNCTIONS///
+////////////////////////
+function processPlayerName(name) {
+  if (name.split(' ').length === 2) {
+    return {FirstName: name.split(' ')[0], LastName: name.split(' ')[1]}
+  }
+  else {
+    return 'INCORRECT NAME'
+  }
+}
 
+
+function findUserFirstPlayer(playerName) {
+  console.log('Locating ' + playerName)
+  //find the player from our current DB
+  debugger;
+  Player.find({$and: [
+    {FirstName: playerName.FirstName},
+    {LastName: playerName.LastName}]}, (error, player) => {
+    //locate the player in the API
+    debugger;
+    request(options(player.PlayerID), (data) => {
+//----> here we would have to compare the JSON's of our local DB and what the API gives
+    })
+  })
+}
+
+function options(playerID) {
+  console.log('defining API query options');
+  return {
+    url: 'https://api.fantasydata.net/nba/v2/JSON/Player/'+PlayerID,
+    Host: 'api.fantasydat.net',
+//-------->OLEG'S Key:
+    "Ocp-Apim-Subscription-Key": 'd29863acdf714a50a97247181f9563e9'
+//-------->STEVE'S Key:
+//          Ocp-Apim-Subscription-Key: '350faf5499d24addaa79a4ab6b949145';
+  }
+}
 
 
 
