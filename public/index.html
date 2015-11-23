@@ -130,25 +130,25 @@
 
       <!-- TEMPLATE WILL EDIT USER PROFILE-->
       <template id="edit-user-template" type="text/x-handlebars-template">
-        <form class="form-horizontal text center" id="edit-user-form" method="PUT" action="/users"> <br>
+        <form class="form-horizontal text center" id="edit-user-form" method="PUT" action="/users/"> <br>
           <div class="form-group text-center">
             <label> <font color="white">  User Name </label>
-            <input type="text" class="form-control" id="user-name-input" value={{this.user_name}}>
+            <input type="text" class="form-control" id="user-name-input" name="userName" value={{this.user_name}}>
           </div>
 
           <div class="form-group text-center">
             <label> Email </label>
-            <input type="text" class="form-control" id="email-input" value={{this.email}}>
+            <input type="text" class="form-control" id="email-input" name="email" value={{this.email}}>
           </div>
 
           <div class="form-group text-center">
             <label> Profile Photo </label>
-            <input type="text" class="form-control" id="image-input" value={{this.user_img}}>
+            <input type="text" class="form-control" id="image-input" name="image" value={{this.user_img}}>
           </div>
 
           <div class="form-group text-center">
             <label> Favorite Team </label>
-            <input type="text" class="form-control" id="favorite-team-input" value={{this.favorite_team}}>
+            <input type="text" class="form-control" id="favorite-team-input" name="favoriteTeam" value={{this.favorite_team}}>
           </div>
 
 
@@ -160,7 +160,7 @@
         </form>
 
           <div class="text-center">
-            <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
+            <a class="btn btn-default" id="submit_edit_button" role="button">Edit User </a>
          </div>
       </template>
 
