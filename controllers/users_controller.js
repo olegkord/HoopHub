@@ -28,7 +28,7 @@ router.route('/new')
     findUserFirstPlayer(playerNameObject);
 
     let newUserParams = {
-      name: rawParams.name,
+      userName: rawParams.name,
       email: rawParams.email,
       password: rawParams.password,
       favoriteTeam: rawParams.favoriteTeam,
@@ -42,9 +42,7 @@ router.route('/new')
       debugger;
       if (error) res.status(400).send({message: error.errmsg});
 
-      else res.status(200).send({
-        userID: newUser._id
-      });
+      else res.status(200).json(newUser);
     })
   })
 
