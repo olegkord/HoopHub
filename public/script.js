@@ -2,6 +2,7 @@
 
 $(function(){
   $('.user-profile-div').hide();
+  $('.user-player-list-div').hide();
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
   let renderTemplate_edit_user = Handlebars.compile($('template#edit-user-template').html());
@@ -82,6 +83,7 @@ $(function(){
 
 
   function registerEditClick(user_data) {
+    console.log('registering edit button');
     $('#edit-user-form').on('submit', (e) => {
       console.log('CLICKED BUTTON TO SUBMIT USER');
       e.preventDefault();
@@ -119,7 +121,9 @@ $(function(){
     let compiledTemplate = renderTemplate_show_user({user: data});
     $profile.html('').append(compiledTemplate);
 
+
      $('.user-profile-div').show();
+     $('.user-player-list-div').show();
   }
 
   function showUserForm(data) {
@@ -140,7 +144,7 @@ $(function(){
     $form.html('').append(compiledTemplate);
   }
 
-  let showUserPlayerList = (data) => {
+  function showUserPlayerList(data) {
     console.log('Displaying player list');
     resetPlayerList();
 
