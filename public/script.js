@@ -1,7 +1,7 @@
 'use strict';
 
 $(function(){
-
+  $('.user-profile-div').hide();
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
   let renderTemplate_edit_user = Handlebars.compile($('template#edit-user-template').html());
@@ -97,6 +97,8 @@ $(function(){
 
     let compiledTemplate = renderTemplate_show_user({user: data});
     $profile.html('').append(compiledTemplate);
+
+     $('.user-profile-div').show();
   }
 
   function showUserForm(data) {

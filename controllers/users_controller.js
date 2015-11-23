@@ -15,21 +15,17 @@ router.route('/new')
     console.log('Creating a new user');
 
     let rawParams = req.body;
-
-
     let playerNameObject = processPlayerName(rawParams.favoritePlayer);
+////CONSTRUCTION ZONE
 
 
 
-    debugger;
-    // $.get('/player/'+rawParams.favoritePlayer, 'json').done( (player) => {
-    //   console.log(player);
-    // })
 
+/////END CONSTRUCTION ZONE
     findUserFirstPlayer(playerNameObject);
 
     let newUserParams = {
-      userName: rawParams.name,
+      userName: rawParams.userName,
       email: rawParams.email,
       password: rawParams.password,
       favoriteTeam: rawParams.favoriteTeam,
@@ -38,7 +34,7 @@ router.route('/new')
     };
 
     let newUser = new User(newUserParams)
-
+    debugger;
     newUser.save( (error) => {
       debugger;
       if (error) res.status(400).send({message: error.errmsg});
@@ -125,7 +121,7 @@ function findUserFirstPlayer(playerName) {
 
 router.route('/login')
   // route for users to login
-  
+
 function options(playerID) {
   console.log('defining API query options');
   return {

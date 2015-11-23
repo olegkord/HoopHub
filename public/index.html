@@ -63,15 +63,16 @@
       <!-- TEMPLATE WILL RENDER USER PROFILE-->
       <template id="user-template" type="text/x-handlebars-template">
         <div class="user">
-          <div id="user_image">
-            <img src={{user.image}}></img>
+          <div>
+            <img id="user_image" src={{user.image}}></img>
           </div>
-           <h3> {{user.userName}} </h3>
-           <h3> {{user.favoriteTeam}} </h3>
+           <h5 class="user_content"> Hello {{user.userName}} ! </h5>
+           <h5 class="user_content"> Favorite Team: {{user.favoriteTeam}} </h5>
         </div>
        <div class="text-center">
          <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
       </div>
+
       <div class="text-center">
         <a class="btn btn-default" id="delete_user_button" role="button">Delete User </a>
      </div>
