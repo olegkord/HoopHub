@@ -89,10 +89,11 @@ $(function(){
 
   function showUser(data) {
     console.log('Showing User profile page');
+    console.log(data);
     resetUserView();
 
     let $profile = $('.user-profile-div');
-    let compiledTemplate = renderTemplate_show_user(data);
+    let compiledTemplate = renderTemplate_show_user({user: data[0]});
     $profile.html('').append(compiledTemplate);
   }
 

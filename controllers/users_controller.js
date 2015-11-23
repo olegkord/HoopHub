@@ -16,7 +16,7 @@ router.route('/new')
 
     let rawParams = req.body;
 
-    
+
 
     let newUserParams = {
       name: rawParams.name,
@@ -84,8 +84,9 @@ router.route('/:id')
     });
   })
 
-
-
+router.route('/login')
+  // route for users to login
+  
 
 //END ROUTES
 
