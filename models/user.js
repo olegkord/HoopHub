@@ -9,7 +9,7 @@ let userSchema = new mongoose.Schema({
   image: String,
   favoriteTeam: String,
   favoritePlayers: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.Mixed,  //<----- THIS IS QUESTIONABLE
     ref: 'Player'
   }],
 

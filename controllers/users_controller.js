@@ -7,6 +7,9 @@ let Player = require('../models/player');
 let User = require('../models/user')
 let request = require('request');
 
+let events = require('events');
+let EventEmitter = new events.EventEmitter();
+
 //ROUTES HERE
 
 router.route('/new')
@@ -15,33 +18,41 @@ router.route('/new')
     console.log('Creating a new user');
 
     let rawParams = req.body;
-    let playerNameObject = processPlayerName(rawParams.favoritePlayer);
-////CONSTRUCTION ZONE
+    let playerName = processPlayerName(rawParams.favoritePlayer);
+
+//THE FUNCTION BELOW SHOULD BE ABSTRACTED!!!!
+    Player.find({$and: [
+      {FirstName: playerName.FirstName},
+      {LastName: playerName.LastName}]},
+      (error, player) => {
+        if (error) throw error;
+
+       else {
+         let newUserParams = {
+           userName: rawParams.userName,
+           email: rawParams.email,
+           password: rawParams.password,
+           favoriteTeam: rawParams.favoriteTeam,
+           favoritePlayers: [player], //player has been located by name and added to params
+           image: rawParams.image
+         };
+
+         let newUser = new User(newUserParams)
+
+         newUser.save( (error) => {
+           debugger;
+           if (error) res.status(400).send({message: error.errmsg});
+
+           else res.status(200).json(newUser);
+         })
+      }
+   })
+//END ABSTRACT ME
+
+})
 
 
 
-
-/////END CONSTRUCTION ZONE
-    findUserFirstPlayer(playerNameObject);
-
-    let newUserParams = {
-      userName: rawParams.userName,
-      email: rawParams.email,
-      password: rawParams.password,
-      favoriteTeam: rawParams.favoriteTeam,
-  //    favoritePlayers: [rawParams.favoritePlayer],
-      image: rawParams.image
-    };
-
-    let newUser = new User(newUserParams)
-    debugger;
-    newUser.save( (error) => {
-      debugger;
-      if (error) res.status(400).send({message: error.errmsg});
-
-      else res.status(200).json(newUser);
-    })
-  })
 
 
 router.route('/:id')
@@ -101,25 +112,29 @@ function processPlayerName(name) {
 
 
 function findUserFirstPlayer(playerName) {
-  console.log('Locating ' + playerName)
+  let emitter = new EventEmitter();
+  console.log('Locating ' + playerName.FirstName + playerName.LastName)
   //find the player from our current DB
-  debugger;
+
   Player.find({$and: [
     {FirstName: playerName.FirstName},
     {LastName: playerName.LastName}]}, (error, playerData) => {
       if (error) throw error;
 
       else {
-        debugger;
         console.log(playerData);
       }
-    })
-  }
+    }).once('fired', () => {
+      console.log('Emitter fired!');
+        emitter.emit('data',result);
+  })
+  return emitter;
+}
 
 
 
 
-router.route('/login')
+// router.route('/login')
   // route for users to login
 
 function options(playerID) {
@@ -133,9 +148,11 @@ function options(playerID) {
 //          Ocp-Apim-Subscription-Key: '350faf5499d24addaa79a4ab6b949145';
   }
 }
-
-
-
 //END ROUTES
+
+//EVENT EMITTERS
+
+
+//END EVENT EMITTERS
 
 module.exports = router;
