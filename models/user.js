@@ -18,6 +18,11 @@ let userSchema = new mongoose.Schema({
 });
 
 // User.pre('save', function(next){
+
+// userSchema.pre('save', function(next){
+
+// User.pre('save', function(next){
+
 //   var user = this;
 //
 //   if (!user.isModified('password')) return next();
@@ -33,6 +38,7 @@ let userSchema = new mongoose.Schema({
 //   })
 // })
 //
+// userSchema.methods.authenticate = function( password, callback) {
 // User.methods.authenticate = function( password, callback) {
 //   bcrypt.compare(password, this.password, function(err, isMatch) {
 //     callback(null, ismatch);
