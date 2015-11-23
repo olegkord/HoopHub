@@ -25,7 +25,7 @@ $(function(){
       }).done((data) => {
         console.log('show player profile');
         showPlayerProfile(data);
-        
+        playerSubmitClick()    
       });
     });
 
