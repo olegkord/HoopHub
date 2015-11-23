@@ -1,7 +1,7 @@
 'use strict';
 
 $(function(){
-
+  $('.user-profile-div').hide();
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
   let renderTemplate_edit_user = Handlebars.compile($('template#edit-user-template').html());
@@ -82,6 +82,7 @@ $(function(){
 
 
   function registerEditClick(user_data) {
+    console.log('registering edit button');
     $('#edit-user-form').on('submit', (e) => {
       console.log('CLICKED BUTTON TO SUBMIT USER');
       e.preventDefault();
