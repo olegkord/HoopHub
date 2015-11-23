@@ -14,6 +14,22 @@ $(function(){
   let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
 
   // =================================================================
+  // PLAYER Click Events =============================================
+  // =================================================================
+
+    $('body').on('click', '#player_search_submit', (e) => {
+      console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
+        e.preventDefault();
+
+      $.ajax({
+      }).done((data) => {
+        console.log('show player profile');
+        showPlayerProfile(data);
+        
+      });
+    });
+
+  // =================================================================
   // USER Click Events ===============================================
   // =================================================================
 
@@ -56,6 +72,31 @@ $(function(){
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
+
+  function playerSubmitClick() {
+    $('#index-form').on('submit', (e) => {
+      console.log('CLICKED BUTTON TO SHOW PLAYERS');
+      e.preventDefault();
+
+      let new_player_data = $('#new-player-form').serializeArray();
+      let new_player_json = {};
+
+      $.map(new_player_data, (n,i) => {
+        new_player_json[n['name']] = n['value'];
+      })
+
+      console.log(new_player_json);
+
+      $.ajax({
+        type: "GET",
+        url: "/player/",
+        data: new_player_json
+      }).done((new_player_json) => {
+        $.get('/player/' + new_player_json._id, showPlayerProfile(new_player_json), 'json');
+      });
+    });
+  }
+
 
   function registerSubmitClick() {
     $('#new-user-form').on('submit', (e) => {
@@ -108,7 +149,24 @@ $(function(){
   }
 
   // =================================================================
-  // Render templates ================================================
+  // Render USER templates ===========================================
+  // =================================================================
+
+  function showPlayerProfile(data){
+    console.log('Showing Player Profile')
+    console.log(data);
+    resetPlayerView();
+
+    var $profile = $('.player-profile-div');
+
+    var compiledTemplate = renderTemplate_show_player_profile({player: data});
+    $profile.html('').append(compiledTemplate);
+
+    $profile.show();
+  }
+
+  // =================================================================
+  // Render USER templates ===========================================
   // =================================================================
 
   function showUser(data) {
@@ -162,7 +220,7 @@ $(function(){
     console.log('Resetting forms in view');
     $('.forms-div').empty();
     $('.user-profile-div').hide();
-    $('.user-player-list-div').hide(); 
+    $('.user-player-list-div').hide();
     $('#index_form').hide();
     $('#index_button').hide();
   }
