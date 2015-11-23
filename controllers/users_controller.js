@@ -51,10 +51,6 @@ router.route('/new')
 
 })
 
-
-
-
-
 router.route('/:id')
   //route to view user by ID
   .get( (req,res) => {
