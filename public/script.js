@@ -36,7 +36,7 @@ $(function(){
       }).done((data) => {
          console.log('show edit form');
          editUserForm(data);
-         registerEditClick();
+         registerEditClick(data);
       });
     });
 
@@ -81,7 +81,7 @@ $(function(){
   }
 
 
-  function registerEditClick() {
+  function registerEditClick(user_data) {
     $('#edit-user-form').on('submit', (e) => {
       console.log('CLICKED BUTTON TO SUBMIT USER');
       e.preventDefault();
@@ -97,10 +97,10 @@ $(function(){
 
       $.ajax({
         type: "PUT",
-        url: '/users/' + edit_user_json._id,
+        url: '/users/' + user_data._id,
         data: edit_user_json
-      }).done((edit_user_json) => {
-        $.get('/users/' + edit_user_json._id, editUserForm(edit_user_json), 'json');
+      }).done((new_user_json) => {
+        $.get('/users/' + new_user_json._id, editUserForm(edit_user_json), 'json');
       });
     });
   }
