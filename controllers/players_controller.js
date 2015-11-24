@@ -15,7 +15,6 @@ router.route('/:name')
 //route to locate a player by name
   .get( (req,res) => {
 
-    debugger;
     let playerName = req.params.name;
 
     let playerNameObject = processPlayerName(playerName);
@@ -39,7 +38,7 @@ router.route('/:apiPlayerID/news')
       if (error) throw error;
 
       else {
-        res.json(playerNews);
+        res.json(JSON.parse(playerNews.body));
       }
     })
   })
@@ -47,6 +46,7 @@ router.route('/:apiPlayerID/news')
 router.route('/:apiPlayerID/stats')
   .get( (req,res) => {
     let playerID = params.apiPlayerID;
+    console.log('Getting player stats for last game from: ')
   })
 
 //END ROUTES
@@ -78,10 +78,18 @@ function findPlayerByName(playerName) {
 
 function playerNewsByID(playerID) {
   console.log('defining API query options');
+  console.log('YOUR API KEY IS ' + API_KEY )
   return {
-    url: 'https://api.fantasydata.net/nba/v2/JSON/NewsByPlayerID/'+playerID,
-    Host: 'api.fantasydat.net',
-    "Ocp-Apim-Subscription-Key": API_KEY
+    "async": true,
+    "crossDomain": true,
+    "url": "https://api.fantasydata.net/nba/v2/JSON/NewsByPlayerID/"+playerID,
+    "method": "GET",
+    "headers": {
+      "host": "api.fantasydata.net",
+      "ocp-apim-subscription-key": API_KEY,
+      "cache-control": "no-cache",
+    }
   }
 }
+
 module.exports = router;
