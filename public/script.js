@@ -221,6 +221,7 @@ $(function(){
     console.log(data);
     resetPlayerUpdates();
 
+    $('.player-update-div').show();
 
     let $updates = $('.player-update-div');
     let compiledTemplate = renderTemplate_show_player_updates({update: data});
