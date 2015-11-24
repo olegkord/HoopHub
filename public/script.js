@@ -3,6 +3,8 @@
 $(function(){
   $('.user-profile-div').hide();
   $('.user-player-list-div').hide();
+  $('.player-profile-div').hide();
+
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
   let renderTemplate_edit_user = Handlebars.compile($('template#edit-user-template').html());
@@ -12,6 +14,26 @@ $(function(){
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
 
   let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
+
+  // =================================================================
+  // PLAYER Click Events =============================================
+  // =================================================================
+
+    $('#player_search_submit').click((e) => {
+      console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
+        e.preventDefault();
+
+        let player_search = $('#player_search').val();
+          console.log(player_search);
+        player_search.replace(/ /g,'%20')
+          console.log(player_search);
+      $.ajax({
+        type: "GET",
+        url: "/player/" + player_search
+      }).done((onePlayer) => {
+        showPlayerProfile(onePlayer[0]);
+      });
+    });
 
   // =================================================================
   // USER Click Events ===============================================
@@ -29,8 +51,6 @@ $(function(){
         });
       });
 
-
-
     $('#delete_user_button').click((e) => {
       e.preventDefault();
 
@@ -46,6 +66,7 @@ $(function(){
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
+
 
   function registerSubmitClick() {
     $('#new-user-form').on('submit', (e) => {
@@ -109,7 +130,25 @@ $(function(){
   }
 
   // =================================================================
-  // Render templates ================================================
+  // Render USER templates ===========================================
+  // =================================================================
+
+  function showPlayerProfile(data){
+    resetPlayerView();
+    console.log('Showing Player Profile')
+    console.log(data);
+
+
+    var $profile = $('.player-profile-div');
+
+    var compiledTemplate = renderTemplate_show_player_profile({players: data});
+    $profile.html('').append(compiledTemplate);
+
+    $profile.show();
+  }
+
+  // =================================================================
+  // Render USER templates ===========================================
   // =================================================================
 
   function showUser(data) {
@@ -146,6 +185,7 @@ $(function(){
 
   }
 
+<<<<<<< HEAD
   //function showUserPlayerList(data) {
   // =================================================================
   // RENDER PLAYER ===================================================
@@ -176,6 +216,37 @@ $(function(){
     let compiledTemplate = renderTemplate_show_player_updates(data);
     $stats.html('').append(compiledTemplate);
   }
+=======
+  // =================================================================
+  // RENDER PLAYER ===================================================
+  // =================================================================
+  // let showUserPlayerList = (data) => {
+  //   console.log('Displaying player list');
+  //   resetPlayerList();
+  //
+  //   let $list = ('.user_player_list');
+  //   let compiledTemplate = renderTemplate_show_user_player_list({user: data});
+  //   $list.html('').append(compiledTemplate);
+  // }
+  //
+  // let showPlayerStats(data) {
+  //   console.log('Displaying player stats');
+  //   resetPlayerStats();
+  //
+  //   let $stats = ('.player_stats');
+  //   let compiledTemplate = renderTemplate_show_player_stats(data);
+  //   $stats.html('').append(compiledTemplate);
+  // }
+  //
+  // let showPlayerUpdates(data) {
+  //   console.log('Displaying player updates');
+  //   resetPlayerUpdates();
+  //
+  //   let $updates = ('.player_update');
+  //   let compiledTemplate = renderTemplate_show_player_updates(data);
+  //   $stats.html('').append(compiledTemplate);
+  // }
+>>>>>>> cf06014279535ddace0f6df77a1b6787c6ee4269
 
   // =================================================================
   // RESETS ==========================================================
@@ -204,6 +275,8 @@ $(function(){
     $('.player-update-div').empty();
     $('.player-twtr-div').empty();
     $('.player-stats-div').empty();
+    $('#index_form').hide();
+    $('#index_button').hide();
   }
 
   let resetPlayerStats = () => {
