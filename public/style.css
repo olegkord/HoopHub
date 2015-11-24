@@ -122,3 +122,8 @@ body {
   background-color: rgba(255, 0, 0, 0.7);
   border-radius: 15px
 }
+
+.player_update {
+  height: 500px;
+  overflow: scroll;
+}
