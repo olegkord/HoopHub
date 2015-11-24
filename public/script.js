@@ -4,6 +4,7 @@ $(function(){
   $('.user-profile-div').hide();
   $('.user-player-list-div').hide();
   $('.player-profile-div').hide();
+  $('.player-update-div').hide();
 
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
@@ -149,7 +150,7 @@ $(function(){
       url: "/player/"+data.PlayerID+"/news"
     }).done( (playerNews) => {
       //playerNews is a JSON array of updates about the player.
-      showPlayerUpdates(data);
+      showPlayerUpdates(playerNews);
     })
   }
 
@@ -217,11 +218,12 @@ $(function(){
 
   function showPlayerUpdates(data) {
     console.log('Displaying player updates');
+    console.log(data);
     resetPlayerUpdates();
 
 
-    let $updates = $('.player_update');
-    let compiledTemplate = renderTemplate_show_player_updates(data);
+    let $updates = $('.player-update-div');
+    let compiledTemplate = renderTemplate_show_player_updates({update: data});
     $updates.html('').append(compiledTemplate);
   }
 
@@ -268,4 +270,16 @@ $(function(){
     $('.user_player_list').empty();
   }
 
+});
+
+// HELPER METHODS
+
+Handlebars.registerHelper('each_upto', function(ary, max, options) {
+    if(!ary || ary.length == 0)
+        return options.inverse(this);
+
+    var result = [ ];
+    for(var i = 0; i < max && i < ary.length; ++i)
+        result.push(options.fn(ary[i]));
+    return result.join('');
 });
