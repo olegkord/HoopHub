@@ -165,7 +165,7 @@ $(function(){
      $('.user-profile-div').show();
      $('.user-player-list-div').show();
 
-
+     showUserPlayerList(data.favoritePlayers[0]);
   }
 
   function showUserForm(data) {
