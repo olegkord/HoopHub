@@ -145,14 +145,16 @@
      <template id="player-update-template" type="text/x-handlebars-template">
        <div class="player_update">
          <h3> Fantasy Update </h3>
+
          {{#each_upto update 5}}
          <ul>
-          <li> {{this.Title}} </li>
+          <li> {{this.Title}}</li>
           <li> {{this.Content}} </li>
           <li> {{this.Source}} </li>
           <li> {{this.Updated}} </li>
         </ul>
         {{/each_upto}}
+
       </div>
     </template>
 

@@ -39,7 +39,7 @@ router.route('/:apiPlayerID/news')
       if (error) throw error;
 
       else {
-        res.json(playerNews.body);
+        res.json(playerNews);
       }
     })
   })
