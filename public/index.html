@@ -132,9 +132,8 @@
       <template id="edit-user-template" type="text/x-handlebars-template">
         <form class="form-horizontal text center" id="edit-user-form" data-id={{this._id}} method="PUT" action="/users/"+{{this._id}}> <br>
           <div class="form-group text-center">
-            <h1> TEST!!! {{this.userName}} </h1>
             <label> <font color="white">  User Name </label>
-            <input type="text" class="form-control" id="user-name-input" name="userName" value={{this.user_name}}>
+            <input type="text" class="form-control" id="user-name-input" name="userName" value={{this.userName}}>
           </div>
 
           <div class="form-group text-center">
@@ -144,12 +143,12 @@
 
           <div class="form-group text-center">
             <label> Profile Photo </label>
-            <input type="text" class="form-control" id="image-input" name="image" value={{this.user_img}}>
+            <input type="text" class="form-control" id="image-input" name="image" value={{this.image}}>
           </div>
 
           <div class="form-group text-center">
             <label> Favorite Team </label>
-            <input type="text" class="form-control" id="favorite-team-input" name="favoriteTeam" value={{this.favorite_team}}>
+            <input type="text" class="form-control" id="favorite-team-input" name="favoriteTeam" value={{this.favoriteTeam}}>
           </div>
 
 

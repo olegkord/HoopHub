@@ -107,29 +107,6 @@ function processPlayerName(name) {
 }
 
 
-function findUserFirstPlayer(playerName) {
-  let emitter = new EventEmitter();
-  console.log('Locating ' + playerName.FirstName + playerName.LastName)
-  //find the player from our current DB
-
-  Player.find({$and: [
-    {FirstName: playerName.FirstName},
-    {LastName: playerName.LastName}]}, (error, playerData) => {
-      if (error) throw error;
-
-      else {
-        console.log(playerData);
-      }
-    }).once('fired', () => {
-      console.log('Emitter fired!');
-        emitter.emit('data',result);
-  })
-  return emitter;
-}
-
-
-
-
 // router.route('/login')
   // route for users to login
 
