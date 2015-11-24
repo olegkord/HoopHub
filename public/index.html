@@ -101,10 +101,14 @@
       <template id="user-player-list-template" type="text/x-handlebars-template">
         <div class="user_player_list">
           <div id="player_list">
+            {{#each player}}
+            <div id="hover-ul">
             <ul>
               <li> <img src="{{this.PhotoUrl}}"> </li>
               <li> {{this.FirstName}} {{this.LastName}} </li>
             </ul>
+          </div>
+          {{/each}}
           </div>
         </div>
         <div class="text-center">
