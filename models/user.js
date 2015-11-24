@@ -1,6 +1,7 @@
 'use strict';
 
 let mongoose = require('mongoose');
+let bcrypt = require('bcrypt');
 
 let userSchema = new mongoose.Schema({
   userName: String,
@@ -17,12 +18,8 @@ let userSchema = new mongoose.Schema({
   updated_at: Date
 });
 
-// User.pre('save', function(next){
 
 // userSchema.pre('save', function(next){
-
-// User.pre('save', function(next){
-
 //   var user = this;
 //
 //   if (!user.isModified('password')) return next();
@@ -34,17 +31,16 @@ let userSchema = new mongoose.Schema({
 //
 //       user.password = hash;
 //       next();
+//       })
 //     })
-//   })
-// })
+//   });
 //
 // userSchema.methods.authenticate = function( password, callback) {
-// User.methods.authenticate = function( password, callback) {
 //   bcrypt.compare(password, this.password, function(err, isMatch) {
 //     callback(null, ismatch);
 //   });
 // };
 
-var User = mongoose.model('User', userSchema )
+var User = mongoose.model('User', userSchema);
 
 module.exports = User;
