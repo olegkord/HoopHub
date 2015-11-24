@@ -107,8 +107,24 @@ function processPlayerName(name) {
 }
 
 
-// router.route('/login')
-  // route for users to login
+router.route('/login')
+  .post( (req, res) => {
+    var userParams = req.body.user;
+    console.log('hit login route')
+
+  User.findOne({user: userParams.userName}), function(err, user) {
+    user.authenticate(userParams.password, function(err,isMatch){
+      if (err) throw err;
+
+      if (isMatch) {
+        return res.status(200).send({message: "login success"})
+      } else {
+        return res.status(401).send({message: "unauthorized"})
+      }
+    });
+  }
+});
+
 
 function options(playerID) {
   console.log('defining API query options');
