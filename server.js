@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/HoopHub');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/HoopHub');
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -28,7 +28,7 @@ let player = require('./controllers/players_controller');
 app.use('/users', user);
 app.use('/player', player);
 
-let server = app.listen(3000, () => {
+let server = app.listen(process.env.PORT || 3000, () => {
   let host = server.address().address;
   let port = server.address().port;
 
