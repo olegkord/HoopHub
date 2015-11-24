@@ -22,9 +22,11 @@ db.once('open', (callback) => {
   console.log('mongoose connected');
 })
 
+
 let user = require('./controllers/users_controller');
 let player = require('./controllers/players_controller');
 
+app.use('/', route);
 app.use('/users', user);
 app.use('/player', player);
 

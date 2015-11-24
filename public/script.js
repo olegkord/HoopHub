@@ -1,11 +1,13 @@
 'use strict';
 
 $(function(){
+  console.log('loaded.');
+
   $('.user-profile-div').hide();
   $('.user-player-list-div').hide();
   $('.player-profile-div').hide();
 
-  let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
+  // let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
@@ -20,17 +22,15 @@ $(function(){
   // Login Click Events =============================================
   // =================================================================
 
-
-  $('#login_button').click((e) => {
+  // $('#login_button').click(e) => {
+  $('body').on('click', '#login_button', function(e) {
     console.log('CLICKED BUTTON FOR LOGIN FORM');
-        e.preventDefault();
-      $.ajax({
+    e.preventDefault();
 
-      }).done((data)  => {
-        console.log('show user form');
-        showLoginForm(data);
-      });
-    });
+    console.log('show user form');
+    // showLoginForm(data);
+
+  });
 
   // =================================================================
   // PLAYER Click Events =============================================
@@ -58,7 +58,9 @@ $(function(){
 
     $('#new_user_button').click((e) => {
       console.log('CLICKED BUTTON TO GENERATE FORM');
+
           e.preventDefault();
+
         $.ajax({
 
         }).done((data)  => {
