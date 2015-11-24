@@ -194,7 +194,7 @@ $(function(){
     resetPlayerList();
 
     let $list = ('.user_player_list');
-    let compiledTemplate = renderTemplate_show_user_player_list({user: data});
+    let compiledTemplate = renderTemplate_show_user_player_list(data);
     $list.html('').append(compiledTemplate);
   }
 
