@@ -109,10 +109,14 @@
       <template id="user-player-list-template" type="text/x-handlebars-template">
         <div class="user_player_list">
           <div id="player_list">
+            {{#each player}}
+            <div id="hover-ul">
             <ul>
               <li> <img src="{{this.PhotoUrl}}"> </li>
               <li> {{this.FirstName}} {{this.LastName}} </li>
             </ul>
+          </div>
+          {{/each}}
           </div>
         </div>
         <div class="text-center">
@@ -144,12 +148,22 @@
        </div>
    </template>
 
+
+    <!-- TEMPLATE WILL RENDER PLAYER UPDATED PROFILE-->
      <template id="player-update-template" type="text/x-handlebars-template">
        <div class="player_update">
          <h3> Fantasy Update </h3>
-          <li> {{this.content}} </li>
+         {{#each_upto update 5}}
+         <ul>
+          <li> {{this.Title}} </li>
+          <li> {{this.Content}} </li>
+          <li> {{this.Source}} </li>
+          <li> {{this.Updated}} </li>
+        </ul>
+        {{/each_upto}}
       </div>
     </template>
+
 
 
       <!-- TEMPLATE WILL EDIT USER PROFILE-->

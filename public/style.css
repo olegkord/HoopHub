@@ -71,7 +71,17 @@ body {
   border-radius: 15px
 }
 
-#player_list li {
+#player_list ul {
+  list-style: none;
+}
+
+#hover-ul:hover {
+  border: 2px darkgreen solid;
+  border-radius: 15px;
+}
+
+#player_list ul li {
+  display: inline;
   text-align: center;
   margin-top: 25px;
   font-size: 24px;
@@ -103,4 +113,12 @@ body {
 .player-profile-content {
   text-align: center;
   margin-top: 25px;
+}
+
+.player-update-div {
+  width: 450px;
+  height: 500px;
+  margin-left: 500px;
+  background-color: rgba(255, 0, 0, 0.7);
+  border-radius: 15px
 }

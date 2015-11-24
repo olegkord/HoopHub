@@ -6,6 +6,7 @@ $(function(){
   $('.user-profile-div').hide();
   $('.user-player-list-div').hide();
   $('.player-profile-div').hide();
+  $('.player-update-div').hide();
 
   // let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
@@ -170,8 +171,6 @@ $(function(){
   function showPlayerProfile(data){
     resetPlayerView();
     console.log('Showing Player Profile')
-    console.log(data);
-
 
     var $profile = $('.player-profile-div');
 
@@ -179,6 +178,14 @@ $(function(){
     $profile.html('').append(compiledTemplate);
 
     $profile.show();
+
+    $.ajax({
+      type: "GET",
+      url: "/player/"+data.PlayerID+"/news"
+    }).done( (playerNews) => {
+      //playerNews is a JSON array of updates about the player.
+      showPlayerUpdates(playerNews);
+    })
   }
 
   // =================================================================
@@ -199,7 +206,7 @@ $(function(){
      $('.user-profile-div').show();
      $('.user-player-list-div').show();
 
-     showUserPlayerList(data.favoritePlayers[0]);
+     showUserPlayerList(data.favoritePlayers);
   }
 
   function showUserForm(data) {
@@ -228,8 +235,9 @@ $(function(){
     console.log('Displaying player list');
     resetUserPlayerList();
 
+
     let $list = $('.user-player-list-div');
-    let compiledTemplate = renderTemplate_show_user_player_list(data);
+    let compiledTemplate = renderTemplate_show_user_player_list({player: data});
     $list.html('').append(compiledTemplate);
   }
 
@@ -244,11 +252,14 @@ $(function(){
 
   function showPlayerUpdates(data) {
     console.log('Displaying player updates');
+    console.log(data);
     resetPlayerUpdates();
 
-    let $updates = ('.player_update');
-    let compiledTemplate = renderTemplate_show_player_updates(data);
-    $stats.html('').append(compiledTemplate);
+    $('.player-update-div').show();
+
+    let $updates = $('.player-update-div');
+    let compiledTemplate = renderTemplate_show_player_updates({update: data});
+    $updates.html('').append(compiledTemplate);
   }
 
   // =================================================================
@@ -294,4 +305,16 @@ $(function(){
     $('.user_player_list').empty();
   }
 
+});
+
+// HELPER METHODS
+
+Handlebars.registerHelper('each_upto', function(ary, max, options) {
+    if(!ary || ary.length == 0)
+        return options.inverse(this);
+
+    var result = [ ];
+    for(var i = 0; i < max && i < ary.length; ++i)
+        result.push(options.fn(ary[i]));
+    return result.join('');
 });
