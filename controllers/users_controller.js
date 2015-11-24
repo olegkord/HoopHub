@@ -73,7 +73,7 @@ router.route('/:id')
     console.log('Editing User information');
     let userParams = req.body;
     debugger;
-    User.findByIdAndUpdate(userParams.id,
+    User.findByIdAndUpdate(req.params.id,
       {$set: userParams},
       (error, user) => {
         debugger;
