@@ -77,6 +77,7 @@ function playerNewsByID(playerID) {
     url: 'https://api.fantasydata.net/nba/v2/JSON/NewsByPlayerID/'+PlayerID,
     Host: 'api.fantasydat.net',
     "Ocp-Apim-Subscription-Key": API_KEY
+  }
 }
 
 module.exports = router;
