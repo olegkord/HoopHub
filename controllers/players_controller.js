@@ -37,7 +37,11 @@ router.route('/:apiPlayerID/news')
     request(playerNewsByID(playerID), (error,playerNews) => {
       res.json(playerNews)
     })
+  })
 
+router.route('/:apiPlayerID/stats')
+  .get( (req,res) => {
+    let playerID = params.apiPlayerID;
   })
 
 //END ROUTES
