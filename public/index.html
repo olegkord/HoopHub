@@ -48,11 +48,12 @@
 
       <!-- RENDER HOMEPAGE -->
     <!-- <template id="index" type="text/x-handlebars-template"> -->
-     <form class="form-inline text-center" id="index_form" data-id={{this._id}} method="GET">
+     <form class="form-inline text-center" id="index_form">
        <div class="form-group">
          <input type="text" class="form-control" id="player_search" placeholder="e.g. Lebron James">
        </div>
-       <button type="submit" class="btn btn-default" id="player_search_submit"> Search Player</button>
+
+        <button type="submit" class="btn btn-default"> Search Player</button>
     </form>
 
      <div class="text-center" id="index_button">
@@ -65,7 +66,7 @@
           <div>
             <img id="user_image" src={{user.image}}></img>
           </div>
-           <h5 class="user_content"> Hello {{user.userName}}! </h5>
+           <h5 class="user_content"> Hello {{user.userName}} ! </h5>
            <h5 class="user_content"> Favorite Team: {{user.favoriteTeam}} </h5>
         </div>
        <div class="text-center">
@@ -77,6 +78,7 @@
      </div>
      </template>
 
+      <!-- TEMPLATE WILL RENDER PLAYER PROFILE-->
 
       <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
       <template id="user-player-list-template" type="text/x-handlebars-template">
@@ -94,16 +96,15 @@
           <a class="btn btn-default" id="add_player_button" role="button">Add Player </a>
         </div>
       </template>
-
-      <!-- TEMPLATE WILL RENDER PLAYER PROFILE-->
+<!-- DON'T FORGET TO LOOK @ THE FIELD NAMES IN SCHEMA ONCE COMPLETED -->
      <template id="player-profile-template" type="text/x-handlebars-template">
        <div class="player_profile">
-         <div>
-           <img id="player_image" src={{players.PhotoUrl}}></img>
+         <div id="player_image">
+           <img src={{this.img_url}}></img>
          </div>
-        <h4 class="player-profile-content"> Name: {{players.FirstName}} {{players.LastName}}</h4> <br>
-        <h4 class="player-profile-content">  Team: {{players.Team}} </h4> <br>
-        <h4 class="player-profile-content">  Experience: {{players.Experience}} Years</h4>
+        <h3> {{this.player_name}} </h3> <br>
+        <h3> {{this.team_name}} </h3>
+        <h3> {{this.salary}} </h3>
       </div>
     </template>
 
@@ -130,7 +131,6 @@
       <!-- TEMPLATE WILL EDIT USER PROFILE-->
       <template id="edit-user-template" type="text/x-handlebars-template">
         <form class="form-horizontal text center" id="edit-user-form" data-id={{this._id}} method="PUT" action="/users/"+{{this._id}}> <br>
-          <p> Is this working? {{data.userName}} </p>
           <div class="form-group text-center">
             <h1> TEST!!! {{this.userName}} </h1>
             <label> <font color="white">  User Name </label>

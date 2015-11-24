@@ -185,7 +185,6 @@ $(function(){
 
   }
 
-<<<<<<< HEAD
   //function showUserPlayerList(data) {
   // =================================================================
   // RENDER PLAYER ===================================================
@@ -216,37 +215,6 @@ $(function(){
     let compiledTemplate = renderTemplate_show_player_updates(data);
     $stats.html('').append(compiledTemplate);
   }
-=======
-  // =================================================================
-  // RENDER PLAYER ===================================================
-  // =================================================================
-  // let showUserPlayerList = (data) => {
-  //   console.log('Displaying player list');
-  //   resetPlayerList();
-  //
-  //   let $list = ('.user_player_list');
-  //   let compiledTemplate = renderTemplate_show_user_player_list({user: data});
-  //   $list.html('').append(compiledTemplate);
-  // }
-  //
-  // let showPlayerStats(data) {
-  //   console.log('Displaying player stats');
-  //   resetPlayerStats();
-  //
-  //   let $stats = ('.player_stats');
-  //   let compiledTemplate = renderTemplate_show_player_stats(data);
-  //   $stats.html('').append(compiledTemplate);
-  // }
-  //
-  // let showPlayerUpdates(data) {
-  //   console.log('Displaying player updates');
-  //   resetPlayerUpdates();
-  //
-  //   let $updates = ('.player_update');
-  //   let compiledTemplate = renderTemplate_show_player_updates(data);
-  //   $stats.html('').append(compiledTemplate);
-  // }
->>>>>>> cf06014279535ddace0f6df77a1b6787c6ee4269
 
   // =================================================================
   // RESETS ==========================================================
