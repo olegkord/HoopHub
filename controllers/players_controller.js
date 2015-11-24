@@ -79,5 +79,4 @@ function playerNewsByID(playerID) {
     "Ocp-Apim-Subscription-Key": API_KEY
   }
 }
-
 module.exports = router;
