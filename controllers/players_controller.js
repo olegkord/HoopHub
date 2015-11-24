@@ -15,7 +15,6 @@ router.route('/:name')
 //route to locate a player by name
   .get( (req,res) => {
 
-    debugger;
     let playerName = req.params.name;
 
     let playerNameObject = processPlayerName(playerName);
@@ -39,7 +38,7 @@ router.route('/:apiPlayerID/news')
       if (error) throw error;
 
       else {
-        res.json(playerNews.body);
+        res.json(JSON.parse(playerNews.body));
       }
     })
   })
@@ -47,6 +46,7 @@ router.route('/:apiPlayerID/news')
 router.route('/:apiPlayerID/stats')
   .get( (req,res) => {
     let playerID = params.apiPlayerID;
+    console.log('Getting player stats for last game from: ')
   })
 
 //END ROUTES
