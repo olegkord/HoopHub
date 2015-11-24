@@ -75,11 +75,12 @@ router.route('/:id')
     debugger;
     User.findByIdAndUpdate(req.params.id,
       {$set: userParams},
+      {new: true},
       (error, user) => {
         debugger;
         if(error) res.status(400).send({message: error.errmsg});
 
-        else return res.status(202).send({message: "User update succesful"});
+        else return res.status(202).send(user);
       })
   })
 
