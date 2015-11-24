@@ -28,10 +28,12 @@ $(function(){
     console.log('CLICKED BUTTON FOR LOGIN FORM');
     e.preventDefault();
 
-    console.log('show user form');
-    // showLoginForm(data);
-
+    $.ajax({
+    }).done((data) => {
+      showLoginForm(data);
+    });
   });
+
 
   // =================================================================
   // PLAYER Click Events =============================================
