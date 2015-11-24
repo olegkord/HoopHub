@@ -39,7 +39,7 @@ router.route('/:apiPlayerID/news')
       if (error) throw error;
 
       else {
-        res.json(playerNews);
+        res.json(playerNews.body);
       }
     })
   })
@@ -78,10 +78,18 @@ function findPlayerByName(playerName) {
 
 function playerNewsByID(playerID) {
   console.log('defining API query options');
+  console.log('YOUR API KEY IS ' + API_KEY )
   return {
-    url: 'https://api.fantasydata.net/nba/v2/JSON/NewsByPlayerID/'+playerID,
-    Host: 'api.fantasydat.net',
-    "Ocp-Apim-Subscription-Key": API_KEY
+    "async": true,
+    "crossDomain": true,
+    "url": "https://api.fantasydata.net/nba/v2/JSON/NewsByPlayerID/"+playerID,
+    "method": "GET",
+    "headers": {
+      "host": "api.fantasydata.net",
+      "ocp-apim-subscription-key": API_KEY,
+      "cache-control": "no-cache",
+    }
   }
 }
+
 module.exports = router;
