@@ -5,6 +5,8 @@ $(function(){
   $('.user-player-list-div').hide();
   $('.player-profile-div').hide();
 
+  let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
+
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
   let renderTemplate_edit_user = Handlebars.compile($('template#edit-user-template').html());
@@ -12,8 +14,23 @@ $(function(){
   let renderTemplate_show_player_profile = Handlebars.compile($('template#player-profile-template').html());
   let renderTemplate_show_player_stats = Handlebars.compile($('template#player-stats-template').html());
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
-
   let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
+
+  // =================================================================
+  // Login Click Events =============================================
+  // =================================================================
+
+
+  $('#login_button').click((e) => {
+    console.log('CLICKED BUTTON FOR LOGIN FORM');
+        e.preventDefault();
+      $.ajax({
+
+      }).done((data)  => {
+        console.log('show user form');
+        showLoginForm(data);
+      });
+    });
 
   // =================================================================
   // PLAYER Click Events =============================================
@@ -128,6 +145,21 @@ $(function(){
       });
     });
   }
+
+  // =================================================================
+  // Render LOGIN templates ==========================================
+  // =================================================================
+
+
+  function showLoginForm(data) {
+    console.log('Displaying login form');
+    resetForm();
+
+    let $form = $('.forms-div');
+    let compiledTemplate = renderTemplate_show_login(data);
+    $form.html('').append(compiledTemplate);
+  }
+
 
   // =================================================================
   // Render PLAYER templates =========================================
