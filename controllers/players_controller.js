@@ -33,9 +33,14 @@ router.route('/:name')
 
 router.route('/:apiPlayerID/news')
   .get( (req,res) => {
-    let playerID = params.apiPlayerID;
+    let playerID = req.params.apiPlayerID;
+    console.log('Getting player news for ID ' + playerID);
     request(playerNewsByID(playerID), (error,playerNews) => {
-      res.json(playerNews)
+      if (error) throw error;
+
+      else {
+        res.json(playerNews);
+      }
     })
   })
 
@@ -74,7 +79,7 @@ function findPlayerByName(playerName) {
 function playerNewsByID(playerID) {
   console.log('defining API query options');
   return {
-    url: 'https://api.fantasydata.net/nba/v2/JSON/NewsByPlayerID/'+PlayerID,
+    url: 'https://api.fantasydata.net/nba/v2/JSON/NewsByPlayerID/'+playerID,
     Host: 'api.fantasydat.net',
     "Ocp-Apim-Subscription-Key": API_KEY
   }

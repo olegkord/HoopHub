@@ -136,8 +136,6 @@ $(function(){
   function showPlayerProfile(data){
     resetPlayerView();
     console.log('Showing Player Profile')
-    console.log(data);
-
 
     var $profile = $('.player-profile-div');
 
@@ -145,6 +143,14 @@ $(function(){
     $profile.html('').append(compiledTemplate);
 
     $profile.show();
+
+    $.ajax({
+      type: "GET",
+      url: "/player/"+data.PlayerID+"/news"
+    }).done( (playerNews) => {
+      //playerNews is a JSON array of updates about the player.
+      showPlayerUpdates(data);
+    })
   }
 
   // =================================================================
@@ -213,9 +219,10 @@ $(function(){
     console.log('Displaying player updates');
     resetPlayerUpdates();
 
-    let $updates = ('.player_update');
+
+    let $updates = $('.player_update');
     let compiledTemplate = renderTemplate_show_player_updates(data);
-    $stats.html('').append(compiledTemplate);
+    $updates.html('').append(compiledTemplate);
   }
 
   // =================================================================
