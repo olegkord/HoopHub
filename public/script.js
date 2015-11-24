@@ -28,9 +28,8 @@ $(function(){
       $.ajax({
         type: "GET",
         url: "/player/" + player_search
-      }).done((data) => {
-        console.log('show player profile');
-        showPlayerProfile(data);
+      }).done((onePlayer) => {
+        showPlayerProfile(onePlayer[0]);
       });
     });
 
@@ -65,30 +64,6 @@ $(function(){
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
-
-  // function playerSubmitClick(data) {
-  //   $('#player_search_submit').on('click', (e) => {
-  //     console.log('CLICKED BUTTON TO SHOW PLAYERS');
-  //     e.preventDefault();
-  //
-  //     let new_player_data = $('index_form').serializeArray();
-  //     let new_player_json = {};
-  //
-  //     $.map(new_player_data, (n,i) => {
-  //       new_player_json[n['name']] = n['value'];
-  //     })
-  //
-  //     console.log(new_player_json);
-  //
-  //     $.ajax({
-  //       type: "GET",
-  //       url: "/player",
-  //       data: new_player_json
-  //     }).done((new_player_json) => {
-  //       $.get('/player/' + new_player_json._id, showPlayerProfile(new_player_json), 'json');
-  //     });
-  //   });
-  // }
 
 
   function registerSubmitClick() {
@@ -159,13 +134,14 @@ $(function(){
   // =================================================================
 
   function showPlayerProfile(data){
+    resetPlayerView();
     console.log('Showing Player Profile')
     console.log(data);
-    resetPlayerView();
+
 
     var $profile = $('.player-profile-div');
 
-    var compiledTemplate = renderTemplate_show_player_profile({player: data});
+    var compiledTemplate = renderTemplate_show_player_profile({players: data});
     $profile.html('').append(compiledTemplate);
 
     $profile.show();
@@ -209,7 +185,6 @@ $(function(){
 
   }
 
-  // function showUserPlayerList(data)
   // =================================================================
   // RENDER PLAYER ===================================================
   // =================================================================
@@ -267,6 +242,8 @@ $(function(){
     $('.player-update-div').empty();
     $('.player-twtr-div').empty();
     $('.player-stats-div').empty();
+    $('#index_form').hide();
+    $('#index_button').hide();
   }
 
   let resetPlayerStats = () => {

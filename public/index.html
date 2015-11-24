@@ -95,15 +95,15 @@
           <a class="btn btn-default" id="add_player_button" role="button">Add Player </a>
         </div>
       </template>
-<!-- DON'T FORGET TO LOOK @ THE FIELD NAMES IN SCHEMA ONCE COMPLETED -->
+
      <template id="player-profile-template" type="text/x-handlebars-template">
        <div class="player_profile">
          <div id="player_image">
-           <img src={{this.img_url}}></img>
+           <img src={{players.PhotoUrl}}></img>
          </div>
-        <h3> {{this.player_name}} </h3> <br>
-        <h3> {{this.team_name}} </h3>
-        <h3> {{this.salary}} </h3>
+        <h5> {{players.FirstName}}, {{players.LastName}}</h5> <br>
+        <h5> {{players.Team}} </h5> <br>
+        <h5> {{players.Experience}}  Years</h5>
       </div>
     </template>
 
