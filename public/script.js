@@ -165,7 +165,7 @@ $(function(){
      $('.user-profile-div').show();
      $('.user-player-list-div').show();
 
-     showUserPlayerList(data.favoritePlayers[0]);
+     showUserPlayerList(data.favoritePlayers);
   }
 
   function showUserForm(data) {
@@ -195,7 +195,7 @@ $(function(){
     resetUserPlayerList();
 
     let $list = $('.user-player-list-div');
-    let compiledTemplate = renderTemplate_show_user_player_list(data);
+    let compiledTemplate = renderTemplate_show_user_player_list({player: data});
     $list.html('').append(compiledTemplate);
   }
 
