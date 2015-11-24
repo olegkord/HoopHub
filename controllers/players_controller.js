@@ -7,6 +7,8 @@ let User = require('../models/user');
 let request = require('request');
 let Player = require('../models/player');
 
+const API_KEY = process.env.API_KEY;
+
 
 //ROUTES HERE
 router.route('/:name')
@@ -27,6 +29,15 @@ router.route('/:name')
           res.json(playerData);
         }
     })
+  })
+
+router.route('/:apiPlayerID/news')
+  .get( (req,res) => {
+    let playerID = params.apiPlayerID;
+    request(playerNewsByID(playerID), (error,playerNews) => {
+      res.json(playerNews)
+    })
+
   })
 
 //END ROUTES
@@ -56,16 +67,12 @@ function findPlayerByName(playerName) {
     })
   }
 
-function options(playerID) {
+function playerNewsByID(playerID) {
   console.log('defining API query options');
   return {
-    url: 'https://api.fantasydata.net/nba/v2/JSON/Player/'+PlayerID,
+    url: 'https://api.fantasydata.net/nba/v2/JSON/NewsByPlayerID/'+PlayerID,
     Host: 'api.fantasydat.net',
-//-------->OLEG'S Key:
-    "Ocp-Apim-Subscription-Key": 'd29863acdf714a50a97247181f9563e9'
-//-------->STEVE'S Key:
-//          Ocp-Apim-Subscription-Key: '350faf5499d24addaa79a4ab6b949145';
-  }
+    "Ocp-Apim-Subscription-Key": API_KEY
 }
 
 module.exports = router;
