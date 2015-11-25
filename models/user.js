@@ -18,28 +18,27 @@ let userSchema = new mongoose.Schema({
   updated_at: Date
 });
 
+userSchema.pre('save', function(next){
+  var user = this;
 
-// userSchema.pre('save', function(next){
-//   var user = this;
-//
-//   if (!user.isModified('password')) return next();
-//
-//   bcrypt.genSalt(5, function(err,salt){
-//     if (err) return next(err);
-//     bcrypt.hash(user.password, salt, function(err, hash){
-//       if (err) return next(err);
-//
-//       user.password = hash;
-//       next();
-//       })
-//     })
-//   });
-//
-// userSchema.methods.authenticate = function( password, callback) {
-//   bcrypt.compare(password, this.password, function(err, isMatch) {
-//     callback(null, ismatch);
-//   });
-// };
+  if (!user.isModified('password')) return next();
+
+  bcrypt.genSalt(5, function(err,salt){
+    if (err) return next(err);
+    bcrypt.hash(user.password, salt, function(err, hash){
+      if (err) return next(err);
+
+      user.password = hash;
+      next();
+      })
+    })
+  });
+
+userSchema.methods.authenticate = function( password, callback) {
+  bcrypt.compare(password, this.password, function(err, isMatch) {
+    callback(null, isMatch);
+  });
+};
 
 var User = mongoose.model('User', userSchema);
 
