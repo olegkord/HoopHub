@@ -144,19 +144,6 @@ function processPlayerName(name) {
     return 'INCORRECT NAME'
   }
 }
-
-
-function options(playerID) {
-  console.log('defining API query options');
-  return {
-    url: 'https://api.fantasydata.net/nba/v2/JSON/Player/'+PlayerID,
-    Host: 'api.fantasydat.net',
-//-------->OLEG'S Key:
-    "Ocp-Apim-Subscription-Key": 'd29863acdf714a50a97247181f9563e9'
-//-------->STEVE'S Key:
-//          Ocp-Apim-Subscription-Key: '350faf5499d24addaa79a4ab6b949145';
-  }
-}
 //END ROUTES
 
 //EVENT EMITTERS

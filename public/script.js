@@ -177,6 +177,26 @@ $(function(){
     });
   }
 
+  function registerPlayerClicks() {
+    console.log('Registering Click Events for player list...:');
+    let $playerTable = $('#hover-ul');
+    let numPlayers = $playerTable.length;
+    for(var i=0; i < numPlayers; i++) {
+      console.log('.. .. ..');
+      $playerTable.eq(i).click( (event) => {
+        let dataID = $playerTable.eq(i).attr('data-id');
+        console.log('Clicked on ' + dataID);
+
+        $.ajax({
+          type: "GET",
+          url: '/player/' + dataID
+        }).done( (player_data) => {
+          showPlayerProfile(player_data);
+        });
+      });
+    }
+  }
+
   // =================================================================
   // Render LOGIN templates ==========================================
   // =================================================================
@@ -268,6 +288,8 @@ $(function(){
 
     let compiledTemplate = renderTemplate_show_user_player_list({player: data});
     $list.html('').append(compiledTemplate);
+
+    registerPlayerClicks();
   }
 
   function showPlayerStats(data) {

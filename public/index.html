@@ -110,7 +110,7 @@
         <div class="user_player_list">
           <div id="player_list">
             {{#each player}}
-            <div id="hover-ul">
+            <div id="hover-ul" data-id={{this.PlayerID}}>
             <ul>
               <li> <img src="{{this.PhotoUrl}}"> </li>
               <li> {{this.FirstName}} {{this.LastName}} </li>
