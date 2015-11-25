@@ -36,7 +36,7 @@ userSchema.pre('save', function(next){
 
 userSchema.methods.authenticate = function( password, callback) {
   bcrypt.compare(password, this.password, function(err, isMatch) {
-    callback(null, ismatch);
+    callback(null, isMatch);
   });
 };
 

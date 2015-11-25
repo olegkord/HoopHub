@@ -10,6 +10,8 @@ $(function(){
 
   // let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
+  let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
+
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
   let renderTemplate_edit_user = Handlebars.compile($('template#edit-user-template').html());
@@ -23,14 +25,16 @@ $(function(){
   // Login Click Events =============================================
   // =================================================================
 
-  // $('#login_button').click(e) => {
-  $('body').on('click', '#login_button', function(e) {
+
+  $('#login_button').click(function(e) {
     console.log('CLICKED BUTTON FOR LOGIN FORM');
     e.preventDefault();
 
     $.ajax({
     }).done((data) => {
       showLoginForm(data);
+      registerLoginClick()
+      console.log('Login button clicked!');
     });
   });
 
@@ -89,10 +93,32 @@ $(function(){
   // REGISTER CLICKS =================================================
   // =================================================================
 
+  function registerLoginClick() {
+    $('#login-form').on('submit', (e) => {
+      console.log('clicked button to LOG IN user');
+      e.preventDefault();
+
+      let login_user_data = $('#login-form').serializeArray();
+      let login_user_json = {};
+
+      $.map(login_user_data, (n,i) => {
+        login_user_json[n['name']] = n['value'];
+      })
+      $.ajax({
+        type: "POST",
+        url: "/users/login",
+        data: login_user_json
+      }).done( (logged_in_user) => {
+        console.log(logged_in_user);
+        $.get('/users/' + logged_in_user._id, showUser(logged_in_user), 'json');
+      });
+    });
+  }
+
 
   function registerSubmitClick() {
     $('#new-user-form').on('submit', (e) => {
-      console.log('CLICKED BUTTON TO SUBMIT USER');
+      console.log('clicked on button to CREATE NEW user');
       e.preventDefault();
 
       let new_user_data = $('#new-user-form').serializeArray();
