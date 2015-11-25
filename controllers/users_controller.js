@@ -10,6 +10,10 @@ let request = require('request');
 let events = require('events');
 let EventEmitter = new events.EventEmitter();
 
+const expressJwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
+const secret = "omgassomg"
+
 //ROUTES HERE
 router.route('/login')
   .post( (req, res) => {
@@ -24,7 +28,8 @@ router.route('/login')
         if (error) throw error;
 
         if (isMatch) {
-          return res.status(200).json(user)
+          let returnObj = {userObj: user, token: jwt.sign(user, secret)}
+          return res.status(200).json(returnObj);
         }
         else {
           return res.status(401).send({message: "unauthorized"})
@@ -76,6 +81,11 @@ router.route('/new')
 
 router.route('/:id')
   //route to view user by ID
+  .all(expressJwt({
+  secret: secret,
+  userProperty: 'auth'
+  }))
+
   .get( (req,res) => {
     console.log('Viewing user profile');
 
