@@ -1,10 +1,16 @@
 'use strict';
 
 $(function(){
+  console.log('loaded.');
+
   $('.user-profile-div').hide();
   $('.user-player-list-div').hide();
   $('.player-profile-div').hide();
   $('.player-update-div').hide();
+
+  // let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
+
+  let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
   let renderTemplate_create_user = Handlebars.compile($('template#new-user-template').html());
@@ -13,8 +19,25 @@ $(function(){
   let renderTemplate_show_player_profile = Handlebars.compile($('template#player-profile-template').html());
   let renderTemplate_show_player_stats = Handlebars.compile($('template#player-stats-template').html());
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
-
   let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
+
+  // =================================================================
+  // Login Click Events =============================================
+  // =================================================================
+
+
+  $('#login_button').click(function(e) {
+    console.log('CLICKED BUTTON FOR LOGIN FORM');
+    e.preventDefault();
+
+    $.ajax({
+    }).done((data) => {
+      showLoginForm(data);
+      registerLoginClick()
+      console.log('Login button clicked!');
+    });
+  });
+
 
   // =================================================================
   // PLAYER Click Events =============================================
@@ -42,7 +65,9 @@ $(function(){
 
     $('#new_user_button').click((e) => {
       console.log('CLICKED BUTTON TO GENERATE FORM');
+
           e.preventDefault();
+
         $.ajax({
 
         }).done((data)  => {
@@ -68,10 +93,32 @@ $(function(){
   // REGISTER CLICKS =================================================
   // =================================================================
 
+  function registerLoginClick() {
+    $('#login-form').on('submit', (e) => {
+      console.log('clicked button to LOG IN user');
+      e.preventDefault();
+
+      let login_user_data = $('#login-form').serializeArray();
+      let login_user_json = {};
+
+      $.map(login_user_data, (n,i) => {
+        login_user_json[n['name']] = n['value'];
+      })
+      $.ajax({
+        type: "POST",
+        url: "/users/login",
+        data: login_user_json
+      }).done( (logged_in_user) => {
+        console.log(logged_in_user);
+        $.get('/users/' + logged_in_user._id, showUser(logged_in_user), 'json');
+      });
+    });
+  }
+
 
   function registerSubmitClick() {
     $('#new-user-form').on('submit', (e) => {
-      console.log('CLICKED BUTTON TO SUBMIT USER');
+      console.log('clicked on button to CREATE NEW user');
       e.preventDefault();
 
       let new_user_data = $('#new-user-form').serializeArray();
@@ -129,6 +176,21 @@ $(function(){
       });
     });
   }
+
+  // =================================================================
+  // Render LOGIN templates ==========================================
+  // =================================================================
+
+
+  function showLoginForm(data) {
+    console.log('Displaying login form');
+    resetForm();
+
+    let $form = $('.forms-div');
+    let compiledTemplate = renderTemplate_show_login(data);
+    $form.html('').append(compiledTemplate);
+  }
+
 
   // =================================================================
   // Render PLAYER templates =========================================

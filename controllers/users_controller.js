@@ -11,6 +11,28 @@ let events = require('events');
 let EventEmitter = new events.EventEmitter();
 
 //ROUTES HERE
+router.route('/login')
+  .post( (req, res) => {
+    var userParams = req.body;
+    console.log('hit login route')
+
+    User.findOne({userName: userParams.userName}, function(err, user) {
+
+      if (err) throw err;
+      user.authenticate(userParams.password, function(error, isMatch){
+
+        if (error) throw error;
+
+        if (isMatch) {
+          return res.status(200).json(user)
+        }
+        else {
+          return res.status(401).send({message: "unauthorized"})
+        }
+      });
+    });
+  });
+
 
 router.route('/new')
 //route to create a new user
@@ -50,6 +72,8 @@ router.route('/new')
 
 })
 
+
+
 router.route('/:id')
   //route to view user by ID
   .get( (req,res) => {
@@ -59,6 +83,8 @@ router.route('/:id')
     // let userID = params.body.id;
 
     let userID = req.params.id;
+
+
     console.log('ID viewing: ' + userID);
 
     User.find( {_id: userID}, (error, user) => {
@@ -70,7 +96,7 @@ router.route('/:id')
 
   .put((req, res) => {
     //route to edit user information
-    console.log('Editing User information');
+    console.log('Editing User Information');
     let userParams = req.body;
     debugger;
     User.findByIdAndUpdate(req.params.id,
@@ -95,6 +121,8 @@ router.route('/:id')
       else return res.status(200).send({message: "User delete successful"})
     });
   })
+
+
 ////////////////////////
 /////HELPER FUNCTIONS///
 ////////////////////////
@@ -106,25 +134,6 @@ function processPlayerName(name) {
     return 'INCORRECT NAME'
   }
 }
-
-
-router.route('/login')
-  .post( (req, res) => {
-    var userParams = req.body.user;
-    console.log('hit login route')
-
-  User.findOne({user: userParams.userName}), function(err, user) {
-    user.authenticate(userParams.password, function(err,isMatch){
-      if (err) throw err;
-
-      if (isMatch) {
-        return res.status(200).send({message: "login success"})
-      } else {
-        return res.status(401).send({message: "unauthorized"})
-      }
-    });
-  }
-});
 
 
 function options(playerID) {
