@@ -79,12 +79,12 @@ router.route('/new')
 
 
 
-router.route('/:id')
-  //route to view user by ID
-  // .all(expressJwt({
-  // secret: secret,
-  // userProperty: 'auth'
-  // }))
+  router.route('/:id')
+    route to view user by ID
+    .all(expressJwt({
+    secret: secret,
+    userProperty: 'auth'
+    }))
 
   .get( (req,res) => {
     console.log('Viewing user profile');
