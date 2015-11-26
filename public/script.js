@@ -194,7 +194,8 @@ $(function(){
           type: "GET",
           url: '/player/' + dataID
         }).done( (player_data) => {
-          showPlayerProfile(player_data);
+          console.log(player_data);
+          showPlayerProfile(player_data[0]);
         });
       });
     }
@@ -220,6 +221,7 @@ $(function(){
   // =================================================================
 
   function showPlayerProfile(data){
+
     resetPlayerView();
 
     console.log('Showing Player Profile for ' + data.FirstName + ' ' + data.LastName)
