@@ -219,7 +219,7 @@ $(function(){
   function showPlayerProfile(data){
     resetPlayerView();
 
-    console.log('Showing Player Profile')
+    console.log('Showing Player Profile for ' + data.FirstName + ' ' + data.LastName)
 
     var $profile = $('.player-profile-div');
 
