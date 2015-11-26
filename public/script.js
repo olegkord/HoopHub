@@ -92,6 +92,31 @@ $(function(){
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
+  function registerSeachPlayerClick() {
+    console.log('clicked button to search player by name')
+    $('#player_search_submit').click((e) => {
+      console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
+        e.preventDefault();
+
+        let player_search = $('#player_search').val();
+          console.log(player_search);
+        player_search.replace(/ /g,'%20')
+          console.log(player_search);
+      $.ajax({
+        type: "GET",
+        url: "/player/" + player_search
+      }).done( (onePlayer) => {
+        $.ajax({
+          type: "POST",
+          url: "/users/" + userID
+          data: onePlayer
+          //THIS IS NOT DONE!
+        }).done ( (updatedUser) => {
+          $.get('/users/' + updatedUser._id, showUserPlayerList(updatedUser.favoritePlayers), 'json');
+        })
+      });
+    });
+  }
 
   function registerLoginClick() {
     $('#login-form').on('submit', (e) => {
