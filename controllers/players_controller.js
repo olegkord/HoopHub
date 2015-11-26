@@ -17,8 +17,24 @@ router.route('/:playerIdORplayerName')
     //create a joint route based on the type of input.
     console.log('Hit route of player ID or player name in server.')
     let urlInput = req.params.playerIdORplayerName;
-
-
+  //   let playerNameObject = processPlayerName(urlInput);
+  //   let playerID = processPlayerID(urlInput);
+  //   //Search mongo DB for either matching player name OR matching ID.
+  //   debugger;
+  //   Player.find({$or:
+  //     [{PlayerID: playerID},
+  //       {$and:
+  //         [
+  //          {FirstName: playerNameObject.FirstName},
+  //          {LastName:  playerNameObject.LastName }
+  //         ]}
+  //       ]}
+  //      ), (error, playerData) => {
+  //        if (error) throw error;
+  //
+  //        else res.json(playerData);
+  //      }
+  // })
     if (isNaN(parseInt(urlInput))) {
       console.log('The URL input is a Player name.')
 
@@ -27,6 +43,7 @@ router.route('/:playerIdORplayerName')
       Player.find({$and: [
         {FirstName: playerNameObject.FirstName},
         {LastName: playerNameObject.LastName}]}, (error, playerData) => {
+          debugger;
           if (error) throw error;
 
           else {
@@ -53,15 +70,6 @@ router.route('/:playerIdORplayerName')
   })
 
 
-// router.route('/:name')
-// //route to locate a player by name
-//   .get( (req,res) => {
-//
-//     let playerName = req.params.name;
-//
-//
-//   })
-
 router.route('/:apiPlayerID/news')
   .get( (req,res) => {
     let playerID = req.params.apiPlayerID;
@@ -82,31 +90,24 @@ router.route('/:apiPlayerID/stats')
   })
 
 //END ROUTES
-
+function processPlayerID(inputString) {
+  if (isNaN(parseInt(inputString))) {
+    return 0;
+  }
+  else {
+    return parseInt(inputString);
+  }
+}
 function processPlayerName(name) {
   if (name.split(' ').length === 2) {
     return {FirstName: name.split(' ')[0], LastName: name.split(' ')[1]}
   }
   else {
-    return 'INCORRECT NAME'
+    return {FirstName: null, LastName: null}
   }
 }
 
-function findPlayerByName(playerName) {
-  console.log('Locating ' + playerName)
-  //find the player from our current DB
-  debugger;
-  Player.find({$and: [
-    {FirstName: playerName.FirstName},
-    {LastName: playerName.LastName}]}, (error, playerData) => {
-      if (error) throw error;
 
-      else {
-        debugger;
-        console.log(playerData);
-      }
-    })
-  }
 function playerDataById(playerID) {
   console.log('defining API query options');
   console.log('YOUR API KEY IS ' + API_KEY )
