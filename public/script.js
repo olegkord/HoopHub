@@ -184,7 +184,7 @@ $(function(){
     console.log('Registering Click Events for player list...:');
     let $playerTable = $('#hover-ul');
     let numPlayers = $playerTable.length;
-    for(var i=0; i < numPlayers; i++) {
+    for(let i=0; i < numPlayers; i++) {
       console.log('.. .. ..');
       $playerTable.eq(i).click( (event) => {
         let dataID = $playerTable.eq(i).attr('data-id');
@@ -221,7 +221,8 @@ $(function(){
 
   function showPlayerProfile(data){
     resetPlayerView();
-    console.log('Showing Player Profile')
+
+    console.log('Showing Player Profile for ' + data.FirstName + ' ' + data.LastName)
 
     var $profile = $('.player-profile-div');
 
@@ -267,6 +268,8 @@ $(function(){
     let $form = $('.forms-div');
     let compiledTemplate = renderTemplate_create_user(data);
     $form.html('').append(compiledTemplate);
+
+    registerPlayerClicks();
   }
 
   function editUserForm(data) {
