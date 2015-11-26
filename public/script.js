@@ -65,11 +65,9 @@ $(function(){
 
     $('#new_user_button').click((e) => {
       console.log('CLICKED BUTTON TO GENERATE FORM');
-
-          e.preventDefault();
+        e.preventDefault();
 
         $.ajax({
-
         }).done((data)  => {
           console.log('show user form');
           showUserForm(data);
@@ -77,18 +75,6 @@ $(function(){
         });
       });
 
-    $('#delete_user_button').click((e) => {
-      e.preventDefault();
-
-      $.ajax({
-        type: "DELETE",
-        url: "/users/" + $('.edit-user-form').data('id'),
-        data: edit_user_data
-      }).done((data) => {
-         console.log(data);
-        // redirect home? ;
-      });
-    });
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
@@ -175,6 +161,23 @@ $(function(){
         $.get('/users/' + new_user_json._id, showUser(new_user_json), 'json');
       });
     });
+  }
+
+  function registerDeleteClick(user_data) {
+    console.log('registering delete button');
+    $('#delete_user_button').on('click', (e) => {
+      console.log('CLICKED BUTTON TO DELETE USER');
+      e.preventDefault();
+
+      $.ajax({
+        type: "DELETE",
+        url: "/users/" + user_data._id,
+        data: {'method': 'delete'}
+      }).done( (data) => {
+        console.log(data);
+        $.get('/')
+      });
+   });
   }
 
   function registerPlayerClicks() {
@@ -279,7 +282,8 @@ $(function(){
   // =================================================================
   // RENDER PLAYER ===================================================
   // =================================================================
-  let showUserPlayerList = (data) => {
+
+   function showUserPlayerList(data) {
     console.log('Displaying player list');
     resetUserPlayerList();
 
@@ -356,7 +360,6 @@ $(function(){
     $('.user_player_list').empty();
   }
 
-});
 
 // HELPER METHODS
 
@@ -368,4 +371,5 @@ Handlebars.registerHelper('each_upto', function(ary, max, options) {
     for(var i = 0; i < max && i < ary.length; ++i)
         result.push(options.fn(ary[i]));
     return result.join('');
+});
 });

@@ -28,8 +28,8 @@ router.route('/login')
         if (error) throw error;
 
         if (isMatch) {
-          let returnObj = {userObj: user, token: jwt.sign(user, secret)}
-          return res.status(200).json(returnObj);
+          // let returnObj = {userObj: user, token: jwt.sign(user, secret)}
+          return res.status(200).json(user);
         }
         else {
           return res.status(401).send({message: "unauthorized"})
@@ -81,10 +81,10 @@ router.route('/new')
 
 router.route('/:id')
   //route to view user by ID
-  .all(expressJwt({
-  secret: secret,
-  userProperty: 'auth'
-  }))
+  // .all(expressJwt({
+  // secret: secret,
+  // userProperty: 'auth'
+  // }))
 
   .get( (req,res) => {
     console.log('Viewing user profile');
@@ -120,19 +120,21 @@ router.route('/:id')
       })
   })
 
-  .delete( (req,res) => {
+  .delete((req, res) => {
     //route to delete a user
     console.log('Deleting a user');
-    let userID = req.body.id;
-
-    User.findByIdAndRemove(userID, (error) => {
-      if(error) res.status(400).send({message: error.errmsg});
-
-      else return res.status(200).send({message: "User delete successful"})
-    });
-  })
-
-
+    // let userID = req.body;
+     User.remove({
+        _id: req.params.id
+     },
+     (err, users) => {
+       if(err) throw err;
+       res.json({
+              success: true,
+              message: 'User has been deleted'
+       });
+     });
+  });
 ////////////////////////
 /////HELPER FUNCTIONS///
 ////////////////////////

@@ -16,8 +16,8 @@
       <div class="navbar">
         <ul class= "nav navbar-nav">
           <li role="presentation" class="active" id="home"><a href="/"> Home </a></li>
-          <li  id="myPage"><a href="#">  My HH </a></li>
-          <li  id="login"><a href='/'>  Login </a></li>
+          <li  id="myPage"><a href="/users/">  My HH </a></li>
+          <li  id="login"><a href='/users/login'>  Login </a></li>
           <li  id="logout"><a href="#">  Logout </a></li>
        </ul>
      </div>
@@ -87,22 +87,18 @@
     </template>
 
       <!-- TEMPLATE WILL RENDER USER PROFILE-->
-      <template id="user-template" type="text/x-handlebars-template">
-        <div class="user">
-          <div>
-            <img id="user_image" src={{user.image}}></img>
-          </div>
-           <h5 class="user_content"> Hello {{user.userName}} ! </h5>
-           <h5 class="user_content"> Favorite Team: {{user.favoriteTeam}} </h5>
-        </div>
+    <template id="user-template" type="text/x-handlebars-template">
+      <div class="user">
+        <img id="user_image" src={{user.image}}></img>
+        <h5 class="user_content"> Hello {{user.userName}} ! </h5>
+        <h5 class="user_content"> Favorite Team: {{user.favoriteTeam}} </h5>
+      </div>
+
        <div class="text-center">
          <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
       </div>
 
-      <div class="text-center">
-        <a class="btn btn-default" id="delete_user_button" role="button">Delete User </a>
-     </div>
-     </template>
+    </template>
 
 
       <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
@@ -169,6 +165,7 @@
 
       <!-- TEMPLATE WILL EDIT USER PROFILE-->
       <template id="edit-user-template" type="text/x-handlebars-template">
+
         <form class="form-horizontal text center" id="edit-user-form" data-id={{this._id}} method="PUT" action="/users/"> <br>
           <div class="form-group text-center">
             <label> <font color="white">  User Name </label>
@@ -193,7 +190,12 @@
 
           <div class="text-center">
             <input class="btn btn-default" id="submit_edit_button" type="submit" value="edit user" role="button"></input>
+          </div>
+
+         <div class="text-center">
+           <input class="btn btn-default" id="delete_user_button"  type="submit" value="delete user" role="button"></input>
          </div>
+
       </template>
 
       <!-- TEMPLATE WILL RENDER NEW USER FORM-->
