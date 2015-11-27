@@ -154,8 +154,6 @@ $(function(){
       console.log('CLICKED BUTTON TO GENERATE EDIT FORM')
       e.preventDefault();
 
-     console.log(data);
-
      console.log('show edit form');
      editUserForm(data);
      registerEditClick(data);
@@ -175,8 +173,6 @@ $(function(){
       $.map(edit_user_data, (n,i) => {
         edit_user_json[n['name']] = n['value'];
       })
-
-      console.log(edit_user_json);
 
       $.ajax({
         type: "PUT",
@@ -212,6 +208,7 @@ $(function(){
     for(let i=0; i < numPlayers; i++) {
       console.log('.. .. ..');
       $playerTable.eq(i).click( (event) => {
+        event.preventDefault();
         let dataID = $playerTable.eq(i).attr('data-id');
         console.log('Clicked on ' + dataID);
 
@@ -222,6 +219,54 @@ $(function(){
           console.log(player_data);
           showPlayerProfile(player_data[0]);
         });
+      });
+    }
+  }
+
+  function registerPlayerHovers() {
+    console.log('Registering player Hover events');
+    let $playerTable = $('#player_list > *');
+    let numPlayers = $playerTable.length;
+    for(let i=0; i < numPlayers; i++) {
+      console.log('-- -- --');
+      $playerTable.eq(i).hover( (event) => {
+        event.preventDefault();
+        let dataID = $playerTable.eq(i).attr('data-id');
+
+        //Show a glyphicon upon hover.
+        let $iconHolder = $('<li>').addClass('icon-holder');
+        $playerTable.eq(i).children().append($iconHolder);
+        $iconHolder.html('<span class="glyphicon glyphicon-remove-sign"></span>');
+        $playerTable.eq(i).css({
+          border: '2px darkgreen solid',
+          'border-radius': '15px',
+          cursor: 'pointer'
+        })
+        //$playerTable.eq(i).off();
+        $iconHolder.click( (event) => {
+//          event.preventDefault();
+          event.stopPropagation();
+          //click on the icon to delete Player
+          let playerID = $playerTable.eq(i).attr('data-id');
+          let userID = $('.hidden').html();
+          $.ajax({
+            type: "PUT",
+            url: "/users/" + userID,
+            data: {deleteID: playerID}
+          }).done( (updatedUser) => {
+            $.get('/users/' + updatedUser._id, showUserPlayerList(updatedUser.favoritePlayers), 'json');
+          })
+        })
+      }, (event) => {
+
+        let dataID = $playerTable.eq(i).attr('data-id');
+
+        $('.space').remove();
+        $('.glyphicon').remove();
+        $playerTable.eq(i).css({
+          border: '',
+          'border-radius': ''
+        })
       });
     }
   }
@@ -325,6 +370,7 @@ $(function(){
 
     registerPlayerClicks();
     registerSearchPlayerClick();
+    registerPlayerHovers()
   }
 
   function showPlayerStats(data) {
@@ -338,7 +384,6 @@ $(function(){
 
   function showPlayerUpdates(data) {
     console.log('Displaying player updates');
-    console.log(data);
     resetPlayerUpdates();
 
     $('.player-update-div').show();

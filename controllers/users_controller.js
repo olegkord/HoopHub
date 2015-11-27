@@ -120,14 +120,25 @@ router.route('/new')
       debugger;
       //if the front end is sending a player to add to the user's LIST
       User.findByIdAndUpdate(req.params.id,
-      {$push: {"favoritePlayers": userParams}},
+      {$push: {favoritePlayers: userParams}},
       {new: true},
       (error, user) => {
         debugger;
         if(error) res.status(400).send({message: error.errmsg});
 
         else return res.status(202).send(user);
-      })
+      });
+    }
+    else if ('deleteID' in userParams) {
+      console.log('Removing player from user list!');
+      User.findByIdAndUpdate(req.params.id,
+      {$pull: {favoritePlayers: {PlayerID: userParams.deleteID }}},
+      {new: true},
+      (error, user) => {
+        if (error) res.status(400).send({message: error.errmsg});
+
+        else return res.status(202).send(user);
+      });
     }
     else {
       console.log('Updating user information');
