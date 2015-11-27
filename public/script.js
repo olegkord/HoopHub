@@ -168,8 +168,6 @@ $(function(){
       console.log('CLICKED BUTTON TO GENERATE EDIT FORM')
       e.preventDefault();
 
-     console.log(data);
-
      console.log('show edit form');
      editUserForm(data);
      registerEditClick(data);
@@ -190,8 +188,6 @@ $(function(){
         edit_user_json[n['name']] = n['value'];
       })
 
-      console.log(edit_user_json);
-
       $.ajax({
         type: "PUT",
         url: '/users/' + user_data._id,
@@ -209,6 +205,7 @@ $(function(){
     for(let i=0; i < numPlayers; i++) {
       console.log('.. .. ..');
       $playerTable.eq(i).click( (event) => {
+        event.preventDefault();
         let dataID = $playerTable.eq(i).attr('data-id');
         console.log('Clicked on ' + dataID);
 
@@ -230,17 +227,35 @@ $(function(){
     for(let i=0; i < numPlayers; i++) {
       console.log('-- -- --');
       $playerTable.eq(i).hover( (event) => {
+        event.preventDefault();
         let dataID = $playerTable.eq(i).attr('data-id');
 
         //Show a glyphicon upon hover.
-        let $iconHolder = $('div').addclass('icon-holder')
-        $playerTable.eq(i).children().children().eq(1).append($iconHolder);
+        let $iconHolder = $('<li>').addClass('icon-holder');
+        $playerTable.eq(i).children().append($iconHolder);
         $iconHolder.html('<span class="glyphicon glyphicon-remove-sign"></span>');
         $playerTable.eq(i).css({
           border: '2px darkgreen solid',
-          'border-radius': '15px'
+          'border-radius': '15px',
+          cursor: 'pointer'
+        })
+        //$playerTable.eq(i).off();
+        $iconHolder.click( (event) => {
+//          event.preventDefault();
+          event.stopPropagation();
+          //click on the icon to delete Player
+          let playerID = $playerTable.eq(i).attr('data-id');
+          let userID = $('.hidden').html();
+          $.ajax({
+            type: "PUT",
+            url: "/users/" + userID,
+            data: {deleteID: playerID}
+          }).done( (updatedUser) => {
+            $.get('/users/' + updatedUser._id, showUserPlayerList(updatedUser.favoritePlayers), 'json');
+          })
         })
       }, (event) => {
+
         let dataID = $playerTable.eq(i).attr('data-id');
 
         $('.space').remove();
@@ -365,7 +380,6 @@ $(function(){
 
   function showPlayerUpdates(data) {
     console.log('Displaying player updates');
-    console.log(data);
     resetPlayerUpdates();
 
     $('.player-update-div').show();
