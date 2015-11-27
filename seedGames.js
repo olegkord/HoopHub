@@ -1,4 +1,20 @@
-[
+'use strict';
+
+let Game = require('./models/game.js');
+let mongoose = require('mongoose');
+
+//connect to mongodb
+
+mongoose.connect('mongodb://localhost/HoopHub', (error) => {
+  if(error) {
+    console.log('connection error', error);
+  }
+  else {
+    console.log('connection successful');
+  }
+});
+
+let games = [
     {
         "GameID": 7673,
         "Season": 2016,
@@ -30750,3 +30766,15 @@
         "HomeTeamMoneyLine": null
     }
 ]
+
+games.forEach( (game) => {
+  let newGame = new Game(game);
+  newGame.save( (error) => {
+    if (error) {
+      console.log(error)
+    }
+    else {
+      console.log('player added!')
+    }
+  })
+})
