@@ -92,7 +92,7 @@ $(function(){
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
-  function registerSeachPlayerClick() {
+  function registerSearchPlayerClick() {
     console.log('clicked button to search player by name')
     $('#player_search_submit').click((e) => {
       console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
@@ -106,11 +106,11 @@ $(function(){
         type: "GET",
         url: "/player/" + player_search
       }).done( (onePlayer) => {
+        let userID = $('.hidden').html();
         $.ajax({
-          type: "POST",
-          url: "/users/" + userID
-          data: onePlayer
-          //THIS IS NOT DONE!
+          type: "PUT",
+          url: "/users/" + userID,
+          data: onePlayer[0]
         }).done ( (updatedUser) => {
           $.get('/users/' + updatedUser._id, showUserPlayerList(updatedUser.favoritePlayers), 'json');
         })
@@ -320,6 +320,7 @@ $(function(){
     $list.html('').append(compiledTemplate);
 
     registerPlayerClicks();
+    registerSearchPlayerClick();
   }
 
   function showPlayerStats(data) {

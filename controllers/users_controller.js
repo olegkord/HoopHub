@@ -98,9 +98,13 @@ router.route('/:id')
     //route to edit user information
     console.log('Editing User Information');
     let userParams = req.body;
-    debugger;
-    User.findByIdAndUpdate(req.params.id,
-      {$set: userParams},
+
+    if ('PlayerID' in userParams) {
+      console.log('Updating user player list!');
+      debugger;
+      //if the front end is sending a player to add to the user's LIST
+      User.findByIdAndUpdate(req.params.id,
+      {$push: {"favoritePlayers": userParams}},
       {new: true},
       (error, user) => {
         debugger;
@@ -108,6 +112,18 @@ router.route('/:id')
 
         else return res.status(202).send(user);
       })
+    }
+    else {
+      console.log('Updating user information');
+       User.findByIdAndUpdate(req.params.id,
+         {$set: userParams},
+         {new: true},
+         (error, user) => {
+           if(error) res.status(400).send({message: error.errmsg});
+
+           else return res.status(202).send(user);
+        })
+    }
   })
 
   .delete( (req,res) => {
