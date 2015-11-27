@@ -10,6 +10,10 @@ let request = require('request');
 let events = require('events');
 let EventEmitter = new events.EventEmitter();
 
+const expressJwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
+const secret = "omgassomg"
+
 //ROUTES HERE
 router.route('/login')
   .post( (req, res) => {
@@ -24,14 +28,20 @@ router.route('/login')
         if (error) throw error;
 
         if (isMatch) {
-          return res.status(200).json(user)
+          let returnObj = {userObj: user, token: jwt.sign(user, secret)}
+          // console.log(returnObj);
+          // let token  = jwt.sign(user, secret);
+          debugger;
+          console.log(returnObj);
+          return res.status(200).json(returnObj.userObj);
         }
         else {
           return res.status(401).send({message: "unauthorized"})
         }
       });
+      });
     });
-  });
+
 
 
 router.route('/new')
@@ -74,8 +84,13 @@ router.route('/new')
 
 
 
-router.route('/:id')
-  //route to view user by ID
+  router.route('/:id')
+    // route to view user by ID
+    // .all(expressJwt({
+    // secret: secret,
+    // userProperty: 'auth'
+    // }))
+
   .get( (req,res) => {
     console.log('Viewing user profile');
 
@@ -86,6 +101,7 @@ router.route('/:id')
 
 
     console.log('ID viewing: ' + userID);
+
 
     User.find( {_id: userID}, (error, user) => {
       if (error) throw error;
@@ -98,29 +114,55 @@ router.route('/:id')
     //route to edit user information
     console.log('Editing User Information');
     let userParams = req.body;
-    debugger;
-    User.findByIdAndUpdate(req.params.id,
-      {$set: userParams},
+
+    if ('PlayerID' in userParams) {
+      console.log('Updating user player list!');
+      debugger;
+      //if the front end is sending a player to add to the user's LIST
+      User.findByIdAndUpdate(req.params.id,
+      {$push: {favoritePlayers: userParams}},
       {new: true},
       (error, user) => {
         debugger;
         if(error) res.status(400).send({message: error.errmsg});
 
         else return res.status(202).send(user);
-      })
+      });
+    }
+    else if ('deleteID' in userParams) {
+      console.log('Removing player from user list!');
+      User.findByIdAndUpdate(req.params.id,
+      {$pull: {favoritePlayers: {PlayerID: userParams.deleteID }}},
+      {new: true},
+      (error, user) => {
+        if (error) res.status(400).send({message: error.errmsg});
+
+        else return res.status(202).send(user);
+      });
+    }
+    else {
+      console.log('Updating user information');
+       User.findByIdAndUpdate(req.params.id,
+         {$set: userParams},
+         {new: true},
+         (error, user) => {
+           if(error) res.status(400).send({message: error.errmsg});
+
+           else return res.status(202).send(user);
+        })
+    }
   })
 
-  .delete( (req,res) => {
+  .delete((req, res) => {
     //route to delete a user
     console.log('Deleting a user');
-    let userID = req.body.id;
+    // let userID = req.body;
+     User.findOneAndRemove({_id: req.params.id}, function (err) {
+        if(err) console.log(err);
+        res.send('User Deleted');
+        });
+     });
 
-    User.findByIdAndRemove(userID, (error) => {
-      if(error) res.status(400).send({message: error.errmsg});
-
-      else return res.status(200).send({message: "User delete successful"})
-    });
-  })
 
 
 ////////////////////////
