@@ -7,6 +7,7 @@ $(function(){
   $('.user-player-list-div').hide();
   $('.player-profile-div').hide();
   $('.player-update-div').hide();
+  $('.player-stats-div').hide();
 
   // let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
@@ -377,7 +378,9 @@ $(function(){
     console.log('Displaying player stats');
     resetPlayerStats();
 
-    let $stats = ('.player_stats');
+    $('.player-stats-div').show();
+
+    let $stats = ('.player-stats-div');
     let compiledTemplate = renderTemplate_show_player_stats(data);
     $stats.html('').append(compiledTemplate);
   }

@@ -120,7 +120,15 @@ body {
 .player-update-div {
   width: 450px;
   height: 500px;
-  margin-left: 500px;
+  margin-left: 350px;
+  background-color: rgba(255, 0, 0, 0.7);
+  border-radius: 15px
+}
+
+.player-stats-div {
+  width: 450px;
+  height: 500px;
+  margin-left: 600px;
   background-color: rgba(255, 0, 0, 0.7);
   border-radius: 15px
 }
