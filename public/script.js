@@ -204,7 +204,7 @@ $(function(){
 
   function registerPlayerClicks() {
     console.log('Registering Click Events for player list...:');
-    let $playerTable = $('#hover-ul');
+    let $playerTable = $('#player_list > *');
     let numPlayers = $playerTable.length;
     for(let i=0; i < numPlayers; i++) {
       console.log('.. .. ..');

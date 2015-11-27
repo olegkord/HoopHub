@@ -108,7 +108,6 @@
 
       <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
       <template id="user-player-list-template" type="text/x-handlebars-template">
-        <div class="user_player_list">
           <div id="player_list">
             {{#each player}}
             <div id="hover-ul" data-id={{this.PlayerID}}>
@@ -119,7 +118,6 @@
           </div>
           {{/each}}
           </div>
-        </div>
         <div class="form-group col-xs-6">
           <input type="text" class="form-control" id="player_search" placeholder="e.g. LeBron James">
 

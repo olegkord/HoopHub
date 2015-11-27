@@ -61,6 +61,11 @@ body {
   margin: 20px;
 }
 
+#player_list {
+  overflow: scroll;
+  height: 500px;
+}
+
 /*USER PLAYER LIST*/
 
 .user-player-list-div {
