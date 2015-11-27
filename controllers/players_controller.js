@@ -43,7 +43,6 @@ router.route('/:playerIdORplayerName')
       Player.find({$and: [
         {FirstName: playerNameObject.FirstName},
         {LastName: playerNameObject.LastName}]}, (error, playerData) => {
-          debugger;
           if (error) throw error;
 
           else {

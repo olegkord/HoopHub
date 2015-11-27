@@ -49,7 +49,7 @@
     <!-- <template id="index" type="text/x-handlebars-template"> -->
      <form class="form-inline text-center" id="index_form">
        <div class="form-group">
-         <input type="text" class="form-control" id="player_search" placeholder="e.g. Lebron James">
+         <input type="text" class="form-control" id="player_search" placeholder="e.g. LeBron James">
        </div>
         <button type="submit" class="btn btn-default" id="player_search_submit"> Search Player</button>
 
@@ -87,11 +87,16 @@
     </template>
 
       <!-- TEMPLATE WILL RENDER USER PROFILE-->
-    <template id="user-template" type="text/x-handlebars-template">
-      <div class="user" data-id="{{user._id}}">
-        <img id="user_image" src={{user.image}}></img>
-        <h5 class="user_content"> Hello {{user.userName}} ! </h5>
-        <h5 class="user_content"> Favorite Team: {{user.favoriteTeam}} </h5>
+
+      <template id="user-template" type="text/x-handlebars-template">
+        <div class="user">
+          <div>
+            <img id="user_image" src={{user.image}}></img>
+          </div>
+           <h5 class="user_content"> Hello {{user.userName}} ! </h5>
+           <h5 class="user_content"> Favorite Team: {{user.favoriteTeam}} </h5>
+           <span class="hidden">{{user._id}}</span>
+        </div>
        <div class="text-center">
          <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
       </div>
@@ -102,7 +107,6 @@
 
       <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
       <template id="user-player-list-template" type="text/x-handlebars-template">
-        <div class="user_player_list">
           <div id="player_list">
             {{#each player}}
             <div id="hover-ul" data-id={{this.PlayerID}}>
@@ -113,10 +117,12 @@
           </div>
           {{/each}}
           </div>
+        <div class="form-group col-xs-6">
+          <input type="text" class="form-control" id="player_search" placeholder="e.g. LeBron James">
+
         </div>
-        <div class="text-center">
-          <a class="btn btn-default" id="add_player_button" role="button">Add Player </a>
-        </div>
+          <button type="submit" class="btn btn-default" id="player_search_submit"> Add Player</button>
+
       </template>
 
 

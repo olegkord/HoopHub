@@ -78,6 +78,31 @@ $(function(){
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
+  function registerSearchPlayerClick() {
+    console.log('clicked button to search player by name')
+    $('#player_search_submit').click((e) => {
+      console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
+        e.preventDefault();
+
+        let player_search = $('#player_search').val();
+          console.log(player_search);
+        player_search.replace(/ /g,'%20')
+          console.log(player_search);
+      $.ajax({
+        type: "GET",
+        url: "/player/" + player_search
+      }).done( (onePlayer) => {
+        let userID = $('.hidden').html();
+        $.ajax({
+          type: "PUT",
+          url: "/users/" + userID,
+          data: onePlayer[0]
+        }).done ( (updatedUser) => {
+          $.get('/users/' + updatedUser._id, showUserPlayerList(updatedUser.favoritePlayers), 'json');
+        })
+      });
+    });
+  }
 
   function registerLoginClick() {
     $('#login-form').on('submit', (e) => {
@@ -180,7 +205,7 @@ $(function(){
 
   function registerPlayerClicks() {
     console.log('Registering Click Events for player list...:');
-    let $playerTable = $('#hover-ul');
+    let $playerTable = $('#player_list > *');
     let numPlayers = $playerTable.length;
     for(let i=0; i < numPlayers; i++) {
       console.log('.. .. ..');
@@ -297,6 +322,7 @@ $(function(){
     $list.html('').append(compiledTemplate);
 
     registerPlayerClicks();
+    registerSearchPlayerClick();
   }
 
   function showPlayerStats(data) {
