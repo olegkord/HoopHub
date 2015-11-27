@@ -136,15 +136,20 @@
         </div>
       </template>
 
+
+    <!-- TEMPLATE WILL RENDER PLAYER STATS PROFILE-->
     <template id="player-stats-template" type="text/x-handlebars-template">
       <div class="player_stats">
         <h3> Last Game Stats </h3>
+
+        {{#each}}
           <ul>
            <li> {{this.points}} </li>
            <li> {{this.rebounds}} </li>
            <li> {{this.assists}} </li>
            <li> {{this.fouls}} </li>
          </ul>
+         {{/each}}
        </div>
    </template>
 
