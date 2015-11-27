@@ -63,6 +63,10 @@ $(function(){
   // USER Click Events ===============================================
   // =================================================================
 
+    //  delete user click event
+    $(".user-profile-div").on('click', '.delete-user', registerDeleteClick);
+
+    //  renders new user form
     $('#new_user_button').click((e) => {
       console.log('CLICKED BUTTON TO GENERATE FORM');
         e.preventDefault();
@@ -184,20 +188,15 @@ $(function(){
     });
   }
 
-  $(".user-profile-div").on('click', '.delete-user', registerDeleteClick);
 
   function registerDeleteClick(user_data) {
     console.log('registering delete button');
-    var userDiv = $(this).closest(".user")
-    console.log('this is the user div' + userDiv.responseText);
-    var id = userDiv.attr('data-id');
-    console.log(id);
+    let userID = $('.hidden').html();
       $.ajax({
-        url: "/users/" + id,
+        url: "/users/" + userID,
         method: "DELETE"
       }).done( (data) => {
         console.log(data);
-        userDiv.remove();
       });
     }
 
