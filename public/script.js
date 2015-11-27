@@ -8,8 +8,6 @@ $(function(){
   $('.player-profile-div').hide();
   $('.player-update-div').hide();
 
-  // let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
-
   let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
@@ -197,6 +195,8 @@ $(function(){
         method: "DELETE"
       }).done( (data) => {
         console.log(data);
+        showLoginForm(data)
+        console.log('routing back to login')
       });
     }
 
