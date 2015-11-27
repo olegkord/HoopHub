@@ -188,12 +188,14 @@ $(function(){
     });
   }
 
-  $(".user-profile-div").on('click', '.delete-user', registerDeleteClick)
+  $(".user-profile-div").on('click', '.delete-user', registerDeleteClick);
 
   function registerDeleteClick(user_data) {
     console.log('registering delete button');
     var userDiv = $(this).closest(".user")
+    console.log('this is the user div' + userDiv.responseText);
     var id = userDiv.attr('data-id');
+    console.log(id);
       $.ajax({
         url: "/users/" + id,
         method: "DELETE"

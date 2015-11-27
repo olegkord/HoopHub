@@ -148,8 +148,7 @@ router.route('/new')
     // let userID = req.body;
      User.findOneAndRemove({_id: req.params.id}, function (err) {
         if(err) console.log(err);
-        console.log("User Deleted");
-        res.send('Artist Deleted')
+        res.send('User Deleted');
         });
      });
 
