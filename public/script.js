@@ -163,22 +163,20 @@ $(function(){
     });
   }
 
+  $(".user-profile-div").on('click', '.delete-user', registerDeleteClick)
+
   function registerDeleteClick(user_data) {
     console.log('registering delete button');
-    $('#delete_user_button').on('click', (e) => {
-      console.log('CLICKED BUTTON TO DELETE USER');
-      e.preventDefault();
-
+    var userDiv = $(this).closest(".user")
+    var id = userDiv.attr('data-id');
       $.ajax({
-        type: "DELETE",
-        url: "/users/" + user_data._id,
-        data: {'method': 'delete'}
+        url: "/users/" + id,
+        method: "DELETE"
       }).done( (data) => {
         console.log(data);
-        $.get('/')
+        userDiv.remove();
       });
-   });
-  }
+    }
 
   function registerPlayerClicks() {
     console.log('Registering Click Events for player list...:');

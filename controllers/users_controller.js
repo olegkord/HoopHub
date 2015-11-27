@@ -28,15 +28,20 @@ router.route('/login')
         if (error) throw error;
 
         if (isMatch) {
-          // let returnObj = {userObj: user, token: jwt.sign(user, secret)}
-          return res.status(200).json(user);
+          let returnObj = {userObj: user, token: jwt.sign(user, secret)}
+          // console.log(returnObj);
+          // let token  = jwt.sign(user, secret);
+          debugger;
+          console.log(returnObj);
+          return res.status(200).json(returnObj.userObj);
         }
         else {
           return res.status(401).send({message: "unauthorized"})
         }
       });
+      });
     });
-  });
+
 
 
 router.route('/new')
@@ -80,11 +85,11 @@ router.route('/new')
 
 
   router.route('/:id')
-    route to view user by ID
-    .all(expressJwt({
-    secret: secret,
-    userProperty: 'auth'
-    }))
+    // route to view user by ID
+    // .all(expressJwt({
+    // secret: secret,
+    // userProperty: 'auth'
+    // }))
 
   .get( (req,res) => {
     console.log('Viewing user profile');
@@ -96,6 +101,7 @@ router.route('/new')
 
 
     console.log('ID viewing: ' + userID);
+
 
     User.find( {_id: userID}, (error, user) => {
       if (error) throw error;
@@ -124,17 +130,15 @@ router.route('/new')
     //route to delete a user
     console.log('Deleting a user');
     // let userID = req.body;
-     User.remove({
-        _id: req.params.id
-     },
-     (err, users) => {
-       if(err) throw err;
-       res.json({
-              success: true,
-              message: 'User has been deleted'
-       });
+     User.findOneAndRemove({_id: req.params.id}, function (err) {
+        if(err) console.log(err);
+        console.log("User Deleted");
+        res.send('Artist Deleted')
+        });
      });
-  });
+
+
+
 ////////////////////////
 /////HELPER FUNCTIONS///
 ////////////////////////

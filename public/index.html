@@ -88,16 +88,15 @@
 
       <!-- TEMPLATE WILL RENDER USER PROFILE-->
     <template id="user-template" type="text/x-handlebars-template">
-      <div class="user">
+      <div class="user" data-id="{{user._id}}">
         <img id="user_image" src={{user.image}}></img>
         <h5 class="user_content"> Hello {{user.userName}} ! </h5>
         <h5 class="user_content"> Favorite Team: {{user.favoriteTeam}} </h5>
-      </div>
-
        <div class="text-center">
          <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
       </div>
-
+      <h5 class="delete-user">DELETE USER</h5>
+    </div>
     </template>
 
 
