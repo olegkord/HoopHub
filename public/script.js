@@ -223,6 +223,36 @@ $(function(){
     }
   }
 
+  function registerPlayerHovers() {
+    console.log('Registering player Hover events');
+    let $playerTable = $('#player_list > *');
+    let numPlayers = $playerTable.length;
+    for(let i=0; i < numPlayers; i++) {
+      console.log('-- -- --');
+      $playerTable.eq(i).hover( (event) => {
+        let dataID = $playerTable.eq(i).attr('data-id');
+
+        //Show a glyphicon upon hover.
+        let $iconHolder = $('div').addclass('icon-holder')
+        $playerTable.eq(i).children().children().eq(1).append($iconHolder);
+        $iconHolder.html('<span class="glyphicon glyphicon-remove-sign"></span>');
+        $playerTable.eq(i).css({
+          border: '2px darkgreen solid',
+          'border-radius': '15px'
+        })
+      }, (event) => {
+        let dataID = $playerTable.eq(i).attr('data-id');
+
+        $('.space').remove();
+        $('.glyphicon').remove();
+        $playerTable.eq(i).css({
+          border: '',
+          'border-radius': ''
+        })
+      });
+    }
+  }
+
   // =================================================================
   // Render LOGIN templates ==========================================
   // =================================================================
@@ -321,6 +351,7 @@ $(function(){
 
     registerPlayerClicks();
     registerSearchPlayerClick();
+    registerPlayerHovers()
   }
 
   function showPlayerStats(data) {
