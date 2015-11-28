@@ -109,7 +109,7 @@
     </template>
 
 
-      <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
+      <!-- TEMPLATE WILL RENDER FAVORITE PLAYER LIST-->
       <template id="user-player-list-template" type="text/x-handlebars-template">
           <div id="player_list">
             {{#each player}}
@@ -123,13 +123,28 @@
           </div>
         <div class="form-group col-xs-6">
           <input type="text" class="form-control" id="player_search" placeholder="e.g. LeBron James">
-
         </div>
           <button type="submit" class="btn btn-default" id="player_search_submit"> Add Player</button>
-
       </template>
 
 
+      <template id="player-twitter-template" type="text/x-handlebars-template">
+        <div id="player-twitter">
+          {{each tweets}}
+            <ul>
+              <li> {{this.text}} </li>
+              <li> {{this.created_at}} </li>
+            </ul>
+          {{/each}}
+        </div>
+
+        <div class="form-group">
+          <input text="text" class="form-control" id="twitter_search" placeholder="e.g. LeBron James">
+        </div>
+          <button type="submit" class="btn btn-default" id="twitter_search_submit"> Search Twitter</button>
+      </template>
+
+      <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
       <template id="player-profile-template" type="text/x-handlebars-template">
          <div class="player_profile">
          <div>
