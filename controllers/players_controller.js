@@ -3,9 +3,14 @@
 let express = require('express');
 let router = express.Router();
 let bodyParser = require('body-parser');
+
+let moment = require('moment');
+moment().format();
+
 let User = require('../models/user');
 let request = require('request');
 let Player = require('../models/player');
+let Game = require('../models/game');
 
 const API_KEY = process.env.API_KEY;
 
@@ -84,8 +89,26 @@ router.route('/:apiPlayerID/news')
 
 router.route('/:apiPlayerID/stats')
   .get( (req,res) => {
-    let playerID = params.apiPlayerID;
-    console.log('Getting player stats for last game from: ')
+    let playerID = req.params.apiPlayerID;
+    let today = new Date();
+    console.log('Getting player stats for last game from: ');
+    Player.find({PlayerID: playerID}, (error, player) => {
+
+      player = player[0]._doc;
+
+      //Game.find({$and: [{$or: [{HomeTeam: player.Team},{AwayTeam: player.Team}]},{Day: {$lt: today}}]}).limit(1).sort({Day: -1}).exec( (error, game) => {
+      Game.find({$and: [{Day: {$lt: today}},
+                {$or: [{HomeTeam: player.Team},
+                       {AwayTeam: player.Team}]}]}).limit(1).sort({Day: -1}).exec(
+                       (error, game) => {
+
+        if (error) throw error;
+
+        else res.json(game);
+      });
+    })
+  //find the game
+
   })
 
 //END ROUTES

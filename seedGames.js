@@ -30769,6 +30769,8 @@ let games = [
 
 games.forEach( (game) => {
   let newGame = new Game(game);
+  newGame.Day = new Date(newGame.Day);
+  newGame.DateTime = new Date(newGame.DateTime);
   newGame.save( (error) => {
     if (error) {
       console.log(error)
