@@ -7,6 +7,7 @@ $(function(){
   $('.user-player-list-div').hide();
   $('.player-profile-div').hide();
   $('.player-update-div').hide();
+  // $('.player-twtr-div').hide();
 
   let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
@@ -19,10 +20,12 @@ $(function(){
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
   let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
 
+  // let renderTemplate_show_twitter_list = Handlebars.compile($('template#player-twitter-template').html())
+
+
   // =================================================================
   // Login Click Events =============================================
   // =================================================================
-
 
   $('#login_button').click(function(e) {
     console.log('CLICKED BUTTON FOR LOGIN FORM');
@@ -63,6 +66,8 @@ $(function(){
 
     //  delete user click event
     $(".user-profile-div").on('click', '.delete-user', registerDeleteClick);
+    $(".navbar").on('click', '.login', showLoginForm);
+    $(".navbar").on('click', '.createUser', showUserForm);
 
     //  renders new user form
     $('#new_user_button').click((e) => {
@@ -80,6 +85,30 @@ $(function(){
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
+  // function registerSearchTwitterClick() {
+  //     console.log('clicked button to retrieve player tweets')
+  //   $('#player_search_submit').click((e) => {
+  //     console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
+  //   e.preventDefault();
+  //
+  //   let twitter_search = $('#twitter_search').val();
+  //     console.log(twitter_search);
+  //     $.ajax({
+  //       dataType: "json",
+  //       url: T.get('search/tweets', { q: twitter_search, count: 10 })
+  //     }).done( (data) => {
+  //       let userID = $('.hidden').html();
+  //       $.ajax({
+  //         type: "GET",
+  //         url: "/users/" + userID,
+  //         data: onePlayer[0]
+  //       }).done ( (updatedUser) => {
+  //         $.get('/users/' + updatedUser._id, showUserPlayerList(updatedUser.favoritePlayers), 'json');
+  //       })
+  //     });
+  //   });
+  // }
+
   function registerSearchPlayerClick() {
     console.log('clicked button to search player by name')
     $('#player_search_submit').click((e) => {
@@ -159,7 +188,6 @@ $(function(){
      console.log('show edit form');
      editUserForm(data);
      registerEditClick(data);
-
     });
   }
 
@@ -328,8 +356,9 @@ $(function(){
 
      $('.user-profile-div').show();
      $('.user-player-list-div').show();
-
+     $('.player-twtr-div').show();
      showUserPlayerList(data.favoritePlayers);
+    //  showTwtrUpdates(data)
   }
 
   function showUserForm(data) {
@@ -391,6 +420,19 @@ $(function(){
     let compiledTemplate = renderTemplate_show_player_updates({update: data});
     $updates.html('').append(compiledTemplate);
   }
+
+  function showTwtrUpdates(data) {
+    console.log('Displaying player updates');
+    resetPlayerUpdates();
+
+    $('.player-twtr-div').show();
+
+    let $twtr = $('.player-twtr-div');
+    let compiledTemplate = renderTemplate_show_twitter_list(data);
+    $twtr.html('').append(compiledTemplate);
+  }
+
+
 
   // =================================================================
   // RESETS ==========================================================

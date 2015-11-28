@@ -5,8 +5,13 @@ body {
   background-repeat: no-repeat;
 }
 
+
+#login_button {
+  margin-top: 25px;
+}
+
 #new_user_button {
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 .form-inline {
@@ -130,7 +135,15 @@ body {
   overflow: scroll;
 }
 
+/* LOGIN FORM  */
+
 #login-form {
   width: 20%;
   margin: 0 auto;
+}
+
+#login-header {
+  margin-top: 175px;
+  text-align: center;
+  color: white;
 }

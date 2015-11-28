@@ -10,9 +10,11 @@ let request = require('request');
 let events = require('events');
 let EventEmitter = new events.EventEmitter();
 
+
 const expressJwt = require('express-jwt');
 const jwt = require('jsonwebtoken');
 const secret = "omgassomg"
+
 
 //ROUTES HERE
 router.route('/login')
