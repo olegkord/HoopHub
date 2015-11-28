@@ -297,13 +297,17 @@ $(function(){
       console.log('displaying twitter feed')
       $('.player-twtr-div').show();
      let twitter = $('.player-twtr-div').append('<div>').find('div')
+      twitter.attr('class','text center twtr-div');
      console.log(data);
-      for (var i = 0; i < data[0].statuses.length; i++) {
-       twitter.append(' <p>' + data[0].statuses[i].text + '</p>');
+      twitter.append('<h1 class="tweet-headline"> NBA Twitter Feed </h1>');
+    for(var j = 3; j <= 4; j++) {
+      for (var i = 0; i < data[3].statuses.length; i++) {
+       twitter.append(' <p class="tweets">' + data[j].statuses[i].user.screen_name + ": " + data[j].statuses[i].text + '</p>');
+       twitter.append(' <p class="tweets">' + data[j].statuses[i].created_at + '</p>');
+       twitter.append(' <p class="tweets">' + '-------------------------------------------------' + '</p>');
      }
-
      }
-
+   }
 
   // =================================================================
   // Render LOGIN templates ==========================================

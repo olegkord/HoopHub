@@ -26,10 +26,10 @@ let hashtag = '#NBA';
 
 let db = mongojs(connectionString,[collectionName]);
 
+var stream = T.stream('statuses/filter', {track: 'nba'})
 
-T.get('search/tweets', { q: 'NBA', count: 10 }, function(err, tweet, response) {
+stream.on('NBA', function(tweet) {
 
-  if (err) throw err
   db.NBA.insert(tweet);
 })
 
