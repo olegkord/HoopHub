@@ -374,17 +374,6 @@ $(function(){
     registerPlayerHovers()
   }
 
-  function showPlayerStats(data) {
-    console.log('Displaying player stats');
-    resetPlayerStats();
-
-    $('.player-stats-div').show();
-
-    let $stats = ('.player-stats-div');
-    let compiledTemplate = renderTemplate_show_player_stats(data);
-    $stats.html('').append(compiledTemplate);
-  }
-
   function showPlayerUpdates(data) {
     console.log('Displaying player updates');
     resetPlayerUpdates();
@@ -395,6 +384,18 @@ $(function(){
     let compiledTemplate = renderTemplate_show_player_updates({update: data});
     $updates.html('').append(compiledTemplate);
   }
+  
+    function showPlayerStats(data) {
+      console.log('Displaying player stats');
+      resetPlayerStats();
+
+      $('.player-stats-div').show();
+
+      let $stats = $('.player-stats-div');
+      let compiledTemplate = renderTemplate_show_player_stats({stats: data});
+      $stats.html('').append(compiledTemplate);
+    }
+
 
   // =================================================================
   // RESETS ==========================================================
