@@ -97,11 +97,26 @@ router.route('/:apiPlayerID/stats')
       player = player[0]._doc;
 
       //Game.find({$and: [{$or: [{HomeTeam: player.Team},{AwayTeam: player.Team}]},{Day: {$lt: today}}]}).limit(1).sort({Day: -1}).exec( (error, game) => {
-      Game.find({$and: [{Day: {$lt: today}},
+      Game.find({$and: [{DateTime: {$lt: today}},
                 {$or: [{HomeTeam: player.Team},
                        {AwayTeam: player.Team}]}]}).limit(1).sort({Day: -1}).exec(
-                       (error, game) => {
+      (error, game) => {
+///CONSTRUTCTION ZONE
 
+        let gameDate = game[0]._doc.DateTime.toString();
+
+        let stringDate = [];
+
+        gameDate = gameDate.split(' ');
+
+        for (var i = 0; i < 3; i++) {
+          stringDate.push(gameDate[i]);
+        }
+
+        stringDate = stringDate.join(' ');
+
+        
+/////////END ZONE
         if (error) throw error;
 
         else res.json(game);
