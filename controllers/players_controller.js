@@ -6,23 +6,9 @@ let bodyParser = require('body-parser');
 let User = require('../models/user');
 let request = require('request');
 let Player = require('../models/player');
-let Twit = require('twit');
+
 
 const API_KEY = process.env.API_KEY;
-
-
-// const CONSUMER_KEY = process.env.CONSUMER_KEY;
-// const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
-// const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
-// const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
-//
-// // gets twitter cred
-// var T = new Twit({
-//     consumer_key:         CONSUMER_KEY  // Your Consumer Key
-//   , consumer_secret:      CONSUMER_SECRET  // Your Consumer Secret
-//   , access_token:         ACCESS_TOKEN  // Your Access Token
-//   , access_token_secret:  ACCESS_TOKEN_SECRET  // Your Access Token Secret
-// });
 
 
 //ROUTES HERE
