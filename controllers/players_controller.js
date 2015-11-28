@@ -7,30 +7,25 @@ let User = require('../models/user');
 let request = require('request');
 let Player = require('../models/player');
 let Twit = require('twit');
+
 const API_KEY = process.env.API_KEY;
-const CONSUMER_KEY = process.env.CONSUMER_KEY;
-const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
-const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
-// gets twitter cred
-var T = new Twit({
-    consumer_key:         CONSUMER_KEY  // Your Consumer Key
-  , consumer_secret:      CONSUMER_SECRET  // Your Consumer Secret
-  , access_token:         ACCESS_TOKEN  // Your Access Token
-  , access_token_secret:  ACCESS_TOKEN_SECRET  // Your Access Token Secret
-});
 
-// input field which search twtr feed and render into feed.
+// const CONSUMER_KEY = process.env.CONSUMER_KEY;
+// const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
+// const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+// const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+//
+// // gets twitter cred
+// var T = new Twit({
+//     consumer_key:         CONSUMER_KEY  // Your Consumer Key
+//   , consumer_secret:      CONSUMER_SECRET  // Your Consumer Secret
+//   , access_token:         ACCESS_TOKEN  // Your Access Token
+//   , access_token_secret:  ACCESS_TOKEN_SECRET  // Your Access Token Secret
+// });
 
-router.route('/tweets/')
-  T.get('search/tweets', { q: 'DYNAMIC ADD PLAYER NAME HERE', count: 10 }, function(err, data, response) {
-  // Do something with the JSON data returned.
-  console.log(data);
-});
 
 //ROUTES HERE
-
 router.route('/:playerIdORplayerName')
   .get( (req,res) => {
     //create a joint route based on the type of input.
