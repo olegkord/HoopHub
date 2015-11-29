@@ -116,12 +116,14 @@ router.route('/:apiPlayerID/stats')
 
         stringDate = stringDate.join(' ');
 
+        debugger;
 
 
 /////////END ZONE
         if (error) throw error;
 
         else {
+          debugger;
           request(playerStatsByIDandDate(playerID, stringDate), (error, playerStats) => {
             res.json(JSON.parse(playerStats.body));
           })

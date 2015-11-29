@@ -35,10 +35,12 @@
      <div class="user-player-list-div"></div>
 
     <!-- RENDER DIVS FOR PLAYERS-->
+    <div class="player-container">
      <div class="player-profile-div"></div>
      <div class="player-update-div"></div>
      <div class="player-twtr-div"></div>
      <div class="player-stats-div"></div>
+   </div>
 
 
      <!-- // =================================================================
@@ -141,15 +143,20 @@
         </div>
       </template>
 
+
+    <!-- TEMPLATE WILL RENDER PLAYER STATS PROFILE-->
     <template id="player-stats-template" type="text/x-handlebars-template">
       <div class="player_stats">
         <h3> Last Game Stats </h3>
+
+        {{#each stats}}
           <ul>
-           <li> {{this.points}} </li>
-           <li> {{this.rebounds}} </li>
-           <li> {{this.assists}} </li>
-           <li> {{this.fouls}} </li>
+           <li> Points Scored: {{player.Points}} </li>
+           <li> Rebounds: {{player.Rebounds}} </li>
+           <li> Assists: {{player.Assists}} </li>
+           <li> Blocks {{player.BlockedShots}} </li>
          </ul>
+         {{/each}}
        </div>
    </template>
 

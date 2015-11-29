@@ -226,7 +226,6 @@ $(function(){
           type: "GET",
           url: '/player/' + dataID
         }).done( (player_data) => {
-          console.log(player_data);
           showPlayerProfile(player_data[0]);
         });
       });
@@ -288,7 +287,7 @@ $(function(){
 
    function showTwitterFeed(data) {
       console.log('displaying twitter feed')
-      $('.player-twtr-div').empty();  
+      $('.player-twtr-div').empty();
       $('.player-twtr-div').show();
      let twitter = $('.player-twtr-div').append('<div>').find('div')
       twitter.attr('class','text center twtr-div');
@@ -324,7 +323,11 @@ $(function(){
 
   function showPlayerProfile(data){
 
+    $('.player-container').show();
     resetPlayerView();
+    resetUserView();
+    $('.user-profile-div').hide();
+    $('.user-player-list-div').hide();
 
     console.log('Showing Player Profile for ' + data.FirstName + ' ' + data.LastName)
 
@@ -341,6 +344,13 @@ $(function(){
     }).done( (playerNews) => {
       //playerNews is a JSON array of updates about the player.
       showPlayerUpdates(playerNews);
+    });
+
+    $.ajax({
+      type: "GET",
+      url: "/player/"+ data.PlayerID+"/stats"
+    }).done ( (playerStats) => {
+      showPlayerStats(playerStats);
     })
   }
 
@@ -406,10 +416,14 @@ $(function(){
 
   function showPlayerStats(data) {
     console.log('Displaying player stats');
+    console.log(data);
     resetPlayerStats();
 
-    let $stats = ('.player_stats');
-    let compiledTemplate = renderTemplate_show_player_stats(data);
+
+
+    let $stats = $('<div/>').attr('id','player_stats');
+    $('.player-stats-div').show().append($stats);
+    let compiledTemplate = renderTemplate_show_player_stats({player: data});
     $stats.html('').append(compiledTemplate);
   }
 
@@ -418,12 +432,21 @@ $(function(){
     resetPlayerUpdates();
 
     $('.player-update-div').show();
+    $('.player-stats-div').show();
 
     let $updates = $('.player-update-div');
     let compiledTemplate = renderTemplate_show_player_updates({update: data});
     $updates.html('').append(compiledTemplate);
   }
 
+    function showPlayerStats(data) {
+      console.log('Displaying player stats');
+      resetPlayerStats();
+
+      let $stats = $('.player-stats-div');
+      let compiledTemplate = renderTemplate_show_player_stats({stats: data});
+      $stats.html('').append(compiledTemplate);
+    }
 
 
   // =================================================================
@@ -436,6 +459,7 @@ $(function(){
     $('.player-profile-div').hide();
     $('.player-update-div').hide();
     $('.player-twtr-div').hide();
+    $('.player-container').hide();
   }
 
   function resetTwtr() {
