@@ -52,6 +52,30 @@ body {
 }
 
 /*USER PROFILE DIV */
+.player_update {
+  text-align: center;
+  color: white;
+}
+
+.player-update-list {
+  list-style: none;
+  margin-right: 44px;
+}
+
+.player-update-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.player-update-source {
+  font-style: italic;
+}
+
+.player-update-updated {
+  font-style: italic;
+}
+
 
 .user-profile-div {
  width: 300px;
@@ -111,6 +135,32 @@ body {
   margin: 0 auto;
 }
 
+/* LAST GAME DIV */
+.player_stats {
+  color: white;
+  text-align: center;
+ width: 300px;
+ height: 300px;
+ margin-left: 139px;
+ background-color: rgba(128,128,128,0.7);
+ border-radius: 15px;
+ float: left;
+}
+
+.stats-header{
+  padding-top: 10px;
+}
+
+.stats-content {
+  list-style: none;
+  margin-right: 50px;
+  padding-top: 10px;
+}
+
+#player_stats {
+  margin-bottom: -295px;
+}
+
 /* PLAYER PROFILE DIV */
 
 .player-container {
@@ -120,29 +170,35 @@ body {
 
 .player-profile-div {
  width: 300px;
- height: 500px;
- margin-left: 50px;
+ height: 300px;
+ margin-left: 139px;
  background-color: rgba(1,128,128,0.7);
  border-radius: 15px;
  float: left;
 }
 
 #player_image {
- width: 125px;
- height: 140px;
+ width: 100px;
+ height: 125px;
  border-radius: 50%;
- margin-left: 88px;
- margin-top: 25px;
+ margin-left: 102px;
+ margin-top: 26px;
 }
 
 .player-profile-content {
   text-align: center;
-  margin-top: 25px;
+  color: white;
 }
 
 .player-update-div {
+<<<<<<< HEAD
+  width: 450px;
+  height: 600px;
+  margin-left: 500px;
+=======
   width: 400px;
   height: 500px;
+>>>>>>> da0e1224f6c980a3d7e708dfdbf15fd7b2c698a7
   background-color: rgba(255, 0, 0, 0.7);
   border-radius: 15px;
   float: left;
@@ -196,3 +252,5 @@ body {
   text-align: center;
   padding: 10px;
 }
+
+/* PLAYER PROFILE   */

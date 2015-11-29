@@ -5,6 +5,11 @@ $(function(){
 
   hideAllDivs();
 
+  // =================================================================
+  // HANDLEBAR TEMPLATES =============================================
+  // =================================================================
+
+
   let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
@@ -15,22 +20,6 @@ $(function(){
   let renderTemplate_show_player_stats = Handlebars.compile($('template#player-stats-template').html());
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
   let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
-
-  // =================================================================
-  // Login Click Events =============================================
-  // =================================================================
-
-  $('#login_button').click(function(e) {
-    console.log('CLICKED BUTTON FOR LOGIN FORM');
-    e.preventDefault();
-
-    $.ajax({
-    }).done((data) => {
-      showLoginForm(data);
-      registerLoginClick()
-      console.log('Login button clicked!');
-    });
-  });
 
 
   // =================================================================
@@ -107,7 +96,7 @@ $(function(){
         type: "GET",
         url: "/player/" + player_search
       }).done( (onePlayer) => {
-        let userID = $('.hidden').html();
+        let userID = $('.hidden#user-id').html();
         $.ajax({
           type: "PUT",
           url: "/users/" + userID,
@@ -135,11 +124,21 @@ $(function(){
         data: login_user_json
       }).done( (logged_in_user) => {
         console.log(logged_in_user);
+        let $user = $('<span/>').addClass('hidden').attr('id', 'user-id').html(logged_in_user._id);
+        $('body').append($user);
+        registerProfileButton(logged_in_user);
         $.get('/users/' + logged_in_user._id, showUser(logged_in_user), 'json');
       });
     });
   }
 
+  function registerProfileButton(user) {
+     $('li.profile').click( (event) => {
+      console.log('Going to your profile');
+      event.preventDefault();
+      showUser(user);
+    });
+  }
 
   function registerSubmitClick() {
     $('#new-user-form').on('submit', (e) => {
@@ -200,7 +199,7 @@ $(function(){
 
   function registerDeleteClick(user_data) {
     console.log('registering delete button');
-    let userID = $('.hidden').html();
+    let userID = $('.hidden#user-id').html();
       $.ajax({
         url: "/users/" + userID,
         method: "DELETE"
@@ -257,7 +256,7 @@ $(function(){
           event.stopPropagation();
           //click on the icon to delete Player
           let playerID = $playerTable.eq(i).attr('data-id');
-          let userID = $('.hidden').html();
+          let userID = $('.hidden#user-id').html();
           $.ajax({
             type: "PUT",
             url: "/users/" + userID,
@@ -282,7 +281,7 @@ $(function(){
 
   // =================================================================
   // Render TWITTER FEED ==========================================
-  // =================================================================
+  // ====================.=============================================
 
 
    function showTwitterFeed(data) {
@@ -293,27 +292,27 @@ $(function(){
       twitter.attr('class','text center twtr-div');
      console.log(data);
       twitter.append('<h1 class="tweet-headline"> NBA Twitter Feed </h1>');
-    for(var j = 0; j <= 10; j++) {
-      // for (var i = 0; i < data[3].statuses.length; i++) {
-       twitter.append(' <p class="tweets">' + '@'+ data[j].user.screen_name + ": " + data[j].text + '</p>');
-       twitter.append(' <p class="tweets">' + data[j].created_at + '</p>');
+    for(var j = data.length -1 ; j > -1; j--) {
+      for(var i = 0; i < data[j].statuses.length; i++) {
+       twitter.append(' <p class="tweets">' + '@'+ data[j].statuses[i].user.screen_name + ": " + data[j].statuses[i].text + '</p>');
+       twitter.append(' <p class="tweets">' + data[j].statuses[i].created_at + '</p>');
        twitter.append(' <p class="tweets">' + '-------------------------------------------------' + '</p>');
-    //  }
-    }
+     }
    }
-
+}
   // =================================================================
   // Render LOGIN templates ==========================================
   // =================================================================
 
 
-  function showLoginForm(data) {
+  function showLoginForm() {
     console.log('Displaying login form');
     resetForm();
 
     let $form = $('.forms-div');
-    let compiledTemplate = renderTemplate_show_login(data);
+    let compiledTemplate = renderTemplate_show_login();
     $form.html('').append(compiledTemplate);
+    registerLoginClick();
   }
 
 
@@ -360,6 +359,7 @@ $(function(){
 
   function showUser(data) {
     console.log('Showing User profile page');
+    $('.player-container').hide();
     resetUserView();
 
     let $profile = $('.user-profile-div');
@@ -402,6 +402,7 @@ $(function(){
    function showUserPlayerList(data) {
     console.log('Displaying player list');
     resetUserPlayerList();
+    $('.player-twtr-div').hide();
 
 
     let $list = $('.user-player-list-div');
@@ -418,8 +419,8 @@ $(function(){
     console.log('Displaying player stats');
     console.log(data);
     resetPlayerStats();
-
-
+    $('.player-twtr-div').hide();
+    $('.logo').hide();
 
     let $stats = $('<div/>').attr('id','player_stats');
     $('.player-stats-div').show().append($stats);
@@ -430,7 +431,7 @@ $(function(){
   function showPlayerUpdates(data) {
     console.log('Displaying player updates');
     resetPlayerUpdates();
-
+    $('.player-twtr-div').hide();
     $('.player-update-div').show();
     $('.player-stats-div').show();
 
