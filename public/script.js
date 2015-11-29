@@ -21,6 +21,22 @@ $(function(){
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
   let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
 
+  // =================================================================
+  // Login Click Events =============================================
+  // =================================================================
+
+  $('#login_button').click(function(e) {
+    console.log('CLICKED BUTTON FOR LOGIN FORM');
+
+
+    $.ajax({
+    }).done((data) => {
+      showLoginForm(data);
+      registerLoginClick()
+      console.log('Login button clicked!');
+    });
+  });
+
 
   // =================================================================
   // PLAYER Click Events =============================================
@@ -245,14 +261,8 @@ $(function(){
         let $iconHolder = $('<li>').addClass('icon-holder');
         $playerTable.eq(i).children().append($iconHolder);
         $iconHolder.html('<span class="glyphicon glyphicon-remove-sign"></span>');
-        $playerTable.eq(i).css({
-          border: '2px darkgreen solid',
-          'border-radius': '15px',
-          cursor: 'pointer'
-        })
-        //$playerTable.eq(i).off();
+
         $iconHolder.click( (event) => {
-//          event.preventDefault();
           event.stopPropagation();
           //click on the icon to delete Player
           let playerID = $playerTable.eq(i).attr('data-id');
@@ -305,14 +315,13 @@ $(function(){
   // =================================================================
 
 
-  function showLoginForm() {
+  function showLoginForm(data) {
     console.log('Displaying login form');
     resetForm();
 
     let $form = $('.forms-div');
-    let compiledTemplate = renderTemplate_show_login();
+    let compiledTemplate = renderTemplate_show_login(data);
     $form.html('').append(compiledTemplate);
-    registerLoginClick();
   }
 
 
@@ -359,7 +368,6 @@ $(function(){
 
   function showUser(data) {
     console.log('Showing User profile page');
-    $('.player-container').hide();
     resetUserView();
 
     let $profile = $('.user-profile-div');
@@ -445,7 +453,7 @@ $(function(){
       resetPlayerStats();
 
       let $stats = $('.player-stats-div');
-      let compiledTemplate = renderTemplate_show_player_stats({stats: data});
+      let compiledTemplate = renderTemplate_show_player_stats({player: data});
       $stats.html('').append(compiledTemplate);
     }
 
@@ -460,7 +468,7 @@ $(function(){
     $('.player-profile-div').hide();
     $('.player-update-div').hide();
     $('.player-twtr-div').hide();
-    $('.player-container').hide();
+    $('.player-stats-div').hide();
   }
 
   function resetTwtr() {
