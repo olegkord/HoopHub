@@ -12,7 +12,6 @@ const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
-debugger;
 
 // gets twitter cred
 var T = new Twit({

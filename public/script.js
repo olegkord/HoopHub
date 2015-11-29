@@ -226,7 +226,6 @@ $(function(){
           type: "GET",
           url: '/player/' + dataID
         }).done( (player_data) => {
-          console.log(player_data);
           showPlayerProfile(player_data[0]);
         });
       });
@@ -288,7 +287,7 @@ $(function(){
 
    function showTwitterFeed(data) {
       console.log('displaying twitter feed')
-      $('.player-twtr-div').empty();  
+      $('.player-twtr-div').empty();
       $('.player-twtr-div').show();
      let twitter = $('.player-twtr-div').append('<div>').find('div')
       twitter.attr('class','text center twtr-div');
@@ -341,6 +340,13 @@ $(function(){
     }).done( (playerNews) => {
       //playerNews is a JSON array of updates about the player.
       showPlayerUpdates(playerNews);
+    });
+
+    $.ajax({
+      type: "GET",
+      url: "/player/"+ data.PlayerID+"/stats"
+    }).done ( (playerStats) => {
+      showPlayerStats(playerStats);
     })
   }
 
@@ -406,10 +412,14 @@ $(function(){
 
   function showPlayerStats(data) {
     console.log('Displaying player stats');
+    console.log(data);
     resetPlayerStats();
 
-    let $stats = ('.player_stats');
-    let compiledTemplate = renderTemplate_show_player_stats(data);
+
+
+    let $stats = $('<div/>').attr('id','player_stats');
+    $('.player-stats-div').show().append($stats);
+    let compiledTemplate = renderTemplate_show_player_stats({player: data});
     $stats.html('').append(compiledTemplate);
   }
 
