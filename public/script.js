@@ -287,7 +287,7 @@ $(function(){
 
   // =================================================================
   // Render TWITTER FEED ==========================================
-  // =================================================================
+  // ====================.=============================================
 
 
    function showTwitterFeed(data) {
@@ -298,8 +298,8 @@ $(function(){
       twitter.attr('class','text center twtr-div');
      console.log(data);
       twitter.append('<h1 class="tweet-headline"> NBA Twitter Feed </h1>');
-    for(var j = 0; j < data.length; j++) {
-      for(var i = 0; i < data[0].statuses.length; i++) {
+    for(var j = data.length -1 ; j > -1; j--) {
+      for(var i = 0; i < data[j].statuses.length; i++) {
        twitter.append(' <p class="tweets">' + '@'+ data[j].statuses[i].user.screen_name + ": " + data[j].statuses[i].text + '</p>');
        twitter.append(' <p class="tweets">' + data[j].statuses[i].created_at + '</p>');
        twitter.append(' <p class="tweets">' + '-------------------------------------------------' + '</p>');
@@ -420,8 +420,7 @@ $(function(){
     console.log(data);
     resetPlayerStats();
     $('.player-twtr-div').hide();
-
-
+    $('.logo').hide();
 
     let $stats = $('<div/>').attr('id','player_stats');
     $('.player-stats-div').show().append($stats);

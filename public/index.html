@@ -135,20 +135,20 @@
          <div>
             <img id="player_image" src={{players.PhotoUrl}}></img>
         </div>
-        <h4 class="player-profile-content"> Name: {{players.FirstName}} {{players.LastName}}</h4> <br>
-         <h4 class="player-profile-content">  Team: {{players.Team}} </h4> <br>
-         <h4 class="player-profile-content">  Experience: {{players.Experience}} Years</h4>
+         <p class="player-profile-content"> Name: {{players.FirstName}} {{players.LastName}}</p> <br>
+         <p class="player-profile-content">  Team: {{players.Team}} </p> <br>
+         <p class="player-profile-content">  Experience: {{players.Experience}} Years</p>
         </div>
       </template>
 
     <template id="player-stats-template" type="text/x-handlebars-template">
       <div class="player_stats">
-        <h3> Last Game Stats </h3>
+        <h3 class="stats-header"> Last Game Stats </h3>
           <ul>
-           <li> Points Scored: {{player.Points}} </li>
-           <li> Rebounds: {{player.Rebounds}} </li>
-           <li> Assists: {{player.Assists}} </li>
-           <li> Blocks {{player.BlockedShots}} </li>
+           <li class="stats-content"> Points Scored: {{player.Points}} </li>
+           <li class="stats-content"> Rebounds: {{player.Rebounds}} </li>
+           <li class="stats-content"> Assists: {{player.Assists}} </li>
+           <li class="stats-content"> Blocks {{player.BlockedShots}} </li>
          </ul>
        </div>
    </template>
@@ -157,14 +157,15 @@
     <!-- TEMPLATE WILL RENDER PLAYER UPDATED PROFILE-->
      <template id="player-update-template" type="text/x-handlebars-template">
        <div class="player_update">
-         <h3> Fantasy Update </h3>
+         <h3 class="player-update-headline"> Player Update </h3>
 
          {{#each_upto update 5}}
-         <ul>
-          <li> {{this.Title}}</li>
+         <ul class="player-update-list">
+          <li class="player-update-title">  {{this.Title}} </li>
           <li> {{this.Content}} </li>
-          <li> {{this.Source}} </li>
-          <li> {{this.Updated}} </li>
+          <li class="player-update-source"> {{this.Source}} </li>
+          <li class="player-update-updated"> {{this.Updated}} </li>
+          <li> ----------------------------------- </li>
         </ul>
         {{/each_upto}}
       </div>
