@@ -261,14 +261,8 @@ $(function(){
         let $iconHolder = $('<li>').addClass('icon-holder');
         $playerTable.eq(i).children().append($iconHolder);
         $iconHolder.html('<span class="glyphicon glyphicon-remove-sign"></span>');
-        // $playerTable.eq(i).css({
-        //   border: '2px darkgreen solid',
-        //   'border-radius': '15px',
-        //   cursor: 'pointer'
-        // })
-        //$playerTable.eq(i).off();
+
         $iconHolder.click( (event) => {
-//          event.preventDefault();
           event.stopPropagation();
           //click on the icon to delete Player
           let playerID = $playerTable.eq(i).attr('data-id');
