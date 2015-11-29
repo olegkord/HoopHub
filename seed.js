@@ -4,8 +4,8 @@ let Player = require('./models/player.js');
 let mongoose = require('mongoose');
 
 //connect to mongodb
-
-mongoose.connect('mongodb://localhost/HoopHub', (error) => {
+let mongoose = require('mongoose');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/HoopHub', (error) => {
   if(error) {
     console.log('connection error', error);
   }
