@@ -107,7 +107,7 @@ $(function(){
         type: "GET",
         url: "/player/" + player_search
       }).done( (onePlayer) => {
-        let userID = $('.hidden').html();
+        let userID = $('.hidden#user-id').html();
         $.ajax({
           type: "PUT",
           url: "/users/" + userID,
@@ -135,11 +135,21 @@ $(function(){
         data: login_user_json
       }).done( (logged_in_user) => {
         console.log(logged_in_user);
+        let $user = $('<span/>').addClass('hidden').attr('id', 'user-id').html(logged_in_user._id);
+        $('body').append($user);
+        registerProfileButton(logged_in_user);
         $.get('/users/' + logged_in_user._id, showUser(logged_in_user), 'json');
       });
     });
   }
 
+  function registerProfileButton(user) {
+     $('li.profile').click( (event) => {
+      console.log('Going to your profile');
+      event.preventDefault();
+      showUser(user);
+    });
+  }
 
   function registerSubmitClick() {
     $('#new-user-form').on('submit', (e) => {
@@ -200,7 +210,7 @@ $(function(){
 
   function registerDeleteClick(user_data) {
     console.log('registering delete button');
-    let userID = $('.hidden').html();
+    let userID = $('.hidden#user-id').html();
       $.ajax({
         url: "/users/" + userID,
         method: "DELETE"
@@ -257,7 +267,7 @@ $(function(){
           event.stopPropagation();
           //click on the icon to delete Player
           let playerID = $playerTable.eq(i).attr('data-id');
-          let userID = $('.hidden').html();
+          let userID = $('.hidden#user-id').html();
           $.ajax({
             type: "PUT",
             url: "/users/" + userID,
