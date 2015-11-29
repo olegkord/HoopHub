@@ -318,6 +318,7 @@ $(function(){
   function showLoginForm(data) {
     console.log('Displaying login form');
     resetForm();
+    hideAllDivs();
 
     let $form = $('.forms-div');
     let compiledTemplate = renderTemplate_show_login(data);

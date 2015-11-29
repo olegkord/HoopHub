@@ -5,6 +5,7 @@ let express = require('express');
 let path = require('path');
 let logger = require('morgan');
 let bodyParser = require('body-parser');
+let multer = require('multer');
 
 let app = express();
 
