@@ -113,6 +113,11 @@ body {
 
 /* PLAYER PROFILE DIV */
 
+.player-container {
+  width: 1200px;
+  height: 500px;
+}
+
 .player-profile-div {
  width: 300px;
  height: 500px;
@@ -136,11 +141,19 @@ body {
 }
 
 .player-update-div {
-  width: 450px;
+  width: 400px;
   height: 500px;
-  margin-left: 500px;
   background-color: rgba(255, 0, 0, 0.7);
-  border-radius: 15px
+  border-radius: 15px;
+  float: left;
+}
+
+.player-stats-div {
+  width: 400px;
+  height: 500px;
+  background-color: rgba(200, 200, 200, 0.7);
+  border-radius: 15px;
+  float: left;
 }
 
 .player_update {

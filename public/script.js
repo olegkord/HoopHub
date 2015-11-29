@@ -323,7 +323,11 @@ $(function(){
 
   function showPlayerProfile(data){
 
+    $('.player-container').show();
     resetPlayerView();
+    resetUserView();
+    $('.user-profile-div').hide();
+    $('.user-player-list-div').hide();
 
     console.log('Showing Player Profile for ' + data.FirstName + ' ' + data.LastName)
 
@@ -428,12 +432,21 @@ $(function(){
     resetPlayerUpdates();
 
     $('.player-update-div').show();
+    $('.player-stats-div').show();
 
     let $updates = $('.player-update-div');
     let compiledTemplate = renderTemplate_show_player_updates({update: data});
     $updates.html('').append(compiledTemplate);
   }
 
+    function showPlayerStats(data) {
+      console.log('Displaying player stats');
+      resetPlayerStats();
+
+      let $stats = $('.player-stats-div');
+      let compiledTemplate = renderTemplate_show_player_stats({stats: data});
+      $stats.html('').append(compiledTemplate);
+    }
 
 
   // =================================================================
@@ -446,6 +459,7 @@ $(function(){
     $('.player-profile-div').hide();
     $('.player-update-div').hide();
     $('.player-twtr-div').hide();
+    $('.player-container').hide();
   }
 
   function resetTwtr() {
