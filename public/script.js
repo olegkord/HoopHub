@@ -112,7 +112,7 @@ $(function(){
         type: "GET",
         url: "/player/" + player_search
       }).done( (onePlayer) => {
-        let userID = $('.hidden').html();
+        let userID = $('.hidden#user-id').html();
         $.ajax({
           type: "PUT",
           url: "/users/" + userID,
@@ -140,11 +140,21 @@ $(function(){
         data: login_user_json
       }).done( (logged_in_user) => {
         console.log(logged_in_user);
+        let $user = $('<span/>').addClass('hidden').attr('id', 'user-id').html(logged_in_user._id);
+        $('body').append($user);
+        registerProfileButton(logged_in_user);
         $.get('/users/' + logged_in_user._id, showUser(logged_in_user), 'json');
       });
     });
   }
 
+  function registerProfileButton(user) {
+     $('li.profile').click( (event) => {
+      console.log('Going to your profile');
+      event.preventDefault();
+      showUser(user);
+    });
+  }
 
   function registerSubmitClick() {
     $('#new-user-form').on('submit', (e) => {
@@ -205,7 +215,7 @@ $(function(){
 
   function registerDeleteClick(user_data) {
     console.log('registering delete button');
-    let userID = $('.hidden').html();
+    let userID = $('.hidden#user-id').html();
       $.ajax({
         url: "/users/" + userID,
         method: "DELETE"
@@ -262,7 +272,7 @@ $(function(){
           event.stopPropagation();
           //click on the icon to delete Player
           let playerID = $playerTable.eq(i).attr('data-id');
-          let userID = $('.hidden').html();
+          let userID = $('.hidden#user-id').html();
           $.ajax({
             type: "PUT",
             url: "/users/" + userID,
@@ -327,7 +337,11 @@ $(function(){
 
   function showPlayerProfile(data){
 
+    $('.player-container').show();
     resetPlayerView();
+    resetUserView();
+    $('.user-profile-div').hide();
+    $('.user-player-list-div').hide();
 
     console.log('Showing Player Profile for ' + data.FirstName + ' ' + data.LastName)
 
@@ -433,12 +447,21 @@ $(function(){
     resetPlayerUpdates();
     $('.player-twtr-div').hide();
     $('.player-update-div').show();
+    $('.player-stats-div').show();
 
     let $updates = $('.player-update-div');
     let compiledTemplate = renderTemplate_show_player_updates({update: data});
     $updates.html('').append(compiledTemplate);
   }
 
+    function showPlayerStats(data) {
+      console.log('Displaying player stats');
+      resetPlayerStats();
+
+      let $stats = $('.player-stats-div');
+      let compiledTemplate = renderTemplate_show_player_stats({stats: data});
+      $stats.html('').append(compiledTemplate);
+    }
 
 
   // =================================================================
@@ -451,6 +474,7 @@ $(function(){
     $('.player-profile-div').hide();
     $('.player-update-div').hide();
     $('.player-twtr-div').hide();
+    $('.player-container').hide();
   }
 
   function resetTwtr() {

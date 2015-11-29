@@ -19,6 +19,7 @@
           <li  class="login"><a class="a"> Login </a></li>
           <li  class="createUser"><a class="a"> Create New User </a></li>
           <li class="twitterFeed"><a class="a"> NBA Twitter Feed </a></li>
+          <li class="profile"><a class="a">My Profile</a></li>
        </ul>
      </div>
 
@@ -35,10 +36,12 @@
      <div class="user-player-list-div"></div>
 
     <!-- RENDER DIVS FOR PLAYERS-->
+    <div class="player-container">
      <div class="player-profile-div"></div>
      <div class="player-update-div"></div>
      <div class="player-twtr-div"></div>
      <div class="player-stats-div"></div>
+   </div>
 
 
      <!-- // =================================================================
@@ -96,7 +99,6 @@
           </div>
            <h5 class="user_content"> Hello {{user.userName}} ! </h5>
            <h5 class="user_content"> Favorite Team: {{user.favoriteTeam}} </h5>
-           <span class="hidden">{{user._id}}</span>
         </div>
 
        <div class="text-center">
@@ -141,6 +143,8 @@
         </div>
       </template>
 
+
+    <!-- TEMPLATE WILL RENDER PLAYER STATS PROFILE-->
     <template id="player-stats-template" type="text/x-handlebars-template">
       <div class="player_stats">
         <h3 class="stats-header"> Last Game Stats </h3>
