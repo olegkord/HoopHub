@@ -96,7 +96,7 @@ router.route('/:apiPlayerID/stats')
 
       player = player[0]._doc;
 
-      //Game.find({$and: [{$or: [{HomeTeam: player.Team},{AwayTeam: player.Team}]},{Day: {$lt: today}}]}).limit(1).sort({Day: -1}).exec( (error, game) => {
+
       Game.find({$and: [{DateTime: {$lt: today}},
                 {$or: [{HomeTeam: player.Team},
                        {AwayTeam: player.Team}]}]}).limit(1).sort({Day: -1}).exec(
@@ -104,6 +104,7 @@ router.route('/:apiPlayerID/stats')
 ///CONSTRUTCTION ZONE
 
         let gameDate = game[0]._doc.DateTime.toString();
+        let playerID = res.req.params.apiPlayerID;
 
         let stringDate = [];
 
@@ -115,11 +116,16 @@ router.route('/:apiPlayerID/stats')
 
         stringDate = stringDate.join(' ');
 
-        
+
+
 /////////END ZONE
         if (error) throw error;
 
-        else res.json(game);
+        else {
+          request(playerStatsByIDandDate(playerID, stringDate), (error, playerStats) => {
+            res.json(JSON.parse(playerStats.body));
+          })
+        }
       });
     })
   //find the game
@@ -160,7 +166,21 @@ function playerDataById(playerID) {
     }
   }
 }
-
+function playerStatsByIDandDate(playerID, date) {
+  console.log('defining API query options');
+  console.log('YOUR API KEY IS ' + API_KEY );
+  return {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://api.fantasydata.net/nba/v2/JSON/PlayerGameStatsByPlayer/"+date+ "/"+playerID,
+    "method": "GET",
+    "headers": {
+      "host": "api.fantasydata.net",
+      "ocp-apim-subscription-key": API_KEY,
+      "cache-control": "no-cache",
+    }
+  }
+}
 function playerNewsByID(playerID) {
   console.log('defining API query options');
   console.log('YOUR API KEY IS ' + API_KEY )
