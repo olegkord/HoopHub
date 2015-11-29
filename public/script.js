@@ -296,6 +296,7 @@ $(function(){
 
    function showTwitterFeed(data) {
       console.log('displaying twitter feed')
+      hideAllDivs();
       $('.player-twtr-div').empty();
       $('.player-twtr-div').show();
      let twitter = $('.player-twtr-div').append('<div>').find('div')
