@@ -3,12 +3,7 @@
 $(function(){
   console.log('loaded.');
 
-  $('.user-profile-div').hide();
-  $('.user-player-list-div').hide();
-  $('.player-profile-div').hide();
-  $('.player-update-div').hide();
-
-  // let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
+  hideAllDivs();
 
   let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
@@ -24,7 +19,6 @@ $(function(){
   // =================================================================
   // Login Click Events =============================================
   // =================================================================
-
 
   $('#login_button').click(function(e) {
     console.log('CLICKED BUTTON FOR LOGIN FORM');
@@ -63,6 +57,26 @@ $(function(){
   // USER Click Events ===============================================
   // =================================================================
 
+    //  delete user click event
+    $(".user-profile-div").on('click', '.delete-user', registerDeleteClick);
+    $(".navbar").on('click', '.login', showLoginForm);
+    $(".navbar").on('click', '.createUser', showUserForm);
+
+    // click event for twitter to display feed
+    $(".navbar").on('click', '.twitterFeed', (e) => {
+      e.preventDefault();
+        $.ajax({
+          type: "GET",
+          url: "/tweets",
+        }).done((data) => {
+          console.log(data);
+          showTwitterFeed(data);
+          resetTwtr()
+        })
+      });
+
+
+    //  renders new user form
     $('#new_user_button').click((e) => {
       console.log('CLICKED BUTTON TO GENERATE FORM');
         e.preventDefault();
@@ -78,6 +92,7 @@ $(function(){
   // =================================================================
   // REGISTER CLICKS =================================================
   // =================================================================
+
   function registerSearchPlayerClick() {
     console.log('clicked button to search player by name')
     $('#player_search_submit').click((e) => {
@@ -103,7 +118,6 @@ $(function(){
       });
     });
   }
-
   function registerLoginClick() {
     $('#login-form').on('submit', (e) => {
       console.log('clicked button to LOG IN user');
@@ -157,7 +171,6 @@ $(function(){
      console.log('show edit form');
      editUserForm(data);
      registerEditClick(data);
-
     });
   }
 
@@ -184,20 +197,17 @@ $(function(){
     });
   }
 
-  $(".user-profile-div").on('click', '.delete-user', registerDeleteClick);
 
   function registerDeleteClick(user_data) {
     console.log('registering delete button');
-    var userDiv = $(this).closest(".user")
-    console.log('this is the user div' + userDiv.responseText);
-    var id = userDiv.attr('data-id');
-    console.log(id);
+    let userID = $('.hidden').html();
       $.ajax({
-        url: "/users/" + id,
+        url: "/users/" + userID,
         method: "DELETE"
       }).done( (data) => {
         console.log(data);
-        userDiv.remove();
+        showLoginForm(data)
+        console.log('routing back to login')
       });
     }
 
@@ -272,6 +282,28 @@ $(function(){
   }
 
   // =================================================================
+  // Render TWITTER FEED ==========================================
+  // =================================================================
+
+
+   function showTwitterFeed(data) {
+      console.log('displaying twitter feed')
+      $('.player-twtr-div').empty();  
+      $('.player-twtr-div').show();
+     let twitter = $('.player-twtr-div').append('<div>').find('div')
+      twitter.attr('class','text center twtr-div');
+     console.log(data);
+      twitter.append('<h1 class="tweet-headline"> NBA Twitter Feed </h1>');
+    for(var j = 0; j <= 10; j++) {
+      // for (var i = 0; i < data[3].statuses.length; i++) {
+       twitter.append(' <p class="tweets">' + '@'+ data[j].user.screen_name + ": " + data[j].text + '</p>');
+       twitter.append(' <p class="tweets">' + data[j].created_at + '</p>');
+       twitter.append(' <p class="tweets">' + '-------------------------------------------------' + '</p>');
+    //  }
+    }
+   }
+
+  // =================================================================
   // Render LOGIN templates ==========================================
   // =================================================================
 
@@ -328,8 +360,7 @@ $(function(){
     registerShowEditFormClick(data);
 
      $('.user-profile-div').show();
-     $('.user-player-list-div').show();
-
+     $('.user-player-list-div').show();;
      showUserPlayerList(data.favoritePlayers);
   }
 
@@ -393,17 +424,35 @@ $(function(){
     $updates.html('').append(compiledTemplate);
   }
 
+
+
   // =================================================================
   // RESETS ==========================================================
   // =================================================================
+
+  function hideAllDivs() {
+    $('.user-profile-div').hide();
+    $('.user-player-list-div').hide();
+    $('.player-profile-div').hide();
+    $('.player-update-div').hide();
+    $('.player-twtr-div').hide();
+  }
+
+  function resetTwtr() {
+    $('.forms-div').empty();
+    $('.user-profile-div').hide();
+    $('.user-player-list-div').hide();
+    $('.logo').hide();
+  }
+
 
   function resetForm() {
     console.log('Resetting forms in view');
     $('.forms-div').empty();
     $('.user-profile-div').hide();
     $('.user-player-list-div').hide();
-    $('#index_form').hide();
-    $('#index_button').hide();
+    $('.logo').hide();
+    $('.player-twtr-div').hide();
   }
 
   function resetUserView() {
@@ -413,6 +462,7 @@ $(function(){
     $('.forms-div').empty();
     $('#index_form').hide();
     $('#index_button').hide();
+    $('.player-twtr-div').hide();
   }
 
   let resetPlayerView = () => {
@@ -422,7 +472,12 @@ $(function(){
     $('.player-stats-div').empty();
     $('#index_form').hide();
     $('#index_button').hide();
+    $('.player-twtr-div').hide();
   }
+
+ let hideTwtrDiv = () => {
+    $('.player-twtr-div').hide();
+ }
 
   let resetPlayerStats = () => {
     $('.player-stats-template').empty();

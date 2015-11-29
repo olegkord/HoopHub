@@ -10,9 +10,11 @@ let request = require('request');
 let events = require('events');
 let EventEmitter = new events.EventEmitter();
 
+
 const expressJwt = require('express-jwt');
 const jwt = require('jsonwebtoken');
 const secret = "omgassomg"
+
 
 //ROUTES HERE
 router.route('/login')
@@ -29,18 +31,15 @@ router.route('/login')
 
         if (isMatch) {
           let returnObj = {userObj: user, token: jwt.sign(user, secret)}
-          // console.log(returnObj);
-          // let token  = jwt.sign(user, secret);
-          debugger;
           console.log(returnObj);
           return res.status(200).json(returnObj.userObj);
         }
         else {
           return res.status(401).send({message: "unauthorized"})
         }
-      });
-      });
+     });
     });
+  });
 
 
 

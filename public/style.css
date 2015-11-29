@@ -1,16 +1,34 @@
 body {
-  background-image: url("./images/WFTmul0.jpg");
+  background-image: url("./images/Hoop_Hub_bkgrd_No_logo_v3.jpg");
   background-size: cover;
   width: 100%;
   background-repeat: no-repeat;
 }
 
+.logo {
+  text-align: center;
+}
+
+.a {
+  color: #f7f7f7;
+  font-size: 16px;
+}
+
+#main-logo{
+  margin-top: 85px;
+  width: 15%;
+}
+
+#login_button {
+  margin-top: 25px;
+}
+
 #new_user_button {
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 .form-inline {
-  margin-top: 250px;
+  margin-top: 50px;
 }
 
 #new-user-form {
@@ -130,7 +148,38 @@ body {
   overflow: scroll;
 }
 
+/* LOGIN FORM  */
+
 #login-form {
   width: 20%;
   margin: 0 auto;
+}
+
+#login-header {
+  margin-top: 175px;
+  text-align: center;
+  color: white;
+}
+
+/* TWITTER FEED  */
+
+.twtr-div {
+  color: white;
+  background-color: rgba(0,0,0, .7);
+  width: 50%;
+  border-radius: 10px;
+  margin: 0 auto;
+  overflow: scroll;
+  height: 750px;
+}
+.tweets {
+  width: 50%;
+  padding: 10px 15px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tweet-headline {
+  text-align: center;
+  padding: 10px;
 }

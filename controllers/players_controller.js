@@ -12,11 +12,11 @@ let request = require('request');
 let Player = require('../models/player');
 let Game = require('../models/game');
 
+
 const API_KEY = process.env.API_KEY;
 
 
 //ROUTES HERE
-
 router.route('/:playerIdORplayerName')
   .get( (req,res) => {
     //create a joint route based on the type of input.

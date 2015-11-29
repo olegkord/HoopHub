@@ -15,10 +15,10 @@
       <!-- NAVIGATION -->
       <div class="navbar">
         <ul class= "nav navbar-nav">
-          <li role="presentation" class="active" id="home"><a href="/"> Home </a></li>
-          <li  id="myPage"><a href="/users/">  My HH </a></li>
-          <li  id="login"><a href='/users/login'>  Login </a></li>
-          <li  id="logout"><a href="#">  Logout </a></li>
+          <li role="presentation" class="active" id="home"><a class="a" href="/"> Home </a></li>
+          <li  class="login"><a class="a"> Login </a></li>
+          <li  class="createUser"><a class="a"> Create New User </a></li>
+          <li class="twitterFeed"><a class="a"> NBA Twitter Feed </a></li>
        </ul>
      </div>
 
@@ -47,26 +47,28 @@
 
       <!-- RENDER HOMEPAGE -->
     <!-- <template id="index" type="text/x-handlebars-template"> -->
-     <form class="form-inline text-center" id="index_form">
-       <div class="form-group">
-         <input type="text" class="form-control" id="player_search" placeholder="e.g. LeBron James">
-       </div>
-        <button type="submit" class="btn btn-default" id="player_search_submit"> Search Player</button>
+    <div class="logo">
+      <img id="main-logo" src="./images/hoop_hub_logo_v3.png">
+       <form class="form-inline text-center" id="index_form">
 
-        <div class="text-center" id="index_button">
-         <a class="btn btn-default" id="new_user_button" role="button">Create New User </a>
-       </div>
+           <div class="form-group">
+             <input type="text" class="form-control" id="player_search" placeholder="e.g. LeBron James">
+           </div>
+           <button type="submit" class="btn btn-default" id="player_search_submit"> Search Player</button>
 
-       <div class="text-center" id="index_button">
-        <a class="btn btn-default" id="login_button" role="button">login</a>
-      </div>
-    </form>
+           <div class="text-center" id="index_button">
+             <a class="btn btn-default" id="new_user_button" role="button">Create New User </a>
+           </div>
 
-
+           <div class="text-center" id="index_button">
+            <a class="btn btn-default" id="login_button" role="button">Login</a>
+          </div>
+       </form>
+    </div>
 
       <!-- LOGIN PAGE TEMPLATE -->
     <template id="login-page" type="text/x-handlebars-template">
-      <h1> Login Here </h1>
+      <h1 id="login-header"> Login Here </h1>
         <form class="form-horizontal text center" id="login-form" data-id={{this._id}} method="POST"  action="/users/"+{{this._id}}> <br>
 
           <div class="form-group text-center">
@@ -80,14 +82,13 @@
           </div>
 
           <div class="text-center">
-            <input class="btn btn-default" id="login_button" type="submit" value="login"  role="button"></input>
+            <input class="btn btn-default" id="login_button_submit" type="submit" value="Login"  role="button"></input>
          </div>
 
       </form>
     </template>
 
       <!-- TEMPLATE WILL RENDER USER PROFILE-->
-
       <template id="user-template" type="text/x-handlebars-template">
         <div class="user" data-id={{user._id}}>
           <div>
@@ -102,14 +103,14 @@
          <a class="btn btn-default" id="edit_user_button" role="button">Edit User </a>
       </div>
 
-
-        <h5 class="delete-user">Delete User</h5>
-
+       <div class="text-center">
+        <button class="btn btn-default delete-user">Delete User</button>
+      </div>
     </div>
     </template>
 
 
-      <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
+      <!-- TEMPLATE WILL RENDER FAVORITE PLAYER LIST-->
       <template id="user-player-list-template" type="text/x-handlebars-template">
           <div id="player_list">
             {{#each player}}
@@ -123,13 +124,12 @@
           </div>
         <div class="form-group col-xs-6">
           <input type="text" class="form-control" id="player_search" placeholder="e.g. LeBron James">
-
         </div>
           <button type="submit" class="btn btn-default" id="player_search_submit"> Add Player</button>
-
       </template>
 
 
+      <!-- TEMPLATE WILL RENDER PLAYER PROFILE LIST-->
       <template id="player-profile-template" type="text/x-handlebars-template">
          <div class="player_profile">
          <div>
@@ -200,11 +200,6 @@
           <div class="text-center">
             <input class="btn btn-default" id="submit_edit_button" type="submit" value="edit user" role="button"></input>
           </div>
-
-         <div class="text-center">
-           <input class="btn btn-default" id="delete_user_button"  type="submit" value="delete user" role="button"></input>
-         </div>
-
       </template>
 
       <!-- TEMPLATE WILL RENDER NEW USER FORM-->

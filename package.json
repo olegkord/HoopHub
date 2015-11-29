@@ -23,12 +23,15 @@
     "express": "^4.13.3",
     "express-jwt": "^3.3.0",
     "formidable": "^1.0.17",
+    "fs": "0.0.2",
     "jsonwebtoken": "^5.4.1",
     "kerberos": "0.0.17",
     "moment": "^2.10.6",
+    "mongojs": "^1.4.1",
     "mongoose": "^4.2.6",
     "morgan": "^1.6.1",
     "path": "^0.12.7",
-    "request": "^2.67.0"
+    "request": "^2.67.0",
+    "twit": "^2.1.1"
   }
 }
