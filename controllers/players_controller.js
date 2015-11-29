@@ -3,26 +3,17 @@
 let express = require('express');
 let router = express.Router();
 let bodyParser = require('body-parser');
+
+let moment = require('moment');
+moment().format();
+
 let User = require('../models/user');
 let request = require('request');
 let Player = require('../models/player');
-let Twit = require('twit');
+let Game = require('../models/game');
+
 
 const API_KEY = process.env.API_KEY;
-
-
-// const CONSUMER_KEY = process.env.CONSUMER_KEY;
-// const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
-// const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
-// const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
-//
-// // gets twitter cred
-// var T = new Twit({
-//     consumer_key:         CONSUMER_KEY  // Your Consumer Key
-//   , consumer_secret:      CONSUMER_SECRET  // Your Consumer Secret
-//   , access_token:         ACCESS_TOKEN  // Your Access Token
-//   , access_token_secret:  ACCESS_TOKEN_SECRET  // Your Access Token Secret
-// });
 
 
 //ROUTES HERE
@@ -98,8 +89,47 @@ router.route('/:apiPlayerID/news')
 
 router.route('/:apiPlayerID/stats')
   .get( (req,res) => {
-    let playerID = params.apiPlayerID;
-    console.log('Getting player stats for last game from: ')
+    let playerID = req.params.apiPlayerID;
+    let today = new Date();
+    console.log('Getting player stats for last game from: ');
+    Player.find({PlayerID: playerID}, (error, player) => {
+
+      player = player[0]._doc;
+
+
+      Game.find({$and: [{DateTime: {$lt: today}},
+                {$or: [{HomeTeam: player.Team},
+                       {AwayTeam: player.Team}]}]}).limit(1).sort({Day: -1}).exec(
+      (error, game) => {
+///CONSTRUTCTION ZONE
+
+        let gameDate = game[0]._doc.DateTime.toString();
+        let playerID = res.req.params.apiPlayerID;
+
+        let stringDate = [];
+
+        gameDate = gameDate.split(' ');
+
+        for (var i = 0; i < 3; i++) {
+          stringDate.push(gameDate[i]);
+        }
+
+        stringDate = stringDate.join(' ');
+
+
+
+/////////END ZONE
+        if (error) throw error;
+
+        else {
+          request(playerStatsByIDandDate(playerID, stringDate), (error, playerStats) => {
+            res.json(JSON.parse(playerStats.body));
+          })
+        }
+      });
+    })
+  //find the game
+
   })
 
 //END ROUTES
@@ -136,7 +166,21 @@ function playerDataById(playerID) {
     }
   }
 }
-
+function playerStatsByIDandDate(playerID, date) {
+  console.log('defining API query options');
+  console.log('YOUR API KEY IS ' + API_KEY );
+  return {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://api.fantasydata.net/nba/v2/JSON/PlayerGameStatsByPlayer/"+date+ "/"+playerID,
+    "method": "GET",
+    "headers": {
+      "host": "api.fantasydata.net",
+      "ocp-apim-subscription-key": API_KEY,
+      "cache-control": "no-cache",
+    }
+  }
+}
 function playerNewsByID(playerID) {
   console.log('defining API query options');
   console.log('YOUR API KEY IS ' + API_KEY )

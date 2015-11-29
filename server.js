@@ -25,9 +25,11 @@ db.once('open', (callback) => {
 
 let user = require('./controllers/users_controller');
 let player = require('./controllers/players_controller');
+let tweet = require('./controllers/twitter_controller')
 
 app.use('/users', user);
 app.use('/player', player);
+app.use('/', tweet);
 
 let server = app.listen(process.env.PORT || 3000, () => {
   let host = server.address().address;
