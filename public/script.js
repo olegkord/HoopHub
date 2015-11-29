@@ -3,7 +3,6 @@
 $(function(){
   console.log('loaded.');
 
-
   hideAllDivs();
 
   let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
@@ -327,6 +326,9 @@ $(function(){
 
     $('.player-container').show();
     resetPlayerView();
+    resetUserView();
+    $('.user-profile-div').hide();
+    $('.user-player-list-div').hide();
 
     console.log('Showing Player Profile for ' + data.FirstName + ' ' + data.LastName)
 
@@ -438,6 +440,7 @@ $(function(){
     $('.player-profile-div').hide();
     $('.player-update-div').hide();
     $('.player-twtr-div').hide();
+    $('.player-container').hide();
   }
 
   function resetTwtr() {
