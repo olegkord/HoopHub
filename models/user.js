@@ -19,7 +19,7 @@ let userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', function(next){
-  var user = this;
+  let user = this;
 
   if (!user.isModified('password')) return next();
 
@@ -40,6 +40,6 @@ userSchema.methods.authenticate = function( password, callback) {
   });
 };
 
-var User = mongoose.model('User', userSchema);
+let User = mongoose.model('User', userSchema);
 
 module.exports = User;

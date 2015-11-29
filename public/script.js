@@ -5,6 +5,11 @@ $(function(){
 
   hideAllDivs();
 
+  // =================================================================
+  // HANDLEBAR TEMPLATES =============================================
+  // =================================================================
+
+
   let renderTemplate_show_login = Handlebars.compile($('template#login-page').html());
 
   let renderTemplate_show_user = Handlebars.compile($('template#user-template').html());
@@ -288,21 +293,20 @@ $(function(){
 
    function showTwitterFeed(data) {
       console.log('displaying twitter feed')
-      $('.player-twtr-div').empty();  
+      $('.player-twtr-div').empty();
       $('.player-twtr-div').show();
      let twitter = $('.player-twtr-div').append('<div>').find('div')
       twitter.attr('class','text center twtr-div');
      console.log(data);
       twitter.append('<h1 class="tweet-headline"> NBA Twitter Feed </h1>');
-    for(var j = 0; j <= 10; j++) {
-      // for (var i = 0; i < data[3].statuses.length; i++) {
-       twitter.append(' <p class="tweets">' + '@'+ data[j].user.screen_name + ": " + data[j].text + '</p>');
-       twitter.append(' <p class="tweets">' + data[j].created_at + '</p>');
+    for(var j = 0; j < data.length; j++) {
+      for(var i = 0; i < data[0].statuses.length; i++) {
+       twitter.append(' <p class="tweets">' + '@'+ data[j].statuses[i].user.screen_name + ": " + data[j].statuses[i].text + '</p>');
+       twitter.append(' <p class="tweets">' + data[j].statuses[i].created_at + '</p>');
        twitter.append(' <p class="tweets">' + '-------------------------------------------------' + '</p>');
-    //  }
-    }
+     }
    }
-
+}
   // =================================================================
   // Render LOGIN templates ==========================================
   // =================================================================
@@ -392,6 +396,7 @@ $(function(){
    function showUserPlayerList(data) {
     console.log('Displaying player list');
     resetUserPlayerList();
+    $('.player-twtr-div').hide();
 
 
     let $list = $('.user-player-list-div');
@@ -407,6 +412,7 @@ $(function(){
   function showPlayerStats(data) {
     console.log('Displaying player stats');
     resetPlayerStats();
+    $('.player-twtr-div').hide();
 
     let $stats = ('.player_stats');
     let compiledTemplate = renderTemplate_show_player_stats(data);
@@ -416,7 +422,7 @@ $(function(){
   function showPlayerUpdates(data) {
     console.log('Displaying player updates');
     resetPlayerUpdates();
-
+    $('.player-twtr-div').hide();
     $('.player-update-div').show();
 
     let $updates = $('.player-update-div');
