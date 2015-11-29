@@ -26,7 +26,7 @@ let hashtag = '#NBA';
 
 let db = mongojs(connectionString,[collectionName]);
 
-var stream = T.stream('statuses/filter', {track: 'nba'})
+let stream = T.stream('statuses/filter', {track: 'nba'})
 
 stream.on('NBA', function(tweet) {
 
@@ -34,7 +34,7 @@ stream.on('NBA', function(tweet) {
 })
 
 router.get('/tweets', (req, res, next) => {
-  db.NBA.find( (err, tweets) => {
+  db.NBA.find().sort({ created_at: -1}, (err, tweets) => {
     if (err) throw err;
 
     res.json(tweets);
