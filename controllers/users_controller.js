@@ -51,6 +51,7 @@ router.route('/new')
     let rawParams = req.body;
     let playerName = processPlayerName(rawParams.favoritePlayer);
 
+    debugger;
 //THE FUNCTION BELOW SHOULD BE ABSTRACTED!!!!
     Player.find({$and: [
       {FirstName: playerName.FirstName},

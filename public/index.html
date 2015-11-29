@@ -212,7 +212,7 @@
       <!-- TEMPLATE WILL RENDER NEW USER FORM-->
       <template id="new-user-template" type="text/x-handlebars-template">
         <h2 id="new-user-headline">Create A New User </h2>
-        <form class="form-horizontal text center" id="new-user-form" method="POST" action="/users/new"> <br>
+        <form class="form-horizontal text center" id="new-user-form" method="POST" enctype="multipart/form-data" action="/users/new"> <br>
           <div class="form-group text-center">
             <label> <font color="white"> User Name </label>
             <input type="text" class="form-control" id="user-name-input" name="userName" placeholder="King James">
@@ -229,11 +229,6 @@
           </div>
 
           <div class="form-group text-center">
-            <label> Profile Photo </label>
-            <input type="text" class="form-control" id="image-input" name="image">
-          </div>
-
-          <div class="form-group text-center">
             <label> Favorite Team </label>
             <input type="text" class="form-control" id="favorite-team-input" name="favoriteTeam" placeholder="e.g. Cleveland Cavaliers ">
           </div>
@@ -242,7 +237,16 @@
             <label> Favorite Player </label>
             <input type="text" class="form-control" id="favorite-player-input" name="favoritePlayer" placeholder="e.g. Lebron James">
           </div>
-        </form>
+        <!-- </form> -->
+
+        <div class="form-group text-center">
+          <label> Profile Photo </label><br>
+          <!-- <form action="/pictures/upload" method="POST" enctype="multipart/form-data"> -->
+            Select an image to upload:
+            <input type="file" name="image">
+            <input type="submit" value="Create New User">
+          </form>
+        </div>
 
           <div class="text-center">
             <input class="btn btn-default" id="create_user_button" type="submit" value="Create New User"  role="button"></input>
