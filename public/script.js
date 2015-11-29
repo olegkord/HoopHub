@@ -474,7 +474,7 @@ $(function(){
     $('.player-profile-div').hide();
     $('.player-update-div').hide();
     $('.player-twtr-div').hide();
-    $('.player-container').hide();
+    $('.player-stats-div').hide();
   }
 
   function resetTwtr() {
