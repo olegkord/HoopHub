@@ -261,11 +261,11 @@ $(function(){
         let $iconHolder = $('<li>').addClass('icon-holder');
         $playerTable.eq(i).children().append($iconHolder);
         $iconHolder.html('<span class="glyphicon glyphicon-remove-sign"></span>');
-        $playerTable.eq(i).css({
-          border: '2px darkgreen solid',
-          'border-radius': '15px',
-          cursor: 'pointer'
-        })
+        // $playerTable.eq(i).css({
+        //   border: '2px darkgreen solid',
+        //   'border-radius': '15px',
+        //   cursor: 'pointer'
+        // })
         //$playerTable.eq(i).off();
         $iconHolder.click( (event) => {
 //          event.preventDefault();
@@ -459,7 +459,7 @@ $(function(){
       resetPlayerStats();
 
       let $stats = $('.player-stats-div');
-      let compiledTemplate = renderTemplate_show_player_stats({stats: data});
+      let compiledTemplate = renderTemplate_show_player_stats({player: data});
       $stats.html('').append(compiledTemplate);
     }
 

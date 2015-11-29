@@ -118,6 +118,11 @@ body {
   border-radius: 15px
 }
 
+#hover-ul:hover {
+  border: 2px darkgreen solid;
+  border-radius: 15px;
+  cursor: pointer
+}
 
 #player_list ul {
   list-style: none;
