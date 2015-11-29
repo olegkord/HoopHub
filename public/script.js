@@ -21,6 +21,22 @@ $(function(){
   let renderTemplate_show_player_updates = Handlebars.compile($('template#player-update-template').html());
   let renderTemplate_show_user_player_list = Handlebars.compile($('template#user-player-list-template').html());
 
+  // =================================================================
+  // Login Click Events =============================================
+  // =================================================================
+
+  $('#login_button').click(function(e) {
+    console.log('CLICKED BUTTON FOR LOGIN FORM');
+
+
+    $.ajax({
+    }).done((data) => {
+      showLoginForm(data);
+      registerLoginClick()
+      console.log('Login button clicked!');
+    });
+  });
+
 
   // =================================================================
   // PLAYER Click Events =============================================
@@ -305,14 +321,13 @@ $(function(){
   // =================================================================
 
 
-  function showLoginForm() {
+  function showLoginForm(data) {
     console.log('Displaying login form');
     resetForm();
 
     let $form = $('.forms-div');
-    let compiledTemplate = renderTemplate_show_login();
+    let compiledTemplate = renderTemplate_show_login(data);
     $form.html('').append(compiledTemplate);
-    registerLoginClick();
   }
 
 
@@ -359,7 +374,6 @@ $(function(){
 
   function showUser(data) {
     console.log('Showing User profile page');
-    $('.player-container').hide();
     resetUserView();
 
     let $profile = $('.user-profile-div');
