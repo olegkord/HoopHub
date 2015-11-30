@@ -21,7 +21,7 @@ var T = new Twit({
   , access_token_secret:  ACCESS_TOKEN_SECRET  // Your Access Token Secret
 });
 
-let connectionString = process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI + '/tweets' : 'tweets';
+let connectionString = process.env.MONGO_URL ? process.env.MONGO_URL + '/tweets' : 'tweets';
 let collectionName = 'NBA';
 let hashtag = '#NBA';
 
@@ -42,5 +42,6 @@ router.get('/tweets', (req, res, next) => {
     res.json(tweets);
   });
 });
+
 
 module.exports = router;
