@@ -30,7 +30,7 @@ let db = mongojs(connectionString,[collectionName]);
 T.get('search/tweets', {q: 'nba',  count:10 },  (err, tweet) => {
 
   if (err) throw err;
-  console.log("suuuup")
+  console.log(tweet);
   db.NBA.insert(tweet);
 })
 
