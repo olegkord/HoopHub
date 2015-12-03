@@ -21,7 +21,7 @@ var T = new Twit({
   , access_token_secret:  ACCESS_TOKEN_SECRET  // Your Access Token Secret
 });
 
-let connectionString = process.env.MONGOLAB_URI;
+let connectionString = process.env.MONGOLAB_URI || (process.env.MONGO_URL + '/HoopHub');
 let collectionName = 'NBA';
 let hashtag = '#NBA';
 
