@@ -25,7 +25,7 @@ let connectionString = process.env.MONGOLAB_URI;
 let collectionName = 'NBA';
 let hashtag = '#NBA';
 
-let db = mongojs(connectionString,[collectionName]);
+let db = mongojs(connectionString,[collectionName], {authMechanism: 'ScramSHA1'});
 
 T.get('search/tweets', {q: 'nba',  count:10 },  (err, tweet) => {
 
