@@ -26,14 +26,11 @@ $(function(){
   // =================================================================
 
   $('#login_button').click(function(e) {
-    console.log('CLICKED BUTTON FOR LOGIN FORM');
-
 
     $.ajax({
     }).done((data) => {
       showLoginForm(data);
       registerLoginClick()
-      console.log('Login button clicked!');
     });
   });
 
@@ -43,13 +40,12 @@ $(function(){
   // =================================================================
 
     $('#player_search_submit').click((e) => {
-      console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
         e.preventDefault();
 
         let player_search = $('#player_search').val();
-          console.log(player_search);
+
         player_search.replace(/ /g,'%20')
-          console.log(player_search);
+
       $.ajax({
         type: "GET",
         url: "/player/" + player_search
@@ -74,7 +70,7 @@ $(function(){
           type: "GET",
           url: "/tweets",
         }).done((data) => {
-          console.log(data);
+
           showTwitterFeed(data);
           resetTwtr()
         })
@@ -83,12 +79,10 @@ $(function(){
 
     //  renders new user form
     $('#new_user_button').click((e) => {
-      console.log('CLICKED BUTTON TO GENERATE FORM');
         e.preventDefault();
 
         $.ajax({
         }).done((data)  => {
-          console.log('show user form');
           showUserForm(data);
           registerSubmitClick();
         });
@@ -99,15 +93,15 @@ $(function(){
   // =================================================================
 
   function registerSearchPlayerClick() {
-    console.log('clicked button to search player by name')
+
     $('#player_search_submit').click((e) => {
-      console.log('CLICK BUTTON TO SEARCH FOR PLAYERS')
+
         e.preventDefault();
 
         let player_search = $('#player_search').val();
-          console.log(player_search);
+
         player_search.replace(/ /g,'%20')
-          console.log(player_search);
+
       $.ajax({
         type: "GET",
         url: "/player/" + player_search
@@ -125,7 +119,7 @@ $(function(){
   }
   function registerLoginClick() {
     $('#login-form').on('submit', (e) => {
-      console.log('clicked button to LOG IN user');
+
       e.preventDefault();
 
       let login_user_data = $('#login-form').serializeArray();
@@ -139,7 +133,7 @@ $(function(){
         url: "/users/login",
         data: login_user_json
       }).done( (logged_in_user) => {
-        console.log(logged_in_user);
+
         let $user = $('<span/>').addClass('hidden').attr('id', 'user-id').html(logged_in_user._id);
         $('body').append($user);
         registerProfileButton(logged_in_user);
@@ -150,7 +144,7 @@ $(function(){
 
   function registerProfileButton(user) {
      $('li.profile').click( (event) => {
-      console.log('Going to your profile');
+
       event.preventDefault();
       showUser(user);
     });
@@ -158,7 +152,7 @@ $(function(){
 
   function registerSubmitClick() {
     $('#new-user-form').on('submit', (e) => {
-      console.log('clicked on button to CREATE NEW user');
+
       e.preventDefault();
 
       let new_user_data = $('#new-user-form').serializeArray();
@@ -178,21 +172,19 @@ $(function(){
   }
 
   function registerShowEditFormClick(data) {
-    console.log('registering listener to display edit form');
-    $('#edit_user_button').on('click', (e) => {
-      console.log('CLICKED BUTTON TO GENERATE EDIT FORM')
-      e.preventDefault();
 
-     console.log('show edit form');
+    $('#edit_user_button').on('click', (e) => {
+
+      e.preventDefault();
      editUserForm(data);
      registerEditClick(data);
     });
   }
 
   function registerEditClick(user_data) {
-    console.log('registering edit button');
+
     $('#edit-user-form').on('submit', (e) => {
-      console.log('CLICKED BUTTON TO EDIT USER');
+
       e.preventDefault();
 
       let edit_user_data = $('#edit-user-form').serializeArray();
@@ -214,28 +206,23 @@ $(function(){
 
 
   function registerDeleteClick(user_data) {
-    console.log('registering delete button');
+
     let userID = $('.hidden#user-id').html();
       $.ajax({
         url: "/users/" + userID,
         method: "DELETE"
       }).done( (data) => {
-        console.log(data);
         showLoginForm(data)
-        console.log('routing back to login')
       });
     }
 
   function registerPlayerClicks() {
-    console.log('Registering Click Events for player list...:');
     let $playerTable = $('#player_list > *');
     let numPlayers = $playerTable.length;
     for(let i=0; i < numPlayers; i++) {
-      console.log('.. .. ..');
       $playerTable.eq(i).click( (event) => {
         event.preventDefault();
         let dataID = $playerTable.eq(i).attr('data-id');
-        console.log('Clicked on ' + dataID);
 
         $.ajax({
           type: "GET",
@@ -248,11 +235,9 @@ $(function(){
   }
 
   function registerPlayerHovers() {
-    console.log('Registering player Hover events');
     let $playerTable = $('#player_list > *');
     let numPlayers = $playerTable.length;
     for(let i=0; i < numPlayers; i++) {
-      console.log('-- -- --');
       $playerTable.eq(i).hover( (event) => {
         event.preventDefault();
         let dataID = $playerTable.eq(i).attr('data-id');
@@ -295,13 +280,11 @@ $(function(){
 
 
    function showTwitterFeed(data) {
-      console.log('displaying twitter feed')
       hideAllDivs();
       $('.player-twtr-div').empty();
       $('.player-twtr-div').show();
      let twitter = $('.player-twtr-div').append('<div>').find('div')
       twitter.attr('class','text center twtr-div');
-     console.log(data);
       twitter.append('<h1 class="tweet-headline"> NBA Twitter Feed </h1>');
     for(var j = data.length -1 ; j > -1; j--) {
       for(var i = 0; i < data[j].statuses.length; i++) {
@@ -317,7 +300,6 @@ $(function(){
 
 
   function showLoginForm(data) {
-    console.log('Displaying login form');
     resetForm();
     hideAllDivs();
 
@@ -338,8 +320,6 @@ $(function(){
     resetUserView();
     $('.user-profile-div').hide();
     $('.user-player-list-div').hide();
-
-    console.log('Showing Player Profile for ' + data.FirstName + ' ' + data.LastName)
 
     var $profile = $('.player-profile-div');
 
@@ -369,7 +349,6 @@ $(function(){
   // =================================================================
 
   function showUser(data) {
-    console.log('Showing User profile page');
     resetUserView();
 
     let $profile = $('.user-profile-div');
@@ -385,7 +364,6 @@ $(function(){
   }
 
   function showUserForm(data) {
-    console.log('Displaying user signup form');
     resetForm();
 
     let $form = $('.forms-div');
@@ -396,7 +374,6 @@ $(function(){
   }
 
   function editUserForm(data) {
-    console.log('Displaying edit user form');
     resetForm();
 
     let $form = $('.forms-div');
@@ -410,7 +387,6 @@ $(function(){
   // =================================================================
 
    function showUserPlayerList(data) {
-    console.log('Displaying player list');
     resetUserPlayerList();
     $('.player-twtr-div').hide();
 
@@ -426,8 +402,6 @@ $(function(){
   }
 
   function showPlayerStats(data) {
-    console.log('Displaying player stats');
-    console.log(data);
     resetPlayerStats();
     $('.player-twtr-div').hide();
     $('.logo').hide();
@@ -439,7 +413,6 @@ $(function(){
   }
 
   function showPlayerUpdates(data) {
-    console.log('Displaying player updates');
     resetPlayerUpdates();
     $('.player-twtr-div').hide();
     $('.player-update-div').show();
@@ -451,7 +424,6 @@ $(function(){
   }
 
     function showPlayerStats(data) {
-      console.log('Displaying player stats');
       resetPlayerStats();
 
       let $stats = $('.player-stats-div');
@@ -482,7 +454,6 @@ $(function(){
 
 
   function resetForm() {
-    console.log('Resetting forms in view');
     $('.forms-div').empty();
     $('.user-profile-div').hide();
     $('.user-player-list-div').hide();
@@ -491,7 +462,6 @@ $(function(){
   }
 
   function resetUserView() {
-    console.log('In ResetUserView!!');
     $('.user-profile-div').empty();
     $('.user-player-list-div').empty();
     $('.forms-div').empty();
