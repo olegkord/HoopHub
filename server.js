@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/HoopHub');
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', (callback) => {
-  console.log('mongoose connected');
+
 })
 
 
@@ -35,6 +35,4 @@ app.use('/', tweet);
 let server = app.listen(process.env.PORT || 3000, () => {
   let host = server.address().address;
   let port = server.address().port;
-
-  console.log('connected on port: '+port+' host: '+host)
 });
