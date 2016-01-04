@@ -1,37 +1,27 @@
 'use strict';
 
-let express = require('express');
-let router = express.Router();
-let bodyParser = require('body-parser');
-let Player = require('../models/player');
-let User = require('../models/user')
-let request = require('request');
-
-let events = require('events');
-let EventEmitter = new events.EventEmitter();
-
-
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
+const Player = require('../models/player');
+const User = require('../models/user')
+const request = require('request');
+const events = require('events');
+const EventEmitter = new events.EventEmitter();
 const expressJwt = require('express-jwt');
 const jwt = require('jsonwebtoken');
 const secret = "omgassomg"
 
-
 //ROUTES HERE
 router.route('/login')
   .post( (req, res) => {
-    var userParams = req.body;
-    console.log('hit login route')
-
+    let userParams = req.body;
     User.findOne({userName: userParams.userName}, function(err, user) {
-
       if (err) throw err;
       user.authenticate(userParams.password, function(error, isMatch){
-
         if (error) throw error;
-
         if (isMatch) {
           let returnObj = {userObj: user, token: jwt.sign(user, secret)}
-          console.log(returnObj);
           return res.status(200).json(returnObj.userObj);
         }
         else {
@@ -41,18 +31,12 @@ router.route('/login')
     });
   });
 
-
-
 router.route('/new')
 //route to create a new user
   .post( (req,res) => {
-    console.log('Creating a new user');
-
     let rawParams = req.body;
     let playerName = processPlayerName(rawParams.favoritePlayer);
 
-    debugger;
-//THE FUNCTION BELOW SHOULD BE ABSTRACTED!!!!
     Player.find({$and: [
       {FirstName: playerName.FirstName},
       {LastName: playerName.LastName}]},
@@ -82,55 +66,30 @@ router.route('/new')
 
 })
 
-
-
   router.route('/:id')
-    // route to view user by ID
-    // .all(expressJwt({
-    // secret: secret,
-    // userProperty: 'auth'
-    // }))
-
   .get( (req,res) => {
-    console.log('Viewing user profile');
-
-    //Body parser?
-    // let userID = params.body.id;
-
     let userID = req.params.id;
-
-
-    console.log('ID viewing: ' + userID);
-
-
     User.find( {_id: userID}, (error, user) => {
       if (error) throw error;
-
       res.json(user);
     });
   })
 
   .put((req, res) => {
     //route to edit user information
-    console.log('Editing User Information');
     let userParams = req.body;
-
     if ('PlayerID' in userParams) {
       console.log('Updating user player list!');
 
-      //if the front end is sending a player to add to the user's LIST
       User.findByIdAndUpdate(req.params.id,
       {$push: {favoritePlayers: userParams}},
       {new: true},
       (error, user) => {
-
         if(error) res.status(400).send({message: error.errmsg});
-
         else return res.status(202).send(user);
       });
     }
     else if ('deleteID' in userParams) {
-      console.log('Removing player from user list!');
       User.findByIdAndUpdate(req.params.id,
       {$pull: {favoritePlayers: {PlayerID: userParams.deleteID }}},
       {new: true},
@@ -141,13 +100,11 @@ router.route('/new')
       });
     }
     else {
-      console.log('Updating user information');
        User.findByIdAndUpdate(req.params.id,
          {$set: userParams},
          {new: true},
          (error, user) => {
            if(error) res.status(400).send({message: error.errmsg});
-
            else return res.status(202).send(user);
         })
     }
@@ -155,15 +112,11 @@ router.route('/new')
 
   .delete((req, res) => {
     //route to delete a user
-    console.log('Deleting a user');
-    // let userID = req.body;
      User.findOneAndRemove({_id: req.params.id}, function (err) {
-        if(err) console.log(err);
+        if(err) throw err;
         res.send('User Deleted');
         });
      });
-
-
 
 ////////////////////////
 /////HELPER FUNCTIONS///
@@ -176,11 +129,5 @@ function processPlayerName(name) {
     return 'INCORRECT NAME'
   }
 }
-//END ROUTES
-
-//EVENT EMITTERS
-
-
-//END EVENT EMITTERS
 
 module.exports = router;
