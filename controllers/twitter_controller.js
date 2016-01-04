@@ -19,10 +19,12 @@ let T = new Twit({
   , access_token_secret:  ACCESS_TOKEN_SECRET  // Your Access Token Secret
 });
 
-let connectionString = process.env.MONGOLAB_URI;
+let connectionString = process.env.MONGOLAB_URI || 'mongodb://localhost/HoopHub';
+debugger;
 let collectionName = 'NBA';
 let hashtag = '#NBA';
 
+debugger;
 let db = mongojs(connectionString,[collectionName], {authMechanism: 'ScramSHA1'});
 
 T.get('search/tweets', {q: 'nba',  count:10 },  (err, tweet) => {
