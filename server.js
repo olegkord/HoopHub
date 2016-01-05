@@ -1,22 +1,21 @@
 'use strict';
 
-let request = require('request');
-let express = require('express');
-let path = require('path');
-let logger = require('morgan');
-let bodyParser = require('body-parser');
-
-let app = express();
+const request = require('request');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/HoopHub');
 
-let db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', (callback) => {
 
